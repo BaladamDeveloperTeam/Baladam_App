@@ -21,10 +21,13 @@ public class ManageTheme : MonoBehaviour
     public Color BackGroundDark;
     public Color HederDark;
     public Color BottomNavDark;
+    public Color ItemBackGroundDark;
 
     [Header("Other Objects")]
     public GameObject Mycamera;
     public GameObject[] Pages;
+    private GameObject[] ItemBackGround;
+    private GameObject[] BackGround;
     public GameObject BottomNav;
     public GameObject Header;
     public Text[] Texts;
@@ -32,7 +35,7 @@ public class ManageTheme : MonoBehaviour
     void Start ()
     {
         //Pages = GameObject.FindGameObjectsWithTag("Pages");
-        Texts = (Text[])FindObjectsOfType(typeof(Text));
+        
 
 		if(EnableDarkTheme == false)
         {
@@ -57,16 +60,33 @@ public class ManageTheme : MonoBehaviour
             }
             BottomNav.gameObject.GetComponent<Image>().color = BottomNavDark;
             Header.gameObject.GetComponent<Image>().color = HederDark;
-            for(int i = 0; i < Texts.Length; i++)
-            {
-                Texts[i].color = Color.white;
-            }
+            
         }
 	}
 
 
 	void Update ()
     {
-		
-	}
+        
+        //Pages = GameObject.FindGameObjectsWithTag("Pages");
+
+        if (EnableDarkTheme == true)
+        {
+            ItemBackGround = GameObject.FindGameObjectsWithTag("ItemBackGround");
+            BackGround = GameObject.FindGameObjectsWithTag("BackGround");
+            Texts = (Text[])FindObjectsOfType(typeof(Text));
+            for (int i = 0; i < ItemBackGround.Length; i++)
+            {
+                ItemBackGround[i].gameObject.GetComponent<Image>().color = ItemBackGroundDark;
+            }
+            for (int i = 0; i < Texts.Length; i++)
+            {
+                Texts[i].color = Color.white;
+            }
+            for (int i = 0; i < BackGround.Length; i++)
+            {
+                BackGround[i].gameObject.GetComponent<Image>().color = BackGroundDark;
+            }
+        }
+    }
 }

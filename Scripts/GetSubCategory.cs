@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class GetSubCategory : MonoBehaviour
 {
 
-    public string masterKey = "2210";
-    public string Url = "http://127.0.0.2:81/GetLiperosals/This_is_PaSSWord_45M127*2210";
+    public string masterKey = "12345678";
+    public string Url = "http://127.0.0.2:81/GetLiperosals/This_is_PaSSWord_45M127*22";
     private string SubCategoryJson = "";
     public SubCategoryInfo[] SubCatInfo;
     public GameObject ShowPlace;
@@ -30,7 +30,7 @@ public class GetSubCategory : MonoBehaviour
         WWW data = new WWW(Url);
         yield return data;
 
-        Debug.Log(data.text);
+        Debug.Log(data.error);
         SubCategoryJson = data.text;
 
         SubCatInfo = JsonHelper.FromJson<SubCategoryInfo>("{\"Items\": " + SubCategoryJson + "}");

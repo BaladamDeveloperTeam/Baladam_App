@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UPersian.Components;
 using UPersian.Utils;
+using UnityEngine.Networking;
 
 public class GetCat : MonoBehaviour
 {
 
-    public string masterKey = "2210";
-    public string Url = "http://127.0.0.2:81/GetLiperosal/This_is_PaSSWord_45M127*2210";
-    public string CategoryJson = "";
+    public string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
+    public string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private string CategoryJson = "";
     public CategoryInfo[] CatInfo;
     public GameObject[] CategoryTitle;
 
@@ -17,16 +18,19 @@ public class GetCat : MonoBehaviour
     private WWWForm SendData()
     {
         WWWForm web = new WWWForm();
-        web.AddField("serverKeycode", masterKey);
+        web.AddField("Master", masterKey);
         return web;
     }
 
     private IEnumerator GetCats()
     {
-        WWWForm WebGet = SendData();
+        //WWWForm WebGet = SendData();
+
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
         WWW data = new WWW(Url);
         yield return data;
-       
+
         Debug.Log(data.text);
         CategoryJson = data.text;
 
@@ -37,6 +41,8 @@ public class GetCat : MonoBehaviour
         set_Title_text();
 
         //yield return new WaitForSeconds(5);
+
+        
 
     }
 
