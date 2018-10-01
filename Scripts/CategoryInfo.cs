@@ -13,6 +13,19 @@ public class CategoryInfo
 }
 
 [System.Serializable]
+public class CategoryNames
+{
+    public string[] name;
+}
+
+[System.Serializable]
+public class SubCategoryNames
+{
+    public string[] name;
+    public string[] nameEN;
+}
+
+[System.Serializable]
 public class SubCategoryInfo
 {
     public string _id;

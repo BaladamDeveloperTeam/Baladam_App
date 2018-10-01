@@ -10,7 +10,7 @@ public class Profile_Click_Handler : MonoBehaviour
 
 	void Start ()
     {
-		
+
 	}
 	
 

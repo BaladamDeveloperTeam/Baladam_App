@@ -4,33 +4,38 @@ using UnityEngine;
 using UPersian.Components;
 using UPersian.Utils;
 using UnityEngine.UI;
+using security;
 
 public class GetSubCategory : MonoBehaviour
 {
 
-    public string masterKey = "12345678";
-    public string Url = "http://127.0.0.2:81/GetLiperosals/This_is_PaSSWord_45M127*22";
-    private string SubCategoryJson = "";
+    private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
+    public string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    public string SubCategoryJson = "";
     public SubCategoryInfo[] SubCatInfo;
     public GameObject ShowPlace;
     public GameObject ItemsPrefab, ItemsPrefabLine;
+    public string CategoryID;
 
-    public  bool[] Fill = new bool[8];
+    private bool[] Fill = new bool[8];
 
     private WWWForm SendData()
     {
+        Coding coding = new Coding();
         WWWForm web = new WWWForm();
-        web.AddField("serverKeycode", masterKey);
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", coding.Md5Sum("3"));
+        web.AddField("DatabaseID", CategoryID);
         return web;
     }
 
     private IEnumerator GetSubCategorys()
     {
         WWWForm WebGet = SendData();
-        WWW data = new WWW(Url);
+        WWW data = new WWW(Url, WebGet);
         yield return data;
 
-        Debug.Log(data.error);
+        Debug.Log(data.text);
         SubCategoryJson = data.text;
 
         SubCatInfo = JsonHelper.FromJson<SubCategoryInfo>("{\"Items\": " + SubCategoryJson + "}");
@@ -40,8 +45,9 @@ public class GetSubCategory : MonoBehaviour
 
     }
 
-    public void GetSubCategoryBut()
+    public void GetSubCategoryBut(string databaseID)
     {
+        CategoryID = databaseID;
         StartCoroutine(GetSubCategorys());
     }
 
@@ -51,7 +57,7 @@ public class GetSubCategory : MonoBehaviour
 
         for (int i = 0; i < SubCatInfo.Length; i++)
         {
-            if (SubCatInfo[i].databaseID == Item.ToString() && Fill[Item - 1] == false)
+            //if (SubCatInfo[i].databaseID == Item.ToString() && Fill[Item - 1] == false)
             {
 
                 GameObject Items = Instantiate(ItemsPrefab) as GameObject;
@@ -63,7 +69,7 @@ public class GetSubCategory : MonoBehaviour
                 text[0].text = SubCatInfo[i].SubName;
                 text[1].text = SubCatInfo[i].SubNameEN;
             }
-            if (SubCatInfo[i].databaseID == Item.ToString())
+            //if (SubCatInfo[i].databaseID == Item.ToString())
             {
                 SubCategoryItemNumber++;
             }

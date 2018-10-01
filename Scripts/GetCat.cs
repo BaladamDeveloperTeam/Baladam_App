@@ -3,40 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UPersian.Components;
 using UPersian.Utils;
-using UnityEngine.Networking;
+using security;
 
 public class GetCat : MonoBehaviour
 {
 
-    public string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
+    private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     public string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    private string CategoryJson = "";
-    public CategoryInfo[] CatInfo;
+    public string CategoryJson = "";
+    public CategoryNames CatInfo;
     public GameObject[] CategoryTitle;
 
 
     private WWWForm SendData()
     {
+        Coding coding = new Coding();
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
+        web.AddField("Chooser", coding.Md5Sum("1"));
         return web;
     }
 
     private IEnumerator GetCats()
     {
-        //WWWForm WebGet = SendData();
-
-        WWWForm web = new WWWForm();
-        web.AddField("Master", masterKey);
-        WWW data = new WWW(Url);
+        WWWForm WebGet = SendData();
+        WWW data = new WWW(Url, WebGet);
         yield return data;
 
         Debug.Log(data.text);
         CategoryJson = data.text;
 
-        CatInfo = JsonHelper.FromJson<CategoryInfo>("{\"Items\": " + CategoryJson + "}");
-        Debug.Log(CatInfo[0].name);
-        Debug.Log(CatInfo[1].name);
+        //CatInfo = JsonHelper.FromJson<CategoryNames>("{\"Items\": " + CategoryJson + "}");
+        CatInfo.name = JsonHelper.FromJson<string>("{\"Items\": " + CategoryJson + "}");
+        //Debug.Log(name[0]);
+        //Debug.Log(CatInfo[1].name);
 
         set_Title_text();
 
@@ -69,9 +69,11 @@ public class GetCat : MonoBehaviour
     private void set_Title_text()
     {
         CategoryTitle = GameObject.FindGameObjectsWithTag("Category_title_text");
-        for (int i = 0; i < CatInfo.Length; i++)
+        for (int i = 0; i < CatInfo.name.Length; i++)
         {
-            CategoryTitle[i].gameObject.GetComponent<RtlText>().text = CatInfo[i].name;
+            //CategoryTitle[i].gameObject.GetComponent<RtlText>().text = CatInfo[i].name;
+            CategoryTitle[i].gameObject.GetComponent<RtlText>().text = CatInfo.name[i];
+            Debug.Log(CatInfo.name[i]);
         }
 
     }
