@@ -12,12 +12,12 @@ public class SignIn : MonoBehaviour
 
     public RtlText Username, Password;
 
-    public string token_csrf;
+    private string token_csrf;
 
     private WWWForm SendData()
     {
         Coding coding = new Coding();
-        token_csrf = "LATARY@" + coding.Md5Sum(Username.text) + coding.Sha1Sum(Username.text);
+        token_csrf = "LATARY@" + coding.Md5Sum(Username.text.ToLower()) + coding.Sha1Sum(Username.text.ToLower());
         Debug.Log(token_csrf);
 
         WWWForm web = new WWWForm();
