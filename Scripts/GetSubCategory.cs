@@ -14,7 +14,7 @@ public class GetSubCategory : MonoBehaviour
     private string SubCategoryJson = "";
     public SubCategoryInfo[] SubCatInfo;
     public GameObject ShowPlace;
-    public GameObject ItemsPrefab, ItemsPrefabLine;
+    public GameObject ItemsPrefab, ItemsPrefabLine, Loading;
     public string CategoryID;
 
     private bool[] Fill = new bool[8];
@@ -24,7 +24,7 @@ public class GetSubCategory : MonoBehaviour
         Coding coding = new Coding();
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
-        web.AddField("Chooser", coding.Md5Sum("3"));
+        web.AddField("Chooser", 3);
         web.AddField("DatabaseID", CategoryID);
         return web;
     }
@@ -33,7 +33,15 @@ public class GetSubCategory : MonoBehaviour
     {
         WWWForm WebGet = SendData();
         WWW data = new WWW(Url, WebGet);
-        yield return data;
+        if (Fill[Category_Click_Handler.SelectedItem-1] == false)
+        {
+            Loading.gameObject.SetActive(true);
+        }
+            yield return data;
+        if (Fill[Category_Click_Handler.SelectedItem-1] == false)
+        {
+            Loading.gameObject.SetActive(false);
+        }
 
         Debug.Log(data.text);
         SubCategoryJson = data.text;

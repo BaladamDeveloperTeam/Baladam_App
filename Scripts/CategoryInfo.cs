@@ -35,6 +35,44 @@ public class SubCategoryInfo
     public string databaseID;
 }
 
+[System.Serializable]
+public class UserInfo
+{
+    public string _id;
+    public string username;
+    public string token;
+    public string loged_on;
+    public string password;
+    public string phone;
+    public string melli;
+    public string email;
+    public string lvl;
+    public string rate;
+    public string f_prj;
+    public string c_prj;
+    public string skill_id;
+    public string is_seller;
+    public string app_run;
+    public string name;
+    public string login_AT;
+    public string shaba;
+    public string is_send_melli_shenasname;
+    public string raters;
+    public string bio;
+    public string gender;
+    public string age;
+    public string madrak_tahsili;
+    public string major_field;
+    public string city;
+    public string town;
+    public string address;
+    public string image_pro;
+    public string banner_pro;
+    public string is_vip;
+    public string wallet;
+    public string updated_at;
+    public string created_at;
+}
 
 public static class JsonHelper
 {

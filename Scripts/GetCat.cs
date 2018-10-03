@@ -13,6 +13,7 @@ public class GetCat : MonoBehaviour
     private string CategoryJson = "";
     public CategoryNames CatInfo;
     public GameObject[] CategoryTitle;
+    public GameObject Loading;
 
 
     private WWWForm SendData()
@@ -20,7 +21,7 @@ public class GetCat : MonoBehaviour
         Coding coding = new Coding();
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
-        web.AddField("Chooser", coding.Md5Sum("1"));
+        web.AddField("Chooser", 1);
         return web;
     }
 
@@ -28,7 +29,9 @@ public class GetCat : MonoBehaviour
     {
         WWWForm WebGet = SendData();
         WWW data = new WWW(Url, WebGet);
+        Loading.gameObject.SetActive(true);
         yield return data;
+        Loading.gameObject.SetActive(false);
 
         Debug.Log(data.text);
         CategoryJson = data.text;
@@ -40,8 +43,6 @@ public class GetCat : MonoBehaviour
 
         set_Title_text();
 
-        //yield return new WaitForSeconds(5);
-
         
 
     }
@@ -49,21 +50,6 @@ public class GetCat : MonoBehaviour
     public void GetCatBut()
     {
         StartCoroutine(GetCats());
-        //Object a = JsonUtility.FromJson<GetCat>(CategoryJson);
-
-
-        //CategoryInfo CF = new CategoryInfo();
-        //CF = CF.CreateFromJSON(CategoryJson);
-        //Debug.Log("Dooooo");
-        //Debug.Log(CF.name);
-
-        //CategoryInfo myClass = new CategoryInfo();
-        //CFI = JsonUtility.FromJson<CategoryInfoList>(CategoryJson);
-        //Debug.Log(CFI.CategoryInfo);
-
-
-        
-
     }
 
     private void set_Title_text()
@@ -73,7 +59,7 @@ public class GetCat : MonoBehaviour
         {
             //CategoryTitle[i].gameObject.GetComponent<RtlText>().text = CatInfo[i].name;
             CategoryTitle[i].gameObject.GetComponent<RtlText>().text = CatInfo.name[i];
-            Debug.Log(CatInfo.name[i]);
+            //Debug.Log(CatInfo.name[i]);
         }
 
     }
