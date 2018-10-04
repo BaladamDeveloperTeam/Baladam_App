@@ -40,19 +40,59 @@ public class UserInfo
 {
     public string _id;
     public string username;
-    public string token;
     public string loged_on;
-    public string password;
+    public string phone;
+    public string melli;
+    public string email;
+    public string lvl;
+    public double rate;
+    public int f_prj;
+    public int c_prj;
+    public int is_seller;
+    public int app_run;
+    public string name;
+    public LoginAT login_AT;
+    public string shaba;
+    public int is_send_melli_shenasname;
+    public int raters;
+    public string bio;
+    public string gender;
+    public string age;
+    public string madrak_tahsili;
+    public string major_field;
+    public string city;
+    public string town;
+    public string address;
+    public string image_pro;
+    public string banner_pro;
+    public int is_vip;
+    public int wallet;
+    public string updated_at;
+    public string created_at;
+}
+
+[System.Serializable]
+public class LoginAT
+{
+    public string date;
+    public int timezone_type;
+    public string timezone;
+}
+
+[System.Serializable]
+public class UserInfo1
+{
+    public string _id;
+    public string username;
     public string phone;
     public string melli;
     public string email;
     public string lvl;
     public string rate;
-    public string f_prj;
-    public string c_prj;
-    public string skill_id;
     public string is_seller;
     public string app_run;
+    public string f_prj;
+    public string c_prj;
     public string name;
     public string login_AT;
     public string shaba;
@@ -72,6 +112,8 @@ public class UserInfo
     public string wallet;
     public string updated_at;
     public string created_at;
+    public string loged_on;
+
 }
 
 public static class JsonHelper

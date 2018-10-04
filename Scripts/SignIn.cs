@@ -9,10 +9,10 @@ public class SignIn : MonoBehaviour
 {
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
-    public string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string ReceivedJson, Path;
-    INIParser File = new INIParser();
-    public UserInfo[] userinfo;
+    private INIParser File = new INIParser();
+    private UserInfo[] userinfo;
     public RtlText Username, ErrorText;
     public InputField Password;
     public GameObject Loading;
@@ -49,11 +49,11 @@ public class SignIn : MonoBehaviour
 
         ReceivedJson = data.text;
         Debug.Log(data.text);
-        if (data.text == "Wrong" || data.text == "" || data.text == null)
+        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
             ErrorText.gameObject.SetActive(true);
         else
         {
-            userinfo = JsonHelper.FromJson<UserInfo>("{\"Items\": " + ReceivedJson + "}");
+            userinfo = JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }");
             File.Open(Path);
             File.WriteValue("UserSignIn", "IsSignIn", 1);
             File.WriteValue("UserSignIn", "SignTime", Time.time);

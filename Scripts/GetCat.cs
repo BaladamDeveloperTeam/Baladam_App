@@ -37,7 +37,7 @@ public class GetCat : MonoBehaviour
         CategoryJson = data.text;
 
         //CatInfo = JsonHelper.FromJson<CategoryNames>("{\"Items\": " + CategoryJson + "}");
-        CatInfo.name = JsonHelper.FromJson<string>("{\"Items\": " + CategoryJson + "}");
+        CatInfo.name = JsonHelper.FromJson<string>("{\"Items\":" + CategoryJson + "}");
         //Debug.Log(name[0]);
         //Debug.Log(CatInfo[1].name);
 
