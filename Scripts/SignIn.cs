@@ -12,16 +12,19 @@ public class SignIn : MonoBehaviour
     private string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string ReceivedJson, Path;
     private INIParser File = new INIParser();
-    private UserInfo[] userinfo;
     public RtlText Username, ErrorText;
     public InputField Password;
-    public GameObject Loading;
+    public Toggle RememberMe;
+    public GameObject Loading, thisPanel, Profile_p;
+    private GameObject GSM, BNC;
 
     private string token_csrf;
 
     void Awake()
     {
         Path = Application.persistentDataPath + "BaladamAppSettings.ini";
+        GSM = GameObject.Find("Global script Manager");
+        BNC = GameObject.Find("BottomNav");
     }
 
     private WWWForm SendData()
@@ -53,12 +56,17 @@ public class SignIn : MonoBehaviour
             ErrorText.gameObject.SetActive(true);
         else
         {
-            userinfo = JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }");
-            File.Open(Path);
-            File.WriteValue("UserSignIn", "IsSignIn", 1);
-            File.WriteValue("UserSignIn", "SignTime", Time.time);
-            File.WriteValue("UserSignIn", "Username", Username.text);
-            File.Close();
+            BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
+            GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+            if (RememberMe.isOn == true)
+            {
+                File.Open(Path);
+                File.WriteValue("UserSignIn", "IsSignIn", 1);
+                File.WriteValue("UserSignIn", "SignTime", Time.time);
+                File.WriteValue("UserSignIn", "Username", Username.text);
+                File.Close();
+            }
+            
         }
 
     }

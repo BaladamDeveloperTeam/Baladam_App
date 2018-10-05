@@ -7,16 +7,23 @@ public class Profile_Click_Handler : MonoBehaviour
 
     public GameObject Drawer, BlackPanel;
     public Animator DrawerAnim, BlackPanelAnim;
+    private GameObject GSM;
 
-	void Start ()
+    void Awake()
+    { 
+        GSM = GameObject.Find("Global script Manager");
+        
+    }
+
+    void Start ()
     {
-
+        
 	}
 	
 
 	void Update ()
     {
-		
+		//GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
 	}
 
     public void OpenDrawerClick()
