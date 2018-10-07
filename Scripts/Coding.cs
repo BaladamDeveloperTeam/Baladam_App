@@ -48,5 +48,34 @@ namespace security
             return hashString.PadLeft(32, '0');
         }
 
+        public int[] MySecurityEncrypt(string strToEncrypt)
+        {
+            char[] charArray = strToEncrypt.ToCharArray();
+            int[] intArray = new int[charArray.Length];
+            for(int i = 0; i < charArray.Length; i++)
+            {
+                intArray[i] = charArray[i];
+            }
+            for(int i = 0; i < intArray.Length; i++)
+            {
+                intArray[i] = ((((intArray[i] * 3) + 5) * 25) - 67);
+            }
+            return intArray;
+        }
+
+        public string MySecurityDecrypt(int[] intToDecrypt)
+        {
+            char[] charArray = new char[intToDecrypt.Length];
+            for(int i = 0; i < intToDecrypt.Length; i++)
+            {
+                intToDecrypt[i] = ((((intToDecrypt[i] - 67) / 25) - 5) / 3) + 2;
+            }
+            for(int i = 0; i < intToDecrypt.Length; i++)
+            {
+                charArray[i] = Convert.ToChar(intToDecrypt[i]);
+            }
+            return charArray.ToString();
+        }
+
     }
 }
