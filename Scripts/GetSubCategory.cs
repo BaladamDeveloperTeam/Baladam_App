@@ -12,7 +12,7 @@ public class GetSubCategory : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string SubCategoryJson = "";
-    public SubCategoryInfo[] SubCatInfo;
+    private SubCategoryInfo[] SubCatInfo;
     public GameObject ShowPlace;
     public GameObject ItemsPrefab, ItemsPrefabLine, Loading;
     public string CategoryID;
