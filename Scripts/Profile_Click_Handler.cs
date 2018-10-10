@@ -5,7 +5,7 @@ using UnityEngine;
 public class Profile_Click_Handler : MonoBehaviour
 {
 
-    public GameObject Drawer, BlackPanel;
+    public GameObject Drawer, BlackPanel, EditProfile_p;
     public Animator DrawerAnim, BlackPanelAnim;
     private GameObject GSM;
 
@@ -57,5 +57,19 @@ public class Profile_Click_Handler : MonoBehaviour
                 DrawerAnim.SetTrigger("End");
                 break;
         }
+    }
+
+    public void OpenEditProfile()
+    {
+        CloseDrawerClick();
+        EditProfile_p.gameObject.SetActive(true);
+        GSM.gameObject.GetComponent<Global_Script_Manager>().FindObjectsForEdit();
+        GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetextForEdit();
+    }
+
+    public void OpenMyProfile()
+    {
+        CloseDrawerClick();
+        EditProfile_p.gameObject.SetActive(false);
     }
 }

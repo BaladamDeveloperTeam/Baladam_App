@@ -15,13 +15,15 @@ public class Register : MonoBehaviour
     public RtlText ErrorText;
     public InputField Password, Password2, Username;
     public Toggle AceptRules;
-    public GameObject Loading;
+    public GameObject Loading, thisPanel, Login_p;
     public Button RegesterBtn;
+    private GameObject BNC;
 
     void Awake()
     {
         RegesterBtn.enabled = false;
         RegesterBtn.interactable = false;
+        BNC = GameObject.Find("BottomNav");
     }
 
     public void ActiveBtn()
@@ -97,5 +99,11 @@ public class Register : MonoBehaviour
     public void DoRegisterBtn()
     {
         StartCoroutine(DoRegister());
+    }
+
+    public void GoToLoginBtn()
+    {
+        thisPanel.gameObject.SetActive(false);
+        Login_p.gameObject.SetActive(true);
     }
 }

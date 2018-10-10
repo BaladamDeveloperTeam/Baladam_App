@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Global_Script_Manager : MonoBehaviour
 {
-    private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText;
+    private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserFullNameEdit, UserBioEdit;
     private UserInfo[] userinfo;
 
     void Awake()
@@ -52,6 +52,23 @@ public class Global_Script_Manager : MonoBehaviour
             UserBioText.gameObject.GetComponent<RtlText>().text = "درباره شما ...";
         else
             UserBioText.gameObject.GetComponent<RtlText>().text = userinfo[0].bio;
+
+    }
+
+    public void FindObjectsForEdit()
+    {
+        UserFullNameEdit = GameObject.Find("EditFullName");
+        UserBioEdit = GameObject.Find("EditBio");
+    }
+
+    public void SetValuetextForEdit()
+    {
+        if (CheckForEmpty(userinfo[0].name) != false)
+            UserFullNameEdit.gameObject.GetComponent<InputField>().text = userinfo[0].name;
+            
+        if (CheckForEmpty(userinfo[0].bio) != false)
+            UserBioEdit.gameObject.GetComponent<InputField>().text = userinfo[0].bio;
+            
 
     }
 

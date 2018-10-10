@@ -15,7 +15,7 @@ public class SignIn : MonoBehaviour
     public RtlText Username, ErrorText;
     public InputField Password;
     public Toggle RememberMe;
-    public GameObject Loading, thisPanel, Profile_p;
+    public GameObject Loading, thisPanel, Profile_p, Register_p;
     private GameObject GSM, BNC;
 
     private string token_csrf;
@@ -74,5 +74,11 @@ public class SignIn : MonoBehaviour
     public void DoSingInBtn()
     {
         StartCoroutine(DoSingIn());
+    }
+
+    public void GoToRegisterBtn()
+    {
+        thisPanel.gameObject.SetActive(false);
+        Register_p.gameObject.SetActive(true);
     }
 }
