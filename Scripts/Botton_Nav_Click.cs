@@ -75,6 +75,8 @@ public class Botton_Nav_Click : MonoBehaviour
         State = 3;
         ChangeColor(State);
         Show_p(State);
+        Login_n.gameObject.SetActive(false);
+        Profile_n.gameObject.SetActive(true);
     }
 
     public void Search_nClick()
