@@ -14,7 +14,7 @@ public class Search_panel_Handler : MonoBehaviour
 
     public RtlText ErrorText;
     public InputField Searchtext;
-    public CategoryInfo[] Categoryinfo;
+    public SearchResult[] Categoryinfo;
     private string SearchResult = "";
 
     private WWWForm SendData()
@@ -37,7 +37,7 @@ public class Search_panel_Handler : MonoBehaviour
         {
             SearchResult = data.text;
 
-            Categoryinfo = JsonHelper.FromJson<CategoryInfo>("{\"Items\": " + SearchResult + "}");
+            Categoryinfo = JsonHelper.FromJson<SearchResult>("{\"Items\": [" + SearchResult + "] }");
         }
 
         if (data.text == "bad post" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))

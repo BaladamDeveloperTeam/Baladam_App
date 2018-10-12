@@ -72,6 +72,11 @@ public class Global_Script_Manager : MonoBehaviour
 
     }
 
+    public string ReadUserName()
+    {
+        return userinfo[0].username;
+    }
+
     private bool CheckForEmpty(string text)
     {
         if (text == "" || text == null || text == " ")

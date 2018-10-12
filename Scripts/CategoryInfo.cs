@@ -80,40 +80,28 @@ public class LoginAT
 }
 
 [System.Serializable]
-public class UserInfo1
+public class gigsInfo
+{
+    public string gigs;
+}
+
+[System.Serializable]
+public class UserSearchInfo
 {
     public string _id;
     public string username;
-    public string phone;
-    public string melli;
-    public string email;
     public string lvl;
-    public string rate;
-    public string is_seller;
-    public string app_run;
-    public string f_prj;
-    public string c_prj;
+    public double rate;
+    public int f_prj;
     public string name;
-    public string login_AT;
-    public string shaba;
-    public string is_send_melli_shenasname;
-    public string raters;
-    public string bio;
-    public string gender;
-    public string age;
-    public string madrak_tahsili;
-    public string major_field;
-    public string city;
-    public string town;
-    public string address;
-    public string image_pro;
-    public string banner_pro;
-    public string is_vip;
-    public string wallet;
-    public string updated_at;
-    public string created_at;
-    public string loged_on;
+}
 
+[System.Serializable]
+public class SearchResult
+{
+    public CategoryInfo[] category;
+    public gigsInfo[] gig;
+    public UserSearchInfo[] user;
 }
 
 public static class JsonHelper
