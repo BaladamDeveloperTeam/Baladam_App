@@ -10,6 +10,7 @@ public class Global_Script_Manager : MonoBehaviour
     private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserFullNameEdit, UserBioEdit, UserEmailEdit,
         UserPhoneEdit, UserAgeEdit, UserSexEdit;
     private UserInfo[] userinfo;
+    public CategoryNames CatInfo;
 
     void Awake()
     {
@@ -27,6 +28,11 @@ public class Global_Script_Manager : MonoBehaviour
         userinfo = userInfos;
         FindObjects();
         SetValuetext();
+    }
+
+    public void SetCategoryName(CategoryNames CatInfo)
+    {
+        this.CatInfo = CatInfo;
     }
 
     private void FindObjects()

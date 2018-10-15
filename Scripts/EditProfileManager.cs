@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UPersian.Components;
 using UPersian.Utils;
 using System.Linq;
+using security;
 
 public class EditProfileManager : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class EditProfileManager : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
 
-    public InputField Email, PhoneNumber, Bio, Gigs, FullName, NewPassword, NewPasswordConferm;
+    public InputField Email, PhoneNumber, Bio, Gigs, FullName, NewPassword, NewPasswordConferm, Password;
     public Dropdown Age, Sex;
     public RtlText BioText, GigsText;
+    public GameObject PassMessage;
     public Color Pass, Faild;
     private GameObject GSM;
     private string param, value;
@@ -35,13 +37,37 @@ public class EditProfileManager : MonoBehaviour
         return web;
     }
 
-    private IEnumerator DoEdit()
+    private WWWForm SendDataNewPassword()
     {
-        WWWForm WebGet = SendData();
-        WWW data = new WWW(Url, WebGet);
-        yield return data;
+        Coding coding = new Coding();
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 10);
+        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("pass", coding.Md5Sum(Password.text));
+        web.AddField("new", coding.Md5Sum(NewPasswordConferm.text));
+        return web;
+    }
 
-        Debug.Log(data.text);
+    private IEnumerator DoEdit(int item)
+    {
+        switch(item)
+        {
+            case 1:
+                WWWForm WebGet = SendData();
+                WWW data = new WWW(Url, WebGet);
+                yield return data;
+
+                Debug.Log(data.text);
+                break;
+            case 2:
+                WWWForm WebGetPass = SendDataNewPassword();
+                WWW dataPass = new WWW(Url, WebGetPass);
+                yield return dataPass;
+
+                Debug.Log(dataPass.text);
+                break;
+        }
     }
 
     public void DoEditCaller(int item)
@@ -77,7 +103,7 @@ public class EditProfileManager : MonoBehaviour
                 value = Age.itemText.text;
                 break;
         }
-        StartCoroutine(DoEdit());
+        StartCoroutine(DoEdit(0));
     }
 
     public void CheckEmail()
@@ -116,16 +142,36 @@ public class EditProfileManager : MonoBehaviour
         }
     }
 
-    public void CheckPasswordConferm()
+    public bool CheckPasswordConferm()
     {
         if (NewPasswordConferm.text.Any(char.IsLower) && NewPasswordConferm.text.Any(char.IsUpper) &&
             NewPasswordConferm.text.Any(char.IsNumber) && NewPassword.text == NewPasswordConferm.text)
         {
             NewPasswordConferm.image.color = Pass;
+            return true;
         }
         else
         {
             NewPasswordConferm.image.color = Faild;
+            return false;
+        }
+    }
+
+
+
+    public void ChangePassword()
+    {
+        if (CheckPasswordConferm() == true)
+        {
+            StartCoroutine(DoEdit(1));
+            PassMessage.gameObject.SetActive(true);
+            PassMessage.gameObject.GetComponent<RtlText>().color = Pass;
+        }
+        else
+        {
+            PassMessage.gameObject.SetActive(true);
+            PassMessage.gameObject.GetComponent<RtlText>().text = "تغییر کلمه پسور با مشکل مواجه شده است.";
+            PassMessage.gameObject.GetComponent<RtlText>().color = Faild;
         }
     }
 

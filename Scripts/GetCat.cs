@@ -14,6 +14,12 @@ public class GetCat : MonoBehaviour
     public CategoryNames CatInfo;
     public GameObject[] CategoryTitle;
     public GameObject Loading;
+    private GameObject GSM;
+
+    void Awake()
+    {
+        GSM = GameObject.Find("Global script Manager");
+    }
 
 
     private WWWForm SendData()
@@ -43,7 +49,7 @@ public class GetCat : MonoBehaviour
 
         set_Title_text();
 
-        
+        GSM.gameObject.GetComponent<Global_Script_Manager>().SetCategoryName(CatInfo);
 
     }
 

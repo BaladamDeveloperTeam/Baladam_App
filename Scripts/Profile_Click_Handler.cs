@@ -5,7 +5,7 @@ using UnityEngine;
 public class Profile_Click_Handler : MonoBehaviour
 {
 
-    public GameObject Drawer, BlackPanel, EditProfile_p;
+    public GameObject Drawer, BlackPanel, EditProfile_p, AddSkill_p;
     public Animator DrawerAnim, BlackPanelAnim;
     private GameObject GSM;
 
@@ -71,5 +71,12 @@ public class Profile_Click_Handler : MonoBehaviour
     {
         CloseDrawerClick();
         EditProfile_p.gameObject.SetActive(false);
+        AddSkill_p.gameObject.SetActive(false);
+    }
+
+    public void OpenAddSkill()
+    {
+        CloseDrawerClick();
+        AddSkill_p.gameObject.SetActive(true);
     }
 }
