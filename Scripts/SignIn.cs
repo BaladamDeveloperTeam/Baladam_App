@@ -17,6 +17,7 @@ public class SignIn : MonoBehaviour
     public Toggle RememberMe;
     public GameObject Loading, thisPanel, Profile_p, Register_p;
     private GameObject GSM, BNC;
+    private string[] DeviceInfo = {"", "", "", ""};
 
     private string token_csrf;
 
@@ -32,6 +33,10 @@ public class SignIn : MonoBehaviour
         Coding coding = new Coding();
         token_csrf = "LATARY@" + coding.Md5Sum(Username.text.ToLower()) + coding.Sha1Sum(Username.text.ToLower());
         Debug.Log(token_csrf);
+        DeviceInfo[0] = SystemInfo.deviceModel;
+        DeviceInfo[1] = SystemInfo.deviceName;
+        DeviceInfo[2] = SystemInfo.deviceUniqueIdentifier;
+        DeviceInfo[3] = coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text);
 
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
@@ -39,11 +44,14 @@ public class SignIn : MonoBehaviour
         web.AddField("user", Username.text);
         web.AddField("pass", coding.Md5Sum(Password.text));
         web.AddField("token_csrf", token_csrf);
+        web.AddField("session", JsonHelper.ToJson(DeviceInfo));
         return web;
     }
 
     private IEnumerator DoSingIn()
     {
+        
+
         WWWForm WebGet = SendData();
         WWW data = new WWW(Url, WebGet);
         Loading.gameObject.SetActive(true);
@@ -60,10 +68,12 @@ public class SignIn : MonoBehaviour
             GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
             if (RememberMe.isOn == true)
             {
+                Coding coding = new Coding();
                 File.Open(Path);
                 File.WriteValue("UserSignIn", "IsSignIn", 1);
                 File.WriteValue("UserSignIn", "SignTime", Time.time);
                 File.WriteValue("UserSignIn", "Username", Username.text);
+                File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text));
                 File.Close();
             }
             
