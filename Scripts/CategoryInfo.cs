@@ -104,6 +104,24 @@ public class SearchResult
     public UserSearchInfo[] user;
 }
 
+[System.Serializable]
+public class Skill
+{
+    public string SkillName;
+    public string SkillCategory;
+    public string SkillSubCategory;
+    public string SkillDescription;
+    public SkillPoint[] SkillPoints = new SkillPoint[3];
+}
+
+[System.Serializable]
+public class SkillPoint
+{
+    public string[] SkillPoints;
+    public int SkillCost;
+    public int SkillPeriod;
+}
+
 public static class JsonHelper
 {
     public static T[] FromJson<T>(string json)
