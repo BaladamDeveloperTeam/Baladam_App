@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 114271097733426710}
   m_Layer: 5
   m_Name: InsertSkillPoint
-  m_TagString: Untagged
+  m_TagString: SkillPoints
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1460,10 +1460,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillNumber: {fileID: 114962025377940768}
-  SkillPointNumber: 1
   SkillPoints: {fileID: 1864875715611246}
   SkillPointPrefab: {fileID: 1692801024431730, guid: 2d2e85fba9b554141a535411e06a0428,
     type: 2}
+  NameNumber: 0
 --- !u!114 &114736992488654664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1693,7 +1693,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0628\u0633\u062A\u0647 \u0634\u0645\u0627\u0631\u0647"
+  m_Text: "\u0628\u0633\u062A\u0647 \u0634\u0645\u0627\u0631\u0647 1"
 --- !u!222 &222012634122275624
 CanvasRenderer:
   m_ObjectHideFlags: 1

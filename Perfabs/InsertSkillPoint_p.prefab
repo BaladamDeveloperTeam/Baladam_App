@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 114792543860919924}
   - component: {fileID: 114915961619579048}
   m_Layer: 5
-  m_Name: InsertSkillName
-  m_TagString: Untagged
+  m_Name: InsertSkillPoint
+  m_TagString: SkillPoints
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

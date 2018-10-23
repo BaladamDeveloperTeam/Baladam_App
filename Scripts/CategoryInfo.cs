@@ -117,7 +117,7 @@ public class Skill
 [System.Serializable]
 public class SkillPoint
 {
-    public string[] SkillPoints;
+    public string[] SkillPoints = new string[50];
     public int SkillCost;
     public int SkillPeriod;
 }

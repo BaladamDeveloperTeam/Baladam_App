@@ -8,9 +8,7 @@ public class SkillBoxManager : MonoBehaviour
 {
 
     private GameObject[] SkillBoxs;
-    private GameObject SkillName, SkillCategory, SkillSubCategory;
     private int SkillPointNumber = 1;
-    private Skill UserSkill;
     public RtlText SkillNumber;
     public GameObject SkillPoints, SkillPointPrefab;
     public int NameNumber;
@@ -19,14 +17,6 @@ public class SkillBoxManager : MonoBehaviour
     {
         SkillBoxs = GameObject.FindGameObjectsWithTag("SkillBox");
         //SkillNumber.text = "بسته شماره ی " + SkillBoxs.Length;
-        FindObject();
-    }
-
-    private void FindObject()
-    {
-        SkillName = GameObject.Find("InsertSkillName");
-        SkillCategory = GameObject.Find("SelectCategory");
-        SkillSubCategory = GameObject.Find("SelectSubCategory");
     }
 
     private void CalHeight(int ItemCount)
@@ -82,12 +72,5 @@ public class SkillBoxManager : MonoBehaviour
     {
         this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x - 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y - 0.01f);
         this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x + 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y + 0.01f);
-    }
-
-    private void SubmitBtn()
-    {
-        UserSkill.SkillName = SkillName.gameObject.GetComponent<InputField>().text;
-        UserSkill.SkillCategory = SkillCategory.gameObject.GetComponent<Dropdown>().itemText.ToString();
-        UserSkill.SkillSubCategory = SkillSubCategory.gameObject.GetComponent<Dropdown>().itemText.ToString();
     }
 }
