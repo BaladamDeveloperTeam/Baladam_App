@@ -66,6 +66,17 @@ public class EditProfileManager : MonoBehaviour
                 yield return dataPass;
 
                 Debug.Log(dataPass.text);
+                if(dataPass.text == "Password Restarted")
+                {
+                    PassMessage.gameObject.SetActive(true);
+                    PassMessage.gameObject.GetComponent<RtlText>().color = Pass;
+                }
+                else
+                {
+                    PassMessage.gameObject.SetActive(true);
+                    PassMessage.gameObject.GetComponent<RtlText>().text = "تغییر کلمه پسور با مشکل مواجه شده است.";
+                    PassMessage.gameObject.GetComponent<RtlText>().color = Faild;
+                }
                 break;
         }
     }
@@ -103,7 +114,7 @@ public class EditProfileManager : MonoBehaviour
                 value = Age.itemText.text;
                 break;
         }
-        StartCoroutine(DoEdit(0));
+        StartCoroutine(DoEdit(1));
     }
 
     public void CheckEmail()
@@ -163,15 +174,7 @@ public class EditProfileManager : MonoBehaviour
     {
         if (CheckPasswordConferm() == true)
         {
-            StartCoroutine(DoEdit(1));
-            PassMessage.gameObject.SetActive(true);
-            PassMessage.gameObject.GetComponent<RtlText>().color = Pass;
-        }
-        else
-        {
-            PassMessage.gameObject.SetActive(true);
-            PassMessage.gameObject.GetComponent<RtlText>().text = "تغییر کلمه پسور با مشکل مواجه شده است.";
-            PassMessage.gameObject.GetComponent<RtlText>().color = Faild;
+            StartCoroutine(DoEdit(2));
         }
     }
 
