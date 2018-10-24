@@ -112,6 +112,9 @@ public class Skill
     public string SkillSubCategory;
     public string SkillDescription;
     public SkillPoint[] SkillPoints = new SkillPoint[3];
+    public int IsExpress;
+    public int ExpressCost;
+    public int ExpressTime;
 }
 
 [System.Serializable]
@@ -121,6 +124,60 @@ public class SkillPoint
     public int SkillCost;
     public int SkillPeriod;
 }
+
+[System.Serializable]
+public class Session
+{
+    public string name;
+    public SessionLog log;
+}
+
+[System.Serializable]
+public class SessionLog
+{
+    public SessionLogAddress address;
+    public SessionLogDevice Device;
+    public SessionLogAt at;
+}
+
+[System.Serializable]
+public class SessionLogAddress
+{
+    public string IP;
+    public SessionLogAddressOther Other;
+}
+
+[System.Serializable]
+public class SessionLogAddressOther
+{
+    public string countryName;
+    public int countryCode;
+    public string regionName;
+    public int regionCode;
+    public string cityName;
+    public string zipCode;
+    public string isoCode;
+    public string PostalCode;
+    public string latitude;
+    public string longitude;
+    public string metroCode;
+    public string areaCode;
+    public string driver;
+
+}
+
+[System.Serializable]
+public class SessionLogDevice
+{
+
+}
+
+[System.Serializable]
+public class SessionLogAt
+{
+
+}
+
 
 public static class JsonHelper
 {

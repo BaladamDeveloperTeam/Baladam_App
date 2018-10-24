@@ -1,5 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Linq;
+using DeadMosquito.AndroidGoodies;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using UPersian.Components;
@@ -15,9 +20,11 @@ public class AddSkillManager : MonoBehaviour
     private SubCategoryInfo[] SubCatInfo;
     public Skill[] UserSkill = new Skill[1];
     public Dropdown SelectCategory, SelectSubCategory;
+    private Toggle IsExpress;
     private GameObject GSM;
-    private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription;
+    private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p, ExpressCost, ExpressTime;
     public GameObject[] SkillPoints, Cost, Period;
+    private Image image;
 
     private void Awake()
     {
@@ -35,6 +42,11 @@ public class AddSkillManager : MonoBehaviour
         SkillCategory = GameObject.Find("SelectCategory");
         SkillSubCategory = GameObject.Find("SelectSubCategory");
         SkillDescription = GameObject.Find("InsertDescription");
+        Express_p = GameObject.Find("Express_p");
+        ExpressCost = GameObject.Find("InsertExpressCost");
+        ExpressTime = GameObject.Find("InsertExpressTime");
+        Express_p.gameObject.SetActive(false);
+        IsExpress = GameObject.Find("IsExpress_t").GetComponent<Toggle>();
     }
 
     private WWWForm SendData()
@@ -136,12 +148,58 @@ public class AddSkillManager : MonoBehaviour
         }
     }
 
+    public void OnPickGalleryImage()
+    {
+        // Whether to generate thumbnails
+        var shouldGenerateThumbnails = true;
+
+        // if image is larger it will be downscaled to the max size proportionally
+        var imageResultSize = ImageResultSize.Max2048;
+        AGGallery.PickImageFromGallery(
+            selectedImage =>
+            {
+                var imageTexture2D = selectedImage.LoadTexture2D();
+
+                string msg = string.Format("{0} was loaded from gallery with size {1}x{2}",
+                    selectedImage.OriginalPath, imageTexture2D.width, imageTexture2D.height);
+                AGUIMisc.ShowToast(msg);
+                Debug.Log(msg);
+                image.sprite = SpriteFromTex2D(imageTexture2D);
+
+                    // Clean up
+                    Resources.UnloadUnusedAssets();
+            },
+            errorMessage => AGUIMisc.ShowToast("Cancelled picking image from gallery: " + errorMessage),
+            imageResultSize, shouldGenerateThumbnails);
+    }
+
+    static Sprite SpriteFromTex2D(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    public void IsExpressCheack()
+    {
+        if(IsExpress.isOn == true)
+            Express_p.gameObject.SetActive(true);
+        else
+            Express_p.gameObject.SetActive(false);
+    }
+
     public void SubmitBtn()
     {
         UserSkill[0].SkillName = SkillName.gameObject.GetComponent<InputField>().text;
         UserSkill[0].SkillCategory = SkillCategory.gameObject.GetComponent<Dropdown>().itemText.ToString();
         UserSkill[0].SkillSubCategory = SkillSubCategory.gameObject.GetComponent<Dropdown>().itemText.ToString();
         UserSkill[0].SkillDescription = SkillDescription.gameObject.GetComponent<InputField>().text;
+        if (IsExpress.isOn)
+        {
+            UserSkill[0].IsExpress = 1;
+            int.TryParse(ExpressCost.gameObject.GetComponent<RtlText>().text, out UserSkill[0].ExpressCost);
+            int.TryParse(ExpressTime.gameObject.GetComponent<RtlText>().text, out UserSkill[0].ExpressTime);
+        }
+        else
+            UserSkill[0].IsExpress = 0;
         SetSkillPointsParametr();
         StartCoroutine(SetSkill());
     }
