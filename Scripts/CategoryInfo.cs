@@ -111,10 +111,12 @@ public class Skill
     public string SkillCategory;
     public string SkillSubCategory;
     public string SkillDescription;
+    public string ImageName;
     public SkillPoint[] SkillPoints = new SkillPoint[3];
     public int IsExpress;
     public int ExpressCost;
     public int ExpressTime;
+    public int IsVIP = 0;
 }
 
 [System.Serializable]
