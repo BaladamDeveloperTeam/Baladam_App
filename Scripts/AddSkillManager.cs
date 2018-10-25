@@ -193,6 +193,7 @@ public class AddSkillManager : MonoBehaviour
         UserSkill[0].SkillCategory = SkillCategory.gameObject.GetComponent<Dropdown>().value.ToString();
         UserSkill[0].SkillSubCategory = SubCatInfo[SelectSubCategory.value]._id;
         UserSkill[0].SkillDescription = SkillDescription.gameObject.GetComponent<InputField>().text;
+        //TODO:Add Image name to An Array
         if(UserSkill[0].ImageName != null)
             UserSkill[0].ImageName = coding.Md5Sum(ImageName + DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
         if (IsExpress.isOn)
@@ -212,7 +213,7 @@ public class AddSkillManager : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 13);
-        //web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
         web.AddField("skill", JsonHelper.ToJson(UserSkill));
         return web;
     }

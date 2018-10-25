@@ -14,8 +14,10 @@ public class Search_panel_Handler : MonoBehaviour
 
     public RtlText ErrorText;
     public InputField Searchtext;
-    public SearchResult[] Categoryinfo;
+    public SearchResult[] SearchedResult;
     private string SearchResult = "";
+    public GameObject SearchedUserPrefab;
+    public GameObject[] US;
 
     private WWWForm SendData()
     {
@@ -37,7 +39,7 @@ public class Search_panel_Handler : MonoBehaviour
         {
             SearchResult = data.text;
 
-            Categoryinfo = JsonHelper.FromJson<SearchResult>("{\"Items\": [" + SearchResult + "] }");
+            SearchedResult = JsonHelper.FromJson<SearchResult>("{\"Items\": [" + SearchResult + "] }");
         }
 
         if (data.text == "bad post" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
@@ -49,6 +51,48 @@ public class Search_panel_Handler : MonoBehaviour
     {
         if(Searchtext.text.Length >= 2)
             StartCoroutine(DoSearch());
+    }
+
+    private void FixedUpdate()
+    {
+        US = GameObject.FindGameObjectsWithTag("SearchedUser");
+        if (SearchedResult[0].user.Length != 0 && SearchedResult[0].user != null && Searchtext.text.Length >= 2)
+        {
+            
+            for (int i = 0; i < SearchedResult[0].user.Length; i++)
+            {
+                GameObject Items = Instantiate(SearchedUserPrefab) as GameObject;
+                Items.transform.SetParent(GameObject.Find("Search_p/SearchedUser_Show").transform);
+            }
+            for (int i = 0; i < US.Length; i++)
+            {
+                if (US.Length == SearchedResult[0].user.Length)
+                {
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<RtlText>().text = SearchedResult[0].user[i].username;
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.GetComponent<RtlText>().text = SearchedResult[0].user[i].name;
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.GetComponent<RtlText>().text = "سطح : " + SearchedResult[0].user[i].lvl;
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.GetComponent<RtlText>().text = "امتیاز : " + SearchedResult[0].user[i].rate.ToString();
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(4).gameObject.GetComponent<RtlText>().text = "پروژه های تکمیل شده : " + SearchedResult[0].user[i].f_prj.ToString();
+                }
+            }
+            //TODO:improve Performance
+            GameObject[] US_D = GameObject.FindGameObjectsWithTag("SearchedUser");
+            for (int i = SearchedResult[0].user.Length; i < US_D.Length; i++)
+            {
+                Destroy(US_D[i]);
+                //Destroy(US[i]);
+            }
+        }
+        if(Searchtext.text == "" || Searchtext.text == null)
+        {
+            //TODO:improve Performance
+            GameObject[] US_D = GameObject.FindGameObjectsWithTag("SearchedUser");
+            for (int i = 0; i < US_D.Length; i++)
+            {
+                Destroy(US_D[i]);
+                //Destroy(US[i]);
+            }
+        }
     }
 
     IEnumerator Type()
