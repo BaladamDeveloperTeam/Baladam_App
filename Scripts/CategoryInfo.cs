@@ -111,7 +111,7 @@ public class Skill
     public string SkillCategory;
     public string SkillSubCategory;
     public string SkillDescription;
-    public string ImageName;
+    public string[] ImageName = new string[4];
     public SkillPoint[] SkillPoints = new SkillPoint[3];
     public int IsExpress;
     public int ExpressCost;

@@ -15,14 +15,14 @@ public class AddSkillManager : MonoBehaviour
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    private string SubCategoryJson = "", ImageName = null;
-    public string[] SkillPointsPath;
+    private string SubCategoryJson = "";
+    private string[] SkillPointsPath, ImageName = { null, null, null, null};
     private SubCategoryInfo[] SubCatInfo;
     public Skill[] UserSkill = new Skill[1];
     public Dropdown SelectCategory, SelectSubCategory;
     private Toggle IsExpress;
     private GameObject GSM;
-    public GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p, ExpressCost, ExpressTime;
+    private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p, ExpressCost, ExpressTime;
     public GameObject[] SkillPoints, Cost, Period;
     private Image image;
 
@@ -165,7 +165,14 @@ public class AddSkillManager : MonoBehaviour
                 AGUIMisc.ShowToast(msg);
                 Debug.Log(msg);
                 image.sprite = SpriteFromTex2D(imageTexture2D);
-                ImageName = selectedImage.DisplayName;
+                if(ImageName[0] == null)
+                    ImageName[0] = selectedImage.DisplayName;
+                else if(ImageName[1] == null)
+                    ImageName[1] = selectedImage.DisplayName;
+                else if (ImageName[2] == null)
+                    ImageName[2] = selectedImage.DisplayName;
+                else if (ImageName[3] == null)
+                    ImageName[3] = selectedImage.DisplayName;
                     // Clean up
                     Resources.UnloadUnusedAssets();
             },
@@ -180,10 +187,15 @@ public class AddSkillManager : MonoBehaviour
 
     public void IsExpressCheack()
     {
-        if(IsExpress.isOn == true)
-            Express_p.gameObject.SetActive(true);
-        else
-            Express_p.gameObject.SetActive(false);
+        switch (IsExpress.isOn)
+        {
+            case true:
+                Express_p.gameObject.SetActive(true);
+                break;
+            default:
+                Express_p.gameObject.SetActive(false);
+                break;
+        }
     }
 
     public void SubmitBtn()
@@ -193,9 +205,16 @@ public class AddSkillManager : MonoBehaviour
         UserSkill[0].SkillCategory = SkillCategory.gameObject.GetComponent<Dropdown>().value.ToString();
         UserSkill[0].SkillSubCategory = SubCatInfo[SelectSubCategory.value]._id;
         UserSkill[0].SkillDescription = SkillDescription.gameObject.GetComponent<InputField>().text;
-        //TODO:Add Image name to An Array
-        if(UserSkill[0].ImageName != null)
-            UserSkill[0].ImageName = coding.Md5Sum(ImageName + DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        if (UserSkill[0].ImageName != null)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if(ImageName[i] != null)
+                {
+                    UserSkill[0].ImageName[i] = i.ToString() + coding.Md5Sum(ImageName[i] + DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+                }
+            }
+        }
         if (IsExpress.isOn)
         {
             UserSkill[0].IsExpress = 1;
@@ -203,7 +222,10 @@ public class AddSkillManager : MonoBehaviour
             int.TryParse(ExpressTime.gameObject.GetComponent<RtlText>().text, out UserSkill[0].ExpressTime);
         }
         else
+        {
             UserSkill[0].IsExpress = 0;
+        }
+
         SetSkillPointsParametr();
         StartCoroutine(SetSkill());
     }
