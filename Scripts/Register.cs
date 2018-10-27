@@ -10,7 +10,7 @@ using security;
 public class Register : MonoBehaviour
 {
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
-    private readonly string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
 
     public RtlText ErrorText;
     public InputField Password, Password2, Username;
@@ -71,8 +71,8 @@ public class Register : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 6);
-        web.AddField("username", Username.text);
-        web.AddField("password", coding.Md5Sum(Password.text));
+        web.AddField("user", Username.text);
+        web.AddField("pass", coding.Md5Sum(Password.text));
         return web;
     }
 

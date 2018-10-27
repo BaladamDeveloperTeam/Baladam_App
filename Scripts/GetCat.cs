@@ -9,7 +9,7 @@ public class GetCat : MonoBehaviour
 {
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
-    private string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string CategoryJson = "";
     public CategoryNames CatInfo;
     public GameObject[] CategoryTitle;

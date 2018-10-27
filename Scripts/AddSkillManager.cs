@@ -14,7 +14,7 @@ public class AddSkillManager : MonoBehaviour
 {
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
-    private string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string SubCategoryJson = "";
     private string[] SkillPointsPath, ImageName = { null, null, null, null};
     private SubCategoryInfo[] SubCatInfo;
@@ -148,7 +148,7 @@ public class AddSkillManager : MonoBehaviour
         }
     }
 
-    public void OnPickGalleryImage()
+    private void OnPickGalleryImage()
     {
         // Whether to generate thumbnails
         var shouldGenerateThumbnails = true;
@@ -183,6 +183,11 @@ public class AddSkillManager : MonoBehaviour
     static Sprite SpriteFromTex2D(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    public void SelectImage()
+    {
+        OnPickGalleryImage();
     }
 
     public void IsExpressCheack()

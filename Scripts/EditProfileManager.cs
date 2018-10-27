@@ -11,7 +11,7 @@ public class EditProfileManager : MonoBehaviour
 {
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
-    private readonly string Url = "http://127.0.0.2:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
 
     public InputField Email, PhoneNumber, Bio, Gigs, FullName, NewPassword, NewPasswordConferm, Password;
     public Dropdown Age, Sex;
