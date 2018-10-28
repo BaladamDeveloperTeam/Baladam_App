@@ -62,8 +62,8 @@ public class Search_panel_Handler : MonoBehaviour
             for (int i = 0; i < SearchedResult[0].user.Length; i++)
             {
                 GameObject Items = Instantiate(SearchedUserPrefab) as GameObject;
-                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1.0f);
-                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1.0f);
+                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
                 Items.transform.SetParent(GameObject.Find("Search_p/SearchedUser_Show").transform);
             }
             for (int i = 0; i < US.Length; i++)

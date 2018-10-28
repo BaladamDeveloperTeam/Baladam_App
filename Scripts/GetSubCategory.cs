@@ -69,12 +69,12 @@ public class GetSubCategory : MonoBehaviour
             {
 
                 GameObject Items = Instantiate(ItemsPrefab) as GameObject;
-                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1.0f);
-                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1.0f);
+                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
                 Items.transform.SetParent(GameObject.Find("Category0" + Item).transform);
                 GameObject ItemsLine = Instantiate(ItemsPrefabLine) as GameObject;
-                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1.0f);
-                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1.0f);
+                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
                 ItemsLine.transform.SetParent(GameObject.Find("Category0" + Item).transform);
                 RtlText[] text = Items.gameObject.GetComponentsInChildren<RtlText>();
                 Image image = Items.gameObject.GetComponentInChildren<Image>();
