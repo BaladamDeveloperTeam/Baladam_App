@@ -82,7 +82,44 @@ public class LoginAT
 [System.Serializable]
 public class gigsInfo
 {
-    public string gigs;
+    public string _id;
+    public string pz_id;
+    public Skillexpress express;
+    public int rate;
+    public string[] gigs;
+    public int comments;
+    public string status;
+    public SearchGigs_Skills skills;
+    public string skillCode;
+    public int vip;
+    public string name;
+    public string updated_at;
+    public string created_at;
+}
+
+[System.Serializable]
+public class Skillexpress
+{
+    public string more_cost;
+    public string more_time;
+}
+
+[System.Serializable]
+public class SearchGigs_Skills
+{
+    public string[] images;
+    public SearchGigs_Boxs[] box;
+    public string decep;
+    public string title;
+    public string subtitle;
+}
+
+[System.Serializable]
+public class SearchGigs_Boxs
+{
+    public string cost;
+    public string time;
+    public string[] options;
 }
 
 [System.Serializable]

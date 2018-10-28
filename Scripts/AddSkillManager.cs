@@ -21,8 +21,8 @@ public class AddSkillManager : MonoBehaviour
     public Skill[] UserSkill = new Skill[1];
     public Dropdown SelectCategory, SelectSubCategory;
     private Toggle IsExpress;
-    private GameObject GSM;
-    private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p, ExpressCost, ExpressTime;
+    private GameObject GSM, SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p
+        , ExpressCost, ExpressTime, Loading, AddSkillMessage;
     public GameObject[] SkillPoints, Cost, Period;
     private Image image;
 
@@ -45,6 +45,8 @@ public class AddSkillManager : MonoBehaviour
         Express_p = GameObject.Find("Express_p");
         ExpressCost = GameObject.Find("InsertExpressCost");
         ExpressTime = GameObject.Find("InsertExpressTime");
+        Loading = GameObject.Find("Skills/WaitForAddSkill");
+        AddSkillMessage = GameObject.Find("Skills/AddSkillMessage");
         Express_p.gameObject.SetActive(false);
         IsExpress = GameObject.Find("IsExpress_t").GetComponent<Toggle>();
     }
@@ -208,7 +210,7 @@ public class AddSkillManager : MonoBehaviour
         security.Coding coding = new security.Coding();
         UserSkill[0].SkillName = SkillName.gameObject.GetComponent<InputField>().text;
         UserSkill[0].SkillCategory = SkillCategory.gameObject.GetComponent<Dropdown>().value.ToString();
-        UserSkill[0].SkillSubCategory = SubCatInfo[SelectSubCategory.value]._id;
+        UserSkill[0].SkillSubCategory = SubCatInfo[SelectSubCategory.value].subID;
         UserSkill[0].SkillDescription = SkillDescription.gameObject.GetComponent<InputField>().text;
         if (UserSkill[0].ImageName != null)
         {
@@ -223,8 +225,8 @@ public class AddSkillManager : MonoBehaviour
         if (IsExpress.isOn)
         {
             UserSkill[0].IsExpress = 1;
-            int.TryParse(ExpressCost.gameObject.GetComponent<RtlText>().text, out UserSkill[0].ExpressCost);
-            int.TryParse(ExpressTime.gameObject.GetComponent<RtlText>().text, out UserSkill[0].ExpressTime);
+            int.TryParse(ExpressCost.gameObject.GetComponent<InputField>().text, out UserSkill[0].ExpressCost);
+            int.TryParse(ExpressTime.gameObject.GetComponent<InputField>().text, out UserSkill[0].ExpressTime);
         }
         else
         {
@@ -249,10 +251,18 @@ public class AddSkillManager : MonoBehaviour
     {
         WWWForm WebGet = SendDataSkill();
         WWW data = new WWW(Url, WebGet);
+
+        Loading.gameObject.SetActive(true);
         yield return data;
+        Loading.gameObject.SetActive(false);
 
         Debug.Log(data.text);
         SubCategoryJson = data.text;
         Debug.Log(JsonHelper.ToJson(UserSkill));
+
+        if(data.text == "")
+        {
+            AddSkillMessage.gameObject.SetActive(true);
+        }
     }
 }

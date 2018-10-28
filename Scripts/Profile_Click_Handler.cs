@@ -29,8 +29,7 @@ public class Profile_Click_Handler : MonoBehaviour
     public void OpenDrawerClick()
     {
         click(0);
-        //Screen.fullScreenMode = FullScreenMode.Windowed;
-        Screen.fullScreen = !Screen.fullScreen;
+        Screen.fullScreen = false;
     }
 
     public void CloseDrawerClick()
