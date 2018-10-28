@@ -50,7 +50,9 @@ public class SkillBoxManager : MonoBehaviour
     private void AddSkillPoint()
     {
         GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
-        if(NameNumber == 0)
+        Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1.0f);
+        Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1.0f);
+        if (NameNumber == 0)
             Items.transform.SetParent(GameObject.Find("SkillBox/SkillPoints").transform);
         else if (NameNumber == 1)
             Items.transform.SetParent(GameObject.Find("SkillBox(1)/SkillPoints").transform);
