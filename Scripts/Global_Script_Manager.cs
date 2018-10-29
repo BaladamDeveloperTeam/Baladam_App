@@ -10,6 +10,8 @@ public class Global_Script_Manager : MonoBehaviour
     private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserFullNameEdit, UserBioEdit, UserEmailEdit,
         UserPhoneEdit, UserAgeEdit, UserSexEdit;
     private UserInfo[] userinfo;
+    //[HideInInspector]
+    //public Session[] OldSession;
     public CategoryNames CatInfo;
 
     void Awake()
@@ -91,6 +93,11 @@ public class Global_Script_Manager : MonoBehaviour
     {
         return userinfo[0].username;
     }
+
+    //public void SetOldSession(Session[] session)
+    //{
+    //    OldSession = session;
+    //}
 
     private bool CheckForEmpty(string text)
     {

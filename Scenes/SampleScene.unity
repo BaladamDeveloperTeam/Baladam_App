@@ -4086,7 +4086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &145482236
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29172,7 +29172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1235802436
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35153,6 +35153,16 @@ MonoBehaviour:
   thisPanel: {fileID: 36957304}
   Profile_p: {fileID: 1251875308}
   Register_p: {fileID: 1291075440}
+  LoginSession:
+    name: 
+    log:
+      address: 
+      Device:
+        Mode: App
+        DeviceModel: 
+        DeviceUsername: 
+        DeviceType: 
+        IMEI: 
 --- !u!1 &1458603323 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1974053745947200, guid: 87793ee3ac8456f47be71036f2311e4f,

@@ -40,7 +40,6 @@ public class UserInfo
 {
     public string _id;
     public string username;
-    public string loged_on;
     public string phone;
     public string melli;
     public string email;
@@ -48,10 +47,10 @@ public class UserInfo
     public double rate;
     public int f_prj;
     public int c_prj;
+    public int count_skill;
     public int is_seller;
     public int app_run;
     public string name;
-    public LoginAT login_AT;
     public string shaba;
     public int is_send_melli_shenasname;
     public int raters;
@@ -69,6 +68,7 @@ public class UserInfo
     public int wallet;
     public string updated_at;
     public string created_at;
+    public Session session;
 }
 
 [System.Serializable]
@@ -174,47 +174,18 @@ public class Session
 [System.Serializable]
 public class SessionLog
 {
-    public SessionLogAddress address;
-    public SessionLogDevice Device;
-    public SessionLogAt at;
+    public string address;
+    public SessionDevice Device;
 }
 
 [System.Serializable]
-public class SessionLogAddress
+public class SessionDevice
 {
-    public string IP;
-    public SessionLogAddressOther Other;
-}
-
-[System.Serializable]
-public class SessionLogAddressOther
-{
-    public string countryName;
-    public int countryCode;
-    public string regionName;
-    public int regionCode;
-    public string cityName;
-    public string zipCode;
-    public string isoCode;
-    public string PostalCode;
-    public string latitude;
-    public string longitude;
-    public string metroCode;
-    public string areaCode;
-    public string driver;
-
-}
-
-[System.Serializable]
-public class SessionLogDevice
-{
-
-}
-
-[System.Serializable]
-public class SessionLogAt
-{
-
+    public string Mode = "App";
+    public string DeviceModel;
+    public string DeviceUsername;
+    public string DeviceType;
+    public string IMEI;
 }
 
 

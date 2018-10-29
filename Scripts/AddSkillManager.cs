@@ -45,9 +45,12 @@ public class AddSkillManager : MonoBehaviour
         Express_p = GameObject.Find("Express_p");
         ExpressCost = GameObject.Find("InsertExpressCost");
         ExpressTime = GameObject.Find("InsertExpressTime");
-        Loading = GameObject.Find("Skills/WaitForAddSkill");
-        AddSkillMessage = GameObject.Find("Skills/AddSkillMessage");
         Express_p.gameObject.SetActive(false);
+        Loading = GameObject.Find("WaitForAddSkill");
+        Loading.gameObject.SetActive(false);
+        AddSkillMessage = GameObject.Find("AddSkillMessage");
+        AddSkillMessage.gameObject.SetActive(false);
+ 
         IsExpress = GameObject.Find("IsExpress_t").GetComponent<Toggle>();
     }
 
@@ -260,7 +263,7 @@ public class AddSkillManager : MonoBehaviour
         SubCategoryJson = data.text;
         Debug.Log(JsonHelper.ToJson(UserSkill));
 
-        if(data.text == "")
+        if(data.text == "save")
         {
             AddSkillMessage.gameObject.SetActive(true);
         }

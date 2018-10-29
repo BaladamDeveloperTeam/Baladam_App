@@ -4,20 +4,22 @@ using UnityEngine;
 using UPersian.Components;
 using UnityEngine.UI;
 using security;
+using System.Net.NetworkInformation;
 
 public class SignIn : MonoBehaviour
 {
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    private string ReceivedJson, Path;
+    private string ReceivedJson, ReceivedGetJson, Path;
     private INIParser File = new INIParser();
     public RtlText Username, ErrorText;
     public InputField Password;
     public Toggle RememberMe;
     public GameObject Loading, thisPanel, Profile_p, Register_p;
     private GameObject GSM, BNC;
-    private string[] DeviceInfo = {"", "", "", ""};
+    public Session LoginSession;
+    private Session[] OldSession;
 
     private string token_csrf;
 
@@ -33,10 +35,26 @@ public class SignIn : MonoBehaviour
         Coding coding = new Coding();
         token_csrf = "LATARY@" + coding.Md5Sum(Username.text.ToLower()) + coding.Sha1Sum(Username.text.ToLower());
         Debug.Log(token_csrf);
-        DeviceInfo[0] = SystemInfo.deviceModel;
-        DeviceInfo[1] = SystemInfo.deviceName;
-        DeviceInfo[2] = SystemInfo.deviceUniqueIdentifier;
-        DeviceInfo[3] = coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text);
+        foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+        {
+            if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+            {
+                foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                {
+                    if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        //do what you want with the IP here... add it to a list, just get the first and break out. Whatever.
+                        Debug.Log(ip.Address.ToString());
+                    }
+                }
+            }
+        }
+        LoginSession.name = coding.Md5Sum(SystemInfo.deviceUniqueIdentifier);
+        LoginSession.log.address = IPManager.GetIP(ADDRESSFAM.IPv4);
+        LoginSession.log.Device.DeviceModel = SystemInfo.deviceModel;
+        LoginSession.log.Device.DeviceUsername = SystemInfo.deviceName;
+        LoginSession.log.Device.DeviceType = SystemInfo.deviceType.ToString();
+        LoginSession.log.Device.IMEI = SystemInfo.deviceUniqueIdentifier;
 
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
@@ -44,14 +62,12 @@ public class SignIn : MonoBehaviour
         web.AddField("user", Username.text);
         web.AddField("pass", coding.Md5Sum(Password.text));
         web.AddField("token_csrf", token_csrf);
-        web.AddField("session", JsonHelper.ToJson(DeviceInfo));
+        web.AddField("session", JsonUtility.ToJson(LoginSession));
         return web;
     }
 
     private IEnumerator DoSingIn()
     {
-        
-
         WWWForm WebGet = SendData();
         WWW data = new WWW(Url, WebGet);
         Loading.gameObject.SetActive(true);
@@ -80,6 +96,26 @@ public class SignIn : MonoBehaviour
         }
 
     }
+
+    //private WWWForm GetSession()
+    //{ 
+    //    WWWForm web = new WWWForm();
+    //    web.AddField("Master", masterKey);
+    //    web.AddField("Chooser", 9);
+    //    web.AddField("user", Username.text);
+    //    return web;
+    //}
+
+    //private IEnumerator DoGet()
+    //{
+    //    WWWForm Get = GetSession();
+    //    WWW data = new WWW(Url, Get);
+
+    //    yield return data;
+
+    //    ReceivedGetJson = data.text;
+    //    GSM.gameObject.GetComponent<Global_Script_Manager>().SetOldSession(JsonHelper.FromJson<Session>("{\"Items\": [ " + ReceivedGetJson + " ] }"));
+    //}
 
     public void DoSingInBtn()
     {
