@@ -65,6 +65,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
                 Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
                 Items.transform.SetParent(GameObject.Find("Search_p/SearchedUser_Show").transform);
+                Items.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             }
             for (int i = 0; i < US.Length; i++)
             {

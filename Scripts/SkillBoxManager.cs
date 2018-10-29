@@ -58,6 +58,7 @@ public class SkillBoxManager : MonoBehaviour
             Items.transform.SetParent(GameObject.Find("SkillBox(1)/SkillPoints").transform);
         else if (NameNumber == 2)
             Items.transform.SetParent(GameObject.Find("SkillBox(2)/SkillPoints").transform);
+        Items.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
     }
 
     private void RemoveSkillPoint()

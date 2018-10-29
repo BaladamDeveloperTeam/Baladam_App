@@ -16,6 +16,7 @@ public class GetSubCategory : MonoBehaviour
     public GameObject ShowPlace;
     public GameObject ItemsPrefab, ItemsPrefabLine, Loading;
     public string CategoryID;
+    private GameObject[] AllItems, AllItemsLine;
 
     private bool[] Fill = new bool[8];
 
@@ -62,6 +63,8 @@ public class GetSubCategory : MonoBehaviour
     public void SetSubCategory(int Item)
     {
         int SubCategoryItemNumber = 0;
+        AllItems = new GameObject[SubCatInfo.Length];
+        AllItemsLine = new GameObject[SubCatInfo.Length];
 
         for (int i = 0; i < SubCatInfo.Length; i++)
         {
@@ -71,11 +74,15 @@ public class GetSubCategory : MonoBehaviour
                 GameObject Items = Instantiate(ItemsPrefab) as GameObject;
                 Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
                 Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
+                //Items.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 Items.transform.SetParent(GameObject.Find("Category0" + Item).transform);
+                AllItems[i] = Items;
                 GameObject ItemsLine = Instantiate(ItemsPrefabLine) as GameObject;
-                Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
-                Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
+                ItemsLine.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+                ItemsLine.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
+                //ItemsLine.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 ItemsLine.transform.SetParent(GameObject.Find("Category0" + Item).transform);
+                AllItemsLine[i] = ItemsLine;
                 RtlText[] text = Items.gameObject.GetComponentsInChildren<RtlText>();
                 Image image = Items.gameObject.GetComponentInChildren<Image>();
                 text[0].text = SubCatInfo[i].SubName;
@@ -85,6 +92,12 @@ public class GetSubCategory : MonoBehaviour
             {
                 SubCategoryItemNumber++;
             }
+        }
+        for(int i = 0; i < AllItems.Length; i++)
+        {
+            Debug.Log(AllItems[i].gameObject.GetComponent<RectTransform>().localScale);
+            AllItems[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            AllItemsLine[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
         Debug.Log(Item);
         Fill[Item - 1] = true;
