@@ -12,18 +12,38 @@ public class Register : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
 
-    public RtlText ErrorText;
-    public InputField Password, Password2, Username;
+    public RtlText ErrorText, TimerText;
+    public InputField Password, Password2, Username, Phone, Code;
     public Toggle AceptRules;
-    public GameObject Loading, thisPanel, Login_p;
+    public GameObject Loading, thisPanel, Login_p, Verifi_p;
     public Button RegesterBtn;
     private GameObject BNC;
+    private SendSMS sendsms = new SendSMS();
+    private string VerifiCode;
+    private float Second = 60, Min = 1;
+    private bool StartTimer = false;
 
     void Awake()
     {
         RegesterBtn.enabled = false;
         RegesterBtn.interactable = false;
         BNC = GameObject.Find("BottomNav");
+    }
+
+    private void Update()
+    {
+        if(StartTimer == true)
+        {
+            Second -= Time.deltaTime;
+            if (Second <= 0 && Min >= 1)
+            {
+                Min--;
+                Second = 60;
+            }
+            TimerText.text = "زمان اعتبار کد : " + Min.ToString() + ":" + ((int)Second).ToString();
+            if (Min <= 0 && Second <= 0)
+                StartTimer = false;
+        }
     }
 
     public void ActiveBtn()
@@ -98,12 +118,25 @@ public class Register : MonoBehaviour
 
     public void DoRegisterBtn()
     {
-        StartCoroutine(DoRegister());
+        Coding coding = new Coding();
+        if (VerifiCode == coding.Md5Sum(Code.text))
+            StartCoroutine(DoRegister());
+        else
+            Debug.Log("Worng Code");
     }
 
     public void GoToLoginBtn()
     {
         thisPanel.gameObject.SetActive(false);
         Login_p.gameObject.SetActive(true);
+    }
+
+    public void SendSMS()
+    {
+        sendsms.sendSMSRegisterVerification(Phone.text);
+        //sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text));
+        VerifiCode = sendsms.ReadVerfi();
+        Verifi_p.gameObject.SetActive(true);
+        StartTimer = true;
     }
 }

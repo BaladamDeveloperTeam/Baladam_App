@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using security;
 
 public class Profile_Click_Handler : MonoBehaviour
 {
 
+    private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
+    private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     public GameObject Drawer, BlackPanel, EditProfile_p, AddSkill_p;
     public Animator DrawerAnim, BlackPanelAnim;
     private GameObject GSM;
@@ -14,13 +17,7 @@ public class Profile_Click_Handler : MonoBehaviour
         GSM = GameObject.Find("Global script Manager");
         
     }
-
-    void Start ()
-    {
-        
-	}
 	
-
 	void Update ()
     {
 		//GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
@@ -77,5 +74,38 @@ public class Profile_Click_Handler : MonoBehaviour
     {
         CloseDrawerClick();
         AddSkill_p.gameObject.SetActive(true);
+    }
+    private WWWForm SendData()
+    {
+        Coding coding = new Coding();
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 12);
+        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("IMEI", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
+        return web;
+    }
+
+    private IEnumerator DoExit()
+    {
+        WWWForm WebGet = SendData();
+        WWW data = new WWW(Url, WebGet);
+        yield return data;
+
+        Debug.Log(data.text);
+        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+        {
+            Debug.Log("Error");
+        }  
+        else
+        {
+            Debug.Log("Exit");
+        }
+
+    }
+
+    public void DoExitBtn()
+    {
+        StartCoroutine(DoExit());
     }
 }
