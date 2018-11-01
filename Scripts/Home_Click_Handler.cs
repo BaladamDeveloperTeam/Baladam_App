@@ -23,5 +23,10 @@ public class Home_Click_Handler : MonoBehaviour
         
     }
 
-    
+    public void Upload()
+    {
+        UploadFiles up = new UploadFiles();
+        up.UploadFile(@"C:/Users/Mohammad/AppData/LocalLow/Baladam/بلدم/0689768c0bc582f99f845db3e272a159b", "test");
+    }
+
 }

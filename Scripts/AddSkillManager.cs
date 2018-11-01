@@ -193,8 +193,33 @@ public class AddSkillManager : MonoBehaviour
 
     public void SelectImageBtn()
     {
+        security.Coding coding = new security.Coding();
+        int i = 0;
         SelectImage Pimg = this.gameObject.GetComponent<SelectImage>();
-        Pimg.OnPressShowPicker();
+        if (ImageName[0] == null)
+        {
+            i = 0;
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            ImageName[0] = Pimg.GetPath();
+        }
+        else if (ImageName[1] == null)
+        {
+            i = 1;
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            ImageName[1] = Pimg.GetPath();
+        }
+        else if (ImageName[2] == null)
+        {
+            i = 2;
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            ImageName[2] = Pimg.GetPath();
+        }
+        else if (ImageName[3] == null)
+        {
+            i = 3;
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            ImageName[3] = Pimg.GetPath();
+        }
     }
 
     public void IsExpressCheack()
@@ -217,13 +242,14 @@ public class AddSkillManager : MonoBehaviour
         UserSkill[0].SkillCategory = SkillCategory.gameObject.GetComponent<Dropdown>().value.ToString();
         UserSkill[0].SkillSubCategory = SubCatInfo[SelectSubCategory.value].subID;
         UserSkill[0].SkillDescription = SkillDescription.gameObject.GetComponent<InputField>().text;
+        UserSkill[0].ImageName = new string[4];
         if (UserSkill[0].ImageName != null)
         {
             for (int i = 0; i < 4; i++)
             {
                 if(ImageName[i] != null)
                 {
-                    UserSkill[0].ImageName[i] = i.ToString() + coding.Md5Sum(ImageName[i] + DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+                    UserSkill[0].ImageName[i] = ImageName[i];
                 }
             }
         }
@@ -236,6 +262,11 @@ public class AddSkillManager : MonoBehaviour
         else
         {
             UserSkill[0].IsExpress = 0;
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            UploadFiles UP = new UploadFiles();
+            UP.UploadFile(@UserSkill[0].ImageName[i], GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
         }
 
         SetSkillPointsParametr();

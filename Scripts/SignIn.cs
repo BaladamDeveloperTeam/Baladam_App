@@ -66,35 +66,102 @@ public class SignIn : MonoBehaviour
         return web;
     }
 
-    private IEnumerator DoSingIn()
+    private WWWForm SendData(string username, string password)
     {
-        WWWForm WebGet = SendData();
-        WWW data = new WWW(Url, WebGet);
-        Loading.gameObject.SetActive(true);
-        yield return data;
-        Loading.gameObject.SetActive(false);
+        Coding coding = new Coding();
+        token_csrf = "LATARY@" + coding.Md5Sum(username.ToLower()) + coding.Sha1Sum(password.ToLower());
+        Debug.Log(token_csrf);
+        foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+        {
+            if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+            {
+                foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                {
+                    if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        //do what you want with the IP here... add it to a list, just get the first and break out. Whatever.
+                        Debug.Log(ip.Address.ToString());
+                    }
+                }
+            }
+        }
+        LoginSession.name = coding.Md5Sum(SystemInfo.deviceUniqueIdentifier);
+        LoginSession.log.address = IPManager.GetIP(ADDRESSFAM.IPv4);
+        LoginSession.log.Device.DeviceModel = SystemInfo.deviceModel;
+        LoginSession.log.Device.DeviceUsername = SystemInfo.deviceName;
+        LoginSession.log.Device.DeviceType = SystemInfo.deviceType.ToString();
+        LoginSession.log.Device.IMEI = SystemInfo.deviceUniqueIdentifier;
 
-        ReceivedJson = data.text;
-        Debug.Log(data.text);
-        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
-            ErrorText.gameObject.SetActive(true);
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 5);
+        web.AddField("user", username);
+        web.AddField("pass", coding.Md5Sum(password));
+        web.AddField("token_csrf", token_csrf);
+        web.AddField("session", JsonUtility.ToJson(LoginSession));
+        return web;
+    }
+
+    private IEnumerator DoSingIn(int mode, string username, string password)
+    {
+        if (mode == 1)
+        {
+            WWWForm WebGet = SendData(username, password);
+            WWW data = new WWW(Url, WebGet);
+            Loading.gameObject.SetActive(true);
+            yield return data;
+            Loading.gameObject.SetActive(false);
+
+            ReceivedJson = data.text;
+            Debug.Log(data.text);
+            if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+                ErrorText.gameObject.SetActive(true);
+            else
+            {
+                BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
+                GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                if (RememberMe.isOn == true)
+                {
+                    Coding coding = new Coding();
+                    File.Open(Path);
+                    File.WriteValue("UserSignIn", "IsSignIn", 1);
+                    File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);
+                    File.WriteValue("UserSignIn", "Username", username);
+                    File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(username));
+                    File.Close();
+                }
+
+            }
+        }
         else
         {
-            BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-            GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
-            if (RememberMe.isOn == true)
-            {
-                Coding coding = new Coding();
-                File.Open(Path);
-                File.WriteValue("UserSignIn", "IsSignIn", 1);
-                File.WriteValue("UserSignIn", "SignTime", Time.time);
-                File.WriteValue("UserSignIn", "Username", Username.text);
-                File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text));
-                File.Close();
-            }
-            
-        }
+            WWWForm WebGet = SendData();
+            WWW data = new WWW(Url, WebGet);
+            Loading.gameObject.SetActive(true);
+            yield return data;
+            Loading.gameObject.SetActive(false);
 
+            ReceivedJson = data.text;
+            Debug.Log(data.text);
+            if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+                ErrorText.gameObject.SetActive(true);
+            else
+            {
+                BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
+                GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                if (RememberMe.isOn == true)
+                {
+                    Coding coding = new Coding();
+                    File.Open(Path);
+                    File.WriteValue("UserSignIn", "IsSignIn", 1);
+                    File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);
+                    File.WriteValue("UserSignIn", "Username", Username.text);
+                    File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text));
+                    File.Close();
+                }
+
+            }
+        }
     }
 
     //private WWWForm GetSession()
@@ -119,7 +186,12 @@ public class SignIn : MonoBehaviour
 
     public void DoSingInBtn()
     {
-        StartCoroutine(DoSingIn());
+        StartCoroutine(DoSingIn(0, "", ""));
+    }
+
+    public void DoSingInOther(string username, string password)
+    {
+        StartCoroutine(DoSingIn(1, username, password));
     }
 
     public void GoToRegisterBtn()

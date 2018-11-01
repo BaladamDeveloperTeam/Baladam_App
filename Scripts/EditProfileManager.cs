@@ -94,8 +94,8 @@ public class EditProfileManager : MonoBehaviour
                 value = Bio.text;
                 break;
             case 2:
-                //param = "Gigs";
-                //value = Bio.text;
+                param = "major_field";
+                value = Gigs.text;
                 break;
             case 3:
                 param = "email";
@@ -107,11 +107,14 @@ public class EditProfileManager : MonoBehaviour
                 break;
             case 5:
                 param = "gender";
-                value = Sex.itemText.text;
+                if (Sex.options[Sex.value].text == "ﺩﺮﻣ")
+                    value = "مرد";
+                else if(Sex.options[Sex.value].text == "ﻥﺯ")
+                    value = "زن";
                 break;
             case 6:
                 param = "age";
-                value = Age.itemText.text;
+                value = Age.options[Age.value].text;
                 break;
         }
         StartCoroutine(DoEdit(1));

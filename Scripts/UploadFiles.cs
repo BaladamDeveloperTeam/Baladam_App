@@ -14,19 +14,42 @@ public class UploadFiles
     private readonly string FTPPassword = "@Amir22102210";
     private readonly string SaveTo = "/BaladamSkillImage/";
 
-    public void UploadFile(string FilePath)
+    public void UploadFile(string FilePath, string UserName)
     {
         try
         {
             Debug.Log("Path: " + FilePath);
 
-            WebClient client = new WebClient();
-            Uri uri = new Uri(FTPHost + SaveTo + "User_" + new FileInfo(FilePath).Name);
+            try
+            {
+                WebRequest request = WebRequest.Create(FTPHost + "/BaladamSkillImage" + "/" + UserName);
+                request.Method = WebRequestMethods.Ftp.MakeDirectory;
+                request.Credentials = new NetworkCredential(FTPUserName, FTPPassword);
+                using (var resp = (FtpWebResponse)request.GetResponse())
+                {
+                    Debug.Log(resp.StatusCode);
+                }
 
-            client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);
-            client.UploadFileCompleted += new UploadFileCompletedEventHandler(OnFileUploadCompleted);
-            client.Credentials = new NetworkCredential(FTPUserName, FTPPassword);
-            client.UploadFileAsync(uri, "STOR", FilePath);
+                WebClient client = new WebClient();
+                Uri uri = new Uri(FTPHost + SaveTo + "/" +UserName + "/" + new FileInfo(FilePath).Name);
+                //Uri uri = new Uri(FTPHost + "/" + new FileInfo(FilePath).Name);
+
+                client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);
+                client.UploadFileCompleted += new UploadFileCompletedEventHandler(OnFileUploadCompleted);
+                client.Credentials = new NetworkCredential(FTPUserName, FTPPassword);
+                client.UploadFileAsync(uri, "STOR", FilePath);
+            }
+            catch
+            {
+                WebClient client = new WebClient();
+                Uri uri = new Uri(FTPHost + SaveTo + "/" +UserName + "/" + new FileInfo(FilePath).Name);
+                //Uri uri = new Uri(FTPHost + "/" + new FileInfo(FilePath).Name);
+
+                client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);
+                client.UploadFileCompleted += new UploadFileCompletedEventHandler(OnFileUploadCompleted);
+                client.Credentials = new NetworkCredential(FTPUserName, FTPPassword);
+                client.UploadFileAsync(uri, "STOR", FilePath);
+            }
         }
         catch
         {

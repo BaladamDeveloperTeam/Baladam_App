@@ -62,6 +62,11 @@ public class Register : MonoBehaviour
 
     public bool CheckPassword()
     {
+        if(Username.text.Length < 5)
+        {
+            ErrorText.text = "نام کاربری باید حداقل دارای 5 حرف باشد.";
+            return false;
+        }
         if (Password.text.Length < 8)
         {
             ErrorText.text = "کلمه عبور باید حداقل دارای 8 حرف باشد.";
@@ -110,6 +115,11 @@ public class Register : MonoBehaviour
             if (data.text == "user" || data.text == "" || data.text == null ||
                 data.text.Contains("<!DOCTYPE html>") || data.text == "duplucate")
                 ErrorText.gameObject.SetActive(true);
+            else if(data.text == "Register")
+            {
+                SignIn signIn = new SignIn();
+                signIn.DoSingInOther(Username.text, Password2.text);
+            }
         }
         else
             ErrorText.gameObject.SetActive(true);
@@ -133,10 +143,17 @@ public class Register : MonoBehaviour
 
     public void SendSMS()
     {
-        sendsms.sendSMSRegisterVerification(Phone.text);
-        //sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text));
-        VerifiCode = sendsms.ReadVerfi();
-        Verifi_p.gameObject.SetActive(true);
-        StartTimer = true;
+        if (CheckPassword() == true)
+        {
+            //sendsms.sendSMSRegisterVerification(Phone.text);
+            StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
+            VerifiCode = sendsms.ReadVerfi();
+            Verifi_p.gameObject.SetActive(true);
+            StartTimer = true;
+        }
+        else
+        {
+            ErrorText.gameObject.SetActive(true);
+        }
     }
 }

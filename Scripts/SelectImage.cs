@@ -23,6 +23,7 @@ public class SelectImage : MonoBehaviour
 
     private IEnumerator LoadImage(string path, Sprite output)
     {
+        ImagePath = path;
         var url = "file://" + path;
         var www = new WWW(url);
         yield return www;
@@ -38,9 +39,9 @@ public class SelectImage : MonoBehaviour
         ImagePath = path;
     }
 
-    public void OnPressShowPicker()
+    public void OnPressShowPicker(string name)
     {
-        imagePicker.Show("Select Image", "BaladamSkillImage.png", 1024);
+        imagePicker.Show("Select Image", name, 1024);
     }
 
     static Sprite SpriteFromTex2D(Texture2D texture)

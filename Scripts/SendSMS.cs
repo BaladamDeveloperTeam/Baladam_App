@@ -36,8 +36,9 @@ public class SendSMS : MonoBehaviour
         }
     }
 
-    public void sendSMSRegisterVerification(long PhoneNumber)
+    public IEnumerator sendSMSRegisterVerification(long PhoneNumber)
     {
+        UltraFastSendRespone ultraFastSendRespone;
         Coding coding = new Coding();
         Random rnd = new Random();
         int number = Random.Range(11111, 99999);
@@ -59,7 +60,7 @@ public class SendSMS : MonoBehaviour
 
         };
 
-        UltraFastSendRespone ultraFastSendRespone = new UltraFast().Send(token, ultraFastSend);
+        yield return ultraFastSendRespone = new UltraFast().Send(token, ultraFastSend);
 
         if (ultraFastSendRespone.IsSuccessful)
         {
