@@ -22,9 +22,10 @@ public class AddSkillManager : MonoBehaviour
     public Dropdown SelectCategory, SelectSubCategory;
     private Toggle IsExpress;
     private GameObject GSM, SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p
-        , ExpressCost, ExpressTime, Loading, AddSkillMessage;
+        , ExpressCost, ExpressTime, Loading, AddSkillMessage, ImagePicker_p, ImagePicker_Content, ImagePickerNumber;
     public GameObject[] SkillPoints, Cost, Period;
-    private Image image;
+    public Image[] image = new Image[4];
+    public Animator ImagePickerAnim;
 
     private void Awake()
     {
@@ -51,7 +52,11 @@ public class AddSkillManager : MonoBehaviour
         Loading.gameObject.SetActive(false);
         AddSkillMessage = GameObject.Find("AddSkillMessage");
         AddSkillMessage.gameObject.SetActive(false);
- 
+        ImagePicker_p = GameObject.Find("ImagePicker_p");
+        ImagePicker_Content = GameObject.Find("ImagePicker_p/Images/ScrollView/Viewport/Content");
+        ImagePickerNumber = GameObject.Find("ImagePicker_p/Bottom/ImageCounter");
+        ImagePicker_p.gameObject.SetActive(false);
+
         IsExpress = GameObject.Find("IsExpress_t").GetComponent<Toggle>();
     }
 
@@ -170,7 +175,7 @@ public class AddSkillManager : MonoBehaviour
                     selectedImage.OriginalPath, imageTexture2D.width, imageTexture2D.height);
                 AGUIMisc.ShowToast(msg);
                 Debug.Log(msg);
-                image.sprite = SpriteFromTex2D(imageTexture2D);
+                image[0].sprite = SpriteFromTex2D(imageTexture2D);
                 if(ImageName[0] == null)
                     ImageName[0] = selectedImage.DisplayName;
                 else if(ImageName[1] == null)
@@ -201,25 +206,61 @@ public class AddSkillManager : MonoBehaviour
             i = 0;
             Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
             ImageName[0] = Pimg.GetPath();
+            image[0].sprite = Pimg.GetSprite();
+            var tempColor = image[0].color;
+            tempColor.a = 1f;
+            image[0].color = tempColor;
+            ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0, ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+            ImagePickerNumber.gameObject.GetComponent<RtlText>().text = "1/4";
         }
         else if (ImageName[1] == null)
         {
             i = 1;
             Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
             ImageName[1] = Pimg.GetPath();
+            image[1].sprite = Pimg.GetSprite();
+            var tempColor = image[1].color;
+            tempColor.a = 1f;
+            image[1].color = tempColor;
+            ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(800, ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+            ImagePickerNumber.gameObject.GetComponent<RtlText>().text = "2/4";
         }
         else if (ImageName[2] == null)
         {
             i = 2;
             Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
             ImageName[2] = Pimg.GetPath();
+            image[2].sprite = Pimg.GetSprite();
+            var tempColor = image[2].color;
+            tempColor.a = 1f;
+            image[2].color = tempColor;
+            ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1615, ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+            ImagePickerNumber.gameObject.GetComponent<RtlText>().text = "3/4";
         }
         else if (ImageName[3] == null)
         {
             i = 3;
             Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
             ImageName[3] = Pimg.GetPath();
+            image[3].sprite = Pimg.GetSprite();
+            var tempColor = image[3].color;
+            tempColor.a = 1f;
+            image[3].color = tempColor;
+            ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(2430, ImagePicker_Content.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+            ImagePickerNumber.gameObject.GetComponent<RtlText>().text = "4/4";
         }
+    }
+
+    public void OpenImagePicker_p()
+    {
+        if (ImagePicker_p.gameObject.activeInHierarchy == true)
+            ImagePicker_p.gameObject.SetActive(false);
+        ImagePicker_p.gameObject.SetActive(true);
+    }
+
+    public void CloseImagePicker_p()
+    {
+        ImagePickerAnim.SetTrigger("Close");
     }
 
     public void IsExpressCheack()

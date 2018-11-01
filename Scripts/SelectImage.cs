@@ -36,6 +36,9 @@ public class SelectImage : MonoBehaviour
 
         FinalImage = SpriteFromTex2D(texture);
         image.sprite = SpriteFromTex2D(texture);
+        var tempColor = image.color;
+        tempColor.a = 1f;
+        image.color = tempColor;
         ImagePath = path;
     }
 
