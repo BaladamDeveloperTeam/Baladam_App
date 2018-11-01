@@ -12,7 +12,6 @@ public class Home_Click_Handler : MonoBehaviour
     {
         Screen.fullScreen = false;
 	}
-	
 
 	void Update ()
     {

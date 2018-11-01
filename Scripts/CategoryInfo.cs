@@ -168,6 +168,7 @@ public class SkillPoint
 public class Session
 {
     public string name;
+    public string mode = "App";
     public SessionLog log;
 }
 
@@ -181,7 +182,6 @@ public class SessionLog
 [System.Serializable]
 public class SessionDevice
 {
-    public string Mode = "App";
     public string DeviceModel;
     public string DeviceUsername;
     public string DeviceType;

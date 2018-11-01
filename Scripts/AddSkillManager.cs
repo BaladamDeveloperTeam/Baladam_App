@@ -34,6 +34,7 @@ public class AddSkillManager : MonoBehaviour
             SelectCategory.options.Add(new Dropdown.OptionData() {text=CatText});
         }
         FindObject();
+
     }
 
     private void FindObject()
