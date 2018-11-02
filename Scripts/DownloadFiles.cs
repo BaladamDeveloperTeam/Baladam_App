@@ -117,7 +117,7 @@ public class DownloadFiles : MonoBehaviour
         {
             Debug.Log(x);
         });
-        await client.DownloadFileAsync(@"D:\MyTest1.png", "/BaladamSkillImage/test/0689768c0bc582f99f845db3e272a159b.png", true, FluentFTP.FtpVerify.Retry, progress);
+        await client.DownloadFileAsync(@"D:\MyTest1.png", "/BaladamSkillImage/mohsen/31bc8e894cda9e30cd9f4997832a06033", true, FluentFTP.FtpVerify.Retry, progress);
         client.Disconnect();
     }
 }

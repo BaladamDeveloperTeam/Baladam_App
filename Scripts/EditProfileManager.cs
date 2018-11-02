@@ -20,6 +20,7 @@ public class EditProfileManager : MonoBehaviour
     public Color Pass, Faild;
     private GameObject GSM;
     private string param, value;
+    public ParamList ParamsList;
 
     void Awake()
     {
@@ -30,10 +31,9 @@ public class EditProfileManager : MonoBehaviour
     {
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
-        web.AddField("Chooser", 8);
+        web.AddField("Chooser", 15);
         web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
-        web.AddField("param", param);
-        web.AddField("value", value);
+        web.AddField("param", JsonUtility.ToJson(ParamsList));
         return web;
     }
 
@@ -81,43 +81,51 @@ public class EditProfileManager : MonoBehaviour
         }
     }
 
-    public void DoEditCaller(int item)
+    public void DoEditCaller(int itema)
     {
-        switch (item)
+        switch (itema)
         {
             case 0:
-                param = "name";
-                value = FullName.text;
+                if (ParamsList.Params.Exists(o => o.Key == "name"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "name"));
+                ParamsList.Params.Add(new Param() { Key = "name", Value = FullName.text});
+                //Debug.Log("are");
                 break;
             case 1:
-                param = "bio";
-                value = Bio.text;
+                if (ParamsList.Params.Exists(o => o.Key == "bio"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "bio"));
+                ParamsList.Params.Add(new Param() { Key = "bio", Value = Bio.text});
                 break;
             case 2:
-                param = "major_field";
-                value = Gigs.text;
+                if (ParamsList.Params.Exists(o => o.Key == "major_field"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "major_field"));
+                ParamsList.Params.Add(new Param() { Key = "major_field", Value = Gigs.text});
                 break;
             case 3:
-                param = "email";
-                value = Email.text;
+                if (ParamsList.Params.Exists(o => o.Key == "email"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "email"));
+                ParamsList.Params.Add(new Param() { Key = "email", Value = Email.text});
                 break;
             case 4:
-                param = "phone";
-                value = PhoneNumber.text;
+                if (ParamsList.Params.Exists(o => o.Key == "phone"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "phone"));
+                ParamsList.Params.Add(new Param() { Key = "phone", Value = PhoneNumber.text});
                 break;
             case 5:
-                param = "gender";
+                if (ParamsList.Params.Exists(o => o.Key == "gender"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "gender"));
                 if (Sex.options[Sex.value].text == "ﺩﺮﻣ")
-                    value = "مرد";
+                    ParamsList.Params.Add(new Param() { Key = "gender", Value = "مرد"});
                 else if(Sex.options[Sex.value].text == "ﻥﺯ")
-                    value = "زن";
+                    ParamsList.Params.Add(new Param() { Key = "gender", Value = "زن"});
                 break;
             case 6:
-                param = "age";
-                value = Age.options[Age.value].text;
+                if (ParamsList.Params.Exists(o => o.Key == "age"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "age"));
+                ParamsList.Params.Add(new Param() { Key = "age", Value = Age.options[Age.value].text});
                 break;
         }
-        StartCoroutine(DoEdit(1));
+        //StartCoroutine(DoEdit(1));
     }
 
     public void CheckEmail()
@@ -179,6 +187,7 @@ public class EditProfileManager : MonoBehaviour
         {
             StartCoroutine(DoEdit(2));
         }
+        //Debug.Log(JsonUtility.ToJson(ParamsList));
     }
 
     public void CheckBio()
@@ -189,5 +198,11 @@ public class EditProfileManager : MonoBehaviour
     public void CheckGigs()
     {
         GigsText.text = (75 - Gigs.text.Length).ToString();
+    }
+
+    public void FillParam()
+    {
+        Debug.Log(JsonUtility.ToJson(ParamsList));
+        StartCoroutine(DoEdit(1));
     }
 }

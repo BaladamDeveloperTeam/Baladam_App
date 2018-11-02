@@ -9,6 +9,8 @@ public class Home_Click_Handler : MonoBehaviour
 {
 
     public Text PlaceHolder;
+    public ParamList c;
+    public string b;
 
 	void Start ()
     {
@@ -36,8 +38,14 @@ public class Home_Click_Handler : MonoBehaviour
         //DF.ListOfDirectory("ftp://138.201.32.126/BaladamSkillImage/");
         
         //DF.NewLibTestAsync();
-        SendSMS sms = new SendSMS();
-        Debug.Log(sms.GetCredit());
+
+        c.Params.Add(new Param() { Key = "name", Value = "asdfasfd"});
+        c.Params.Add(new Param() { Key = "346345", Value = "1234"});
+        c.Params.Add(new Param() { Key = "nasdgfgsme", Value = "wetrewt"});
+        c.Params.Add(new Param() { Key = "ghdfhdfghfd", Value = "543453hgjkgugu"});
+        var a =  JsonUtility.ToJson(c);
+        b = JsonUtility.ToJson(c);
+        
     }
 
 }

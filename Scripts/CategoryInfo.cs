@@ -93,6 +93,9 @@ public class gigsInfo
     public string skillCode;
     public int vip;
     public string name;
+    public string title;
+    public string subtitle;
+    public string decep;
     public string updated_at;
     public string created_at;
 }
@@ -109,9 +112,6 @@ public class SearchGigs_Skills
 {
     public string[] images;
     public SearchGigs_Boxs[] box;
-    public string decep;
-    public string title;
-    public string subtitle;
 }
 
 [System.Serializable]
@@ -186,6 +186,19 @@ public class SessionDevice
     public string DeviceUsername;
     public string DeviceType;
     public string IMEI;
+}
+
+[System.Serializable]
+public class Param
+{
+    public string Key;
+    public string Value;
+}
+
+[System.Serializable]
+public class ParamList
+{
+    public List<Param> Params = new List<Param>();
 }
 
 
