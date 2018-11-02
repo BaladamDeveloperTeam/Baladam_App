@@ -145,11 +145,15 @@ public class Register : MonoBehaviour
     {
         if (CheckPassword() == true)
         {
-            //sendsms.sendSMSRegisterVerification(Phone.text);
-            StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
-            VerifiCode = sendsms.ReadVerfi();
             Verifi_p.gameObject.SetActive(true);
-            StartTimer = true;
+            //if (sendsms.GetCredit() > 0)
+            {
+                //sendsms.sendSMSRegisterVerification(Phone.text);
+                StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
+                VerifiCode = sendsms.ReadVerfi();
+                Verifi_p.gameObject.SetActive(true);
+                StartTimer = true;
+            }
         }
         else
         {

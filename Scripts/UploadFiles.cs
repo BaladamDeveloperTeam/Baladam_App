@@ -31,7 +31,7 @@ public class UploadFiles
                 }
 
                 WebClient client = new WebClient();
-                Uri uri = new Uri(FTPHost + SaveTo + "/" +UserName + "/" + new FileInfo(FilePath).Name);
+                Uri uri = new Uri(FTPHost + SaveTo + "/" + UserName + "/" + new FileInfo(FilePath).Name);
                 //Uri uri = new Uri(FTPHost + "/" + new FileInfo(FilePath).Name);
 
                 client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);
@@ -42,7 +42,7 @@ public class UploadFiles
             catch
             {
                 WebClient client = new WebClient();
-                Uri uri = new Uri(FTPHost + SaveTo + "/" +UserName + "/" + new FileInfo(FilePath).Name);
+                Uri uri = new Uri(FTPHost + SaveTo + "/" + UserName + "/" + new FileInfo(FilePath).Name);
                 //Uri uri = new Uri(FTPHost + "/" + new FileInfo(FilePath).Name);
 
                 client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);

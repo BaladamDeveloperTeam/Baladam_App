@@ -72,6 +72,14 @@ public class SendSMS : MonoBehaviour
         }
     }
 
+    public int GetCredit()
+    {
+        var token = new Token().GetToken("174e6ec07ea335dd486ec0", "mohada01");
+
+        CreditResponse credit = new Credit().GetCredit(token);
+        return (int)credit.Credit;
+    }
+
     public string ReadVerfi()
     {
         return VerficationCode;
