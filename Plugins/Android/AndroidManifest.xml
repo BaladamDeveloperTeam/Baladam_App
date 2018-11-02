@@ -1,35 +1,75 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unity3d.player"
 	android:installLocation="preferExternal"
-    android:versionCode="1"
-    android:versionName="1.0">
+    android:versionCode="1004000"
+    android:versionName="1.4.0">
     <supports-screens
         android:smallScreens="true"
         android:normalScreens="true"
         android:largeScreens="true"
         android:xlargeScreens="true"
         android:anyDensity="true"/>
+  <uses-sdk
+    android:minSdkVersion="14"
+    android:targetSdkVersion="25"/>
 
-    <application
-	
-      android:theme="@style/UnityStatusBarTheme" 
+
+<uses-sdk
+	tools:overrideLibrary="co.ronash.pushe" />
+<permission
+	android:name="8ep6pr11lw36vr9d.permission.C2D_MESSAGE"
+	android:protectionLevel="signature" />
+<uses-permission
+	android:name="8ep6pr11lw36vr9d.permission.C2D_MESSAGE" />
+<uses-permission
+android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+<!-- Optional permissions -->
+<uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	                           
+  <application
+		android:theme="@style/UnityThemeSelector"
 		android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:debuggable="true">
-        <activity android:name="com.unity3d.nostatusbar.UnityPlayerActivityStatusBar" android:launchMode="singleTask"
+        <activity android:name="com.unity3d.player.UnityPlayerActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" /> <!--Add by me--> <!--android:theme="@style/UnityThemeSelector"-->
             </intent-filter>
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
         </activity>
+	
+<receiver android:name="co.ronash.pushe.receiver.UpdateReceiver" >
+	<intent-filter>
+		<action android:name="android.intent.action.PACKAGE_REPLACED" />
 
-        <receiver android:name="net.agasper.unitynotification.UnityNotificationManager"></receiver>
-        <receiver android:name="net.agasper.unitynotification.UnityNotificationActionHandler"></receiver>
-    </application>
+		<data
+			android:path="8ep6pr11lw36vr9d"
+			android:scheme="package" />
+	</intent-filter>
+</receiver>
+
+<receiver
+android:name="com.google.android.gms.gcm.GcmReceiver"
+android:exported="true"
+android:permission="com.google.android.c2dm.permission.SEND" >
+<intent-filter>
+    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+    <category android:name="8ep6pr11lw36vr9d" />
+</intent-filter>
+</receiver>
+
+<meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_701014632077"/>
+<meta-data android:name="co.ronash.pushe.cr" android:value="Tm9uZQ=="/>
+    
+</application>
 </manifest>
