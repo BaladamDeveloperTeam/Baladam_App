@@ -62,7 +62,7 @@ public class UserInfo
     public string city;
     public string town;
     public string address;
-    public string image_pro;
+    public string pro_image;
     public string banner_pro;
     public int is_vip;
     public int wallet;
@@ -95,6 +95,7 @@ public class gigsInfo
     public string name;
     public string title;
     public string subtitle;
+    public string[] url;
     public string decep;
     public string updated_at;
     public string created_at;

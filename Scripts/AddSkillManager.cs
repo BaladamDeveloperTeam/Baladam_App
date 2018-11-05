@@ -200,7 +200,7 @@ public class AddSkillManager : MonoBehaviour
     {
         security.Coding coding = new security.Coding();
         int i = 0;
-        SelectImage Pimg = this.gameObject.GetComponent<SelectImage>();
+        ImageClass Pimg = this.gameObject.GetComponent<ImageClass>();
         if (ImageName[0] == null)
         {
             i = 0;
