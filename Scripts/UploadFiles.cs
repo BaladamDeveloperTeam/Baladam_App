@@ -14,15 +14,17 @@ public class UploadFiles
     private readonly string FTPPassword = "@Amir22102210";
     private readonly string SaveTo = "/BaladamSkillImage/";
 
-    public void UploadFile(string FilePath, string UserName)
+    public void UploadFile(string FilePath, string TargetPath)
     {
+        if (TargetPath == "")
+            TargetPath = "/Junk";
         try
         {
             Debug.Log("Path: " + FilePath);
 
             try
             {
-                WebRequest request = WebRequest.Create(FTPHost + "/BaladamSkillImage" + "/" + UserName);
+                WebRequest request = WebRequest.Create(FTPHost + TargetPath);
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
                 request.Credentials = new NetworkCredential(FTPUserName, FTPPassword);
                 using (var resp = (FtpWebResponse)request.GetResponse())
@@ -31,7 +33,7 @@ public class UploadFiles
                 }
 
                 WebClient client = new WebClient();
-                Uri uri = new Uri(FTPHost + SaveTo + "/" + UserName + "/" + new FileInfo(FilePath).Name);
+                Uri uri = new Uri(FTPHost + TargetPath + "/" + new FileInfo(FilePath).Name);
                 //Uri uri = new Uri(FTPHost + "/" + new FileInfo(FilePath).Name);
 
                 client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);
@@ -42,7 +44,7 @@ public class UploadFiles
             catch
             {
                 WebClient client = new WebClient();
-                Uri uri = new Uri(FTPHost + SaveTo + "/" + UserName + "/" + new FileInfo(FilePath).Name);
+                Uri uri = new Uri(FTPHost + TargetPath + "/" + new FileInfo(FilePath).Name);
                 //Uri uri = new Uri(FTPHost + "/" + new FileInfo(FilePath).Name);
 
                 client.UploadProgressChanged += new UploadProgressChangedEventHandler(OnFileUploadProgressChanged);

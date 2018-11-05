@@ -29,8 +29,8 @@ public class Home_Click_Handler : MonoBehaviour
 
     public void Upload()
     {
-        //UploadFiles up = new UploadFiles();
-        //up.UploadFile(@"C:/Users/Mohammad/AppData/LocalLow/Baladam/بلدم/0689768c0bc582f99f845db3e272a159b", "test");
+        UploadFiles up = new UploadFiles();
+        up.UploadFile(@"E:\TODO.txt", "/test");
         //DownloadFiles DF = new DownloadFiles();
         //string path = Path.Combine(Application.persistentDataPath, "FTP Files");
         //path = Path.Combine(path, "data.png");
