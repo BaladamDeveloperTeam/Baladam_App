@@ -13,7 +13,8 @@ public class Profile_Click_Handler : MonoBehaviour
     public Animator DrawerAnim, BlackPanelAnim;
     private GameObject GSM;
     private ImageClass selectImage;
-    public Image Pro_Image;
+    public Image Pro_Image, Banner_Image;
+    public ParamList EditParam;
 
     void Awake()
     { 
@@ -57,10 +58,12 @@ public class Profile_Click_Handler : MonoBehaviour
                 break;
             case 2:     //SelectPro_Image
                 Coding coding = new Coding();
-                selectImage.OnPressShowPicker("Pro_Image");
+                selectImage.OnPressShowPicker("Pro_Image.png");
                 Pro_Image.sprite = selectImage.GetSprite();
                 UploadFiles UP = new UploadFiles();
                 UP.UploadFile(selectImage.GetPath(), "/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+                EditParam.Params.Add(new Param() { Key = "pro_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName() + "/" + "Pro_Image.png"});
+                StartCoroutine(DoEdit_ProImage());
                 break;
             case 3:     //OpenEditProfile
                 CloseDrawerClick();
@@ -81,7 +84,20 @@ public class Profile_Click_Handler : MonoBehaviour
             case 6:     //DoExitBtn
                 StartCoroutine(DoExit());
                 break;
+            case 7:     //SelectBanner_Image
+                selectImage.OnPressShowPicker("Banner_Image.png");
+                Banner_Image.sprite = selectImage.GetSprite();
+                UploadFiles UP1 = new UploadFiles();
+                UP1.UploadFile(selectImage.GetPath(), "/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+                EditParam.Params.Add(new Param() { Key = "banner_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName() + "/" + "Banner_Image.png" });
+                StartCoroutine(DoEdit_ProImage());
+                break;
         }
+    }
+
+    public void SelectPro_ImageBtn()
+    {
+        click(2);
     }
 
     public void OpenEditProfile()
@@ -104,9 +120,9 @@ public class Profile_Click_Handler : MonoBehaviour
         click(6);
     }
 
-    public void SelectPro_ImageBtn()
+    public void SelectBanner_Image()
     {
-        click(2);
+        click(7);
     }
 
     private WWWForm SendData()
@@ -134,6 +150,34 @@ public class Profile_Click_Handler : MonoBehaviour
         else
         {
             Debug.Log("Exit");
+        }
+
+    }
+
+    private WWWForm SendDataEdit_ProImage()
+    {
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 15);
+        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("param", JsonUtility.ToJson(EditParam));
+        return web;
+    }
+
+    private IEnumerator DoEdit_ProImage()
+    {
+        WWWForm WebGet = SendDataEdit_ProImage();
+        WWW data = new WWW(Url, WebGet);
+        yield return data;
+
+        Debug.Log(data.text);
+        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+        {
+            Debug.Log("Error");
+        }
+        else
+        {
+            Debug.Log("Upload ProImage To Database.");
         }
 
     }
