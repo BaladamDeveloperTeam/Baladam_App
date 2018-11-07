@@ -20,6 +20,7 @@ public class SignIn : MonoBehaviour
     private GameObject GSM, BNC;
     public Session LoginSession;
     private Session[] OldSession;
+    public static string IsSeller;
 
     private string token_csrf;
 
@@ -120,6 +121,7 @@ public class SignIn : MonoBehaviour
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
                 GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                IsSeller = GSM.gameObject.GetComponent<Global_Script_Manager>().ReadIsSeller();
                 if (RememberMe.isOn == true)
                 {
                     Coding coding = new Coding();
@@ -149,6 +151,7 @@ public class SignIn : MonoBehaviour
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
                 GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                IsSeller = GSM.gameObject.GetComponent<Global_Script_Manager>().ReadIsSeller();
                 if (RememberMe.isOn == true)
                 {
                     Coding coding = new Coding();
@@ -162,6 +165,7 @@ public class SignIn : MonoBehaviour
 
             }
         }
+        
     }
 
     //private WWWForm GetSession()

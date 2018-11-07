@@ -10,8 +10,7 @@ public class Global_Script_Manager : MonoBehaviour
     private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserFullNameEdit, UserBioEdit, UserEmailEdit,
         UserPhoneEdit, UserAgeEdit, UserSexEdit;
     private UserInfo[] userinfo;
-    //[HideInInspector]
-    //public Session[] OldSession;
+    [HideInInspector]
     public CategoryNames CatInfo;
 
     void Awake()
@@ -92,6 +91,11 @@ public class Global_Script_Manager : MonoBehaviour
     public string ReadUserName()
     {
         return userinfo[0].username;
+    }
+
+    public string ReadIsSeller()
+    {
+        return userinfo[0].is_seller.ToString();
     }
 
     //public void SetOldSession(Session[] session)

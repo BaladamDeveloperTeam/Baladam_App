@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using security;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Profile_Click_Handler : MonoBehaviour
 {
@@ -15,14 +16,35 @@ public class Profile_Click_Handler : MonoBehaviour
     private ImageClass selectImage;
     public Image Pro_Image, Banner_Image;
     public ParamList EditParam;
+    public Transform[] MenuItems;
 
     void Awake()
     { 
         GSM = GameObject.Find("Global script Manager");
+        MenuItems = Drawer.transform.Cast<Transform>().ToArray();
         selectImage = this.gameObject.GetComponent<ImageClass>();
     }
-	
-	void Update ()
+
+    void Start()
+    {
+        Debug.Log("Is Seller = " + SignIn.IsSeller);
+        if (SignIn.IsSeller == "0")
+        {
+            Transform skill = (from a in MenuItems where a.gameObject.name == "Menu_MySkills" select a).FirstOrDefault();
+            skill.gameObject.SetActive(false);
+            Transform Edit = (from a in MenuItems where a.gameObject.name == "Menu_EditProfile(Seller)" select a).FirstOrDefault();
+            Edit.gameObject.SetActive(false);
+        }
+        else
+        {
+            Transform skill = (from a in MenuItems where a.gameObject.name == "Menu_BeSeller" select a).FirstOrDefault();
+            skill.gameObject.SetActive(false);
+            Transform Edit = (from a in MenuItems where a.gameObject.name == "Menu_EditProfile" select a).FirstOrDefault();
+            Edit.gameObject.SetActive(false);
+        }
+    }
+
+    void Update ()
     {
 		//GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
 	}

@@ -47,7 +47,7 @@ public class GetCat : MonoBehaviour
         //Debug.Log(name[0]);
         //Debug.Log(CatInfo[1].name);
 
-        set_Title_text();
+        //set_Title_text();
 
         GSM.gameObject.GetComponent<Global_Script_Manager>().SetCategoryName(CatInfo);
 
@@ -58,7 +58,7 @@ public class GetCat : MonoBehaviour
         StartCoroutine(GetCats());
     }
 
-    private void set_Title_text()
+    public void set_Title_text()
     {
         CategoryTitle = GameObject.FindGameObjectsWithTag("Category_title_text");
         for (int i = 0; i < CatInfo.name.Length; i++)
@@ -69,16 +69,6 @@ public class GetCat : MonoBehaviour
         }
 
     }
-
-    void Start ()
-    {
-		
-	}
-	
-	void Update ()
-    {
-		
-	}
 }
 
 

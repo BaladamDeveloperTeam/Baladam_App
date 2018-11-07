@@ -10,11 +10,13 @@ public class Home_Click_Handler : MonoBehaviour
 
     public Text PlaceHolder;
     public ParamList c;
-    public string b;
+    private GetCat GetCat;
 
 	void Start ()
     {
         Screen.fullScreen = false;
+        GetCat = this.gameObject.GetComponent<GetCat>();
+        GetCat.GetCatBut();
 	}
 
 	void Update ()
@@ -44,7 +46,6 @@ public class Home_Click_Handler : MonoBehaviour
         c.Params.Add(new Param() { Key = "nasdgfgsme", Value = "wetrewt"});
         c.Params.Add(new Param() { Key = "ghdfhdfghfd", Value = "543453hgjkgugu"});
         var a =  JsonUtility.ToJson(c);
-        b = JsonUtility.ToJson(c);
         
     }
 
