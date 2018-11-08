@@ -14,11 +14,10 @@ public class MessageManager : MonoBehaviour
     public Session[] ActiveSession;
     public ReadSession[] ActiveSessionWeb;
     private int ActiveSessionCount;
-    List<int> AppPlace = new List<int>();
-    List<int> WebPlace = new List<int>();
     public GameObject ItemsPrefab;
-    public GameObject[] AllItems;
+    private GameObject[] AllItems;
     private Transform[] transform, transforms1;
+    private dynamic[] Mydynamics;
 
     void Awake()
     {
@@ -60,7 +59,6 @@ public class MessageManager : MonoBehaviour
                 if (ActiveSession[i].mode == "App")
                 {
                     ActiveSessionCount++;
-                    AppPlace.Add(i);
                 }
             }
             for (int i = 0; i < ActiveSessionWeb.Length; i++)
@@ -68,7 +66,21 @@ public class MessageManager : MonoBehaviour
                 if (ActiveSessionWeb[i].mode == "Web")
                 {
                     ActiveSessionCount++;
-                    WebPlace.Add(i);
+                }
+            }
+            Mydynamics = new dynamic[ActiveSessionCount];
+            for (int i = 0; i < ActiveSession.Length; i++)
+            {
+                if (ActiveSession[i].mode == "App")
+                {
+                    Mydynamics[i] = ActiveSession[i];
+                }
+            }
+            for (int i = 0; i < ActiveSessionWeb.Length; i++)
+            {
+                if (ActiveSessionWeb[i].mode == "Web")
+                {
+                    Mydynamics[i] = ActiveSessionWeb[i];
                 }
             }
         }
@@ -83,17 +95,35 @@ public class MessageManager : MonoBehaviour
             GameObject Items = Instantiate(ItemsPrefab) as GameObject;
             Items.transform.SetParent(GameObject.Find("Messages_p/Scroll View/Viewport/Content").transform);
             AllItems[i] = Items;
-            
-        }
-        for(int i = 0; i < AllItems.Length; i++)
-        {
-            transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
-            transforms1 = transform[0].gameObject.transform.Cast<Transform>().ToArray();
-            transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(DeleteSession);
+            if(Mydynamics[i].mode == "App")
+            {
+                transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
+                transforms1 = transform[0].gameObject.transform.Cast<Transform>().ToArray();
+                transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(() => {DeleteSession(Mydynamics[i].name);});
+                transforms1[1].gameObject.GetComponent<RtlText>().text = "نوع دستگاه : " + Mydynamics[i].mode;
+                transforms1[2].gameObject.GetComponent<RtlText>().text = "IP دستگاه : " + Mydynamics[i].log.address;
+                transforms1[3].gameObject.GetComponent<RtlText>().text = "مدل دستگاه : " + Mydynamics[i].log.Device.DeviceModel;
+                transforms1[4].gameObject.GetComponent<RtlText>().text = "نام دستگاه : " + Mydynamics[i].log.Device.DeviceUsername;
+                transforms1[5].gameObject.GetComponent<RtlText>().text = "زمان ورود : " + Mydynamics[i].log.at.date;
+                transforms1[6].gameObject.GetComponent<RtlText>().text = "شهر : " + Mydynamics[i].log.at.timezone;
+            }
+            if (Mydynamics[i].mode == "Web")
+            {
+                transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
+                transforms1 = transform[0].gameObject.transform.Cast<Transform>().ToArray();
+                transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(() => {DeleteSession(Mydynamics[i].name);});
+                transforms1[1].gameObject.GetComponent<RtlText>().text = "نوع دستگاه : " + Mydynamics[i].mode;
+                transforms1[2].gameObject.GetComponent<RtlText>().text = "IP دستگاه : " + Mydynamics[i].log.address;
+                transforms1[3].gameObject.GetComponent<RtlText>().text = "مرورگر دستگاه : " + Mydynamics[i].log.Device.Browser;
+                transforms1[4].gameObject.GetComponent<RtlText>().text = "پلتفرم : " + Mydynamics[i].log.Device.Platform;
+                transforms1[5].gameObject.GetComponent<RtlText>().text = "زمان ورود : " + Mydynamics[i].log.at.date;
+                transforms1[6].gameObject.GetComponent<RtlText>().text = "شهر : " + Mydynamics[i].log.at.timezone;
+            }
+
         }
     }
 
-    public void DeleteSession()
+    public void DeleteSession(string name)
     {
         Debug.Log("click");
     }
