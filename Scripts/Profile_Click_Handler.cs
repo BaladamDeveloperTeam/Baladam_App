@@ -27,6 +27,17 @@ public class Profile_Click_Handler : MonoBehaviour
 
     void Start()
     {
+        IsSeller();
+        StartCoroutine(LoadProfileImage());
+    }
+
+    void Update ()
+    {
+		//GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
+	}
+
+    private void IsSeller()
+    {
         Debug.Log("Is Seller = " + SignIn.IsSeller);
         if (SignIn.IsSeller == "0")
         {
@@ -44,10 +55,24 @@ public class Profile_Click_Handler : MonoBehaviour
         }
     }
 
-    void Update ()
+    public IEnumerator LoadProfileImage()
     {
-		//GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
-	}
+        string url = GSM.gameObject.GetComponent<Global_Script_Manager>().ReadPro_imageURL();
+        if (!string.IsNullOrEmpty(url))
+        {
+            WWW www = new WWW(url);
+            yield return www;
+            if(string.IsNullOrEmpty(www.error))
+                Pro_Image.sprite = SpriteFromTex2D(www.texture);
+            www.Dispose();
+            www = null;
+        }
+    }
+
+    static Sprite SpriteFromTex2D(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
 
     public void OpenDrawerClick()
     {

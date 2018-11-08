@@ -174,10 +174,25 @@ public class Session
 }
 
 [System.Serializable]
+public class ReadSession
+{
+    public string name;
+    public string mode;
+    public SessionLogWeb log;
+}
+
+[System.Serializable]
 public class SessionLog
 {
     public string address;
     public SessionDevice Device;
+}
+
+[System.Serializable]
+public class SessionLogWeb
+{
+    public string address;
+    public SessionWeb Device;
 }
 
 [System.Serializable]
@@ -187,6 +202,16 @@ public class SessionDevice
     public string DeviceUsername;
     public string DeviceType;
     public string IMEI;
+}
+
+[System.Serializable]
+public class SessionWeb
+{
+    public string Browser;
+    public string Ver;
+    public string Platform;
+    public string Plat_Ver;
+    public string Type;
 }
 
 [System.Serializable]

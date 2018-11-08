@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,18 @@ public class Botton_Nav_Click : MonoBehaviour
 
     public Color ClickedColor = Color.blue, unClickedColor = Color.gray;
     public Image HomeImg, ListImg, LearnImg, SearchImg, ProfileImg, LoginImg;
-    public GameObject Home_p, List_p, Learn_p, Search_p, Profile_p, Login_p, Profile_n, Login_n;
+    public GameObject  Panels_p, Home_p, List_p, Learn_p, Search_p, Profile_p, Login_p, Regester_p, Profile_n, Login_n;
     private int State = 0;
     private GameObject ManageT;
     private string Path;
     private INIParser File = new INIParser();
+    public Transform[] AllPanels;
+    private Transform panel;
 
     void Awake()
     {
         Path = Application.persistentDataPath + "BaladamAppSettings.ini";
+        AllPanels = Panels_p.transform.Cast<Transform>().ToArray();
     }
 
     void Start()
@@ -151,56 +155,47 @@ public class Botton_Nav_Click : MonoBehaviour
 
     void Show_p(int Item)
     {
+        
         switch (Item)
         {
             case 0:
-                Home_p.gameObject.SetActive(true);
-                List_p.gameObject.SetActive(false);
-                Learn_p.gameObject.SetActive(false);
-                Search_p.gameObject.SetActive(false);
-                Profile_p.gameObject.SetActive(false);
-                Login_p.gameObject.SetActive(false);
+                Set_off();
+                panel = (from a in AllPanels where a.gameObject.name == "Home_p" select a).FirstOrDefault();
+                panel.gameObject.SetActive(true);
                 break;
             case 1:
-                Home_p.gameObject.SetActive(false);
-                List_p.gameObject.SetActive(true);
-                Learn_p.gameObject.SetActive(false);
-                Search_p.gameObject.SetActive(false);
-                Profile_p.gameObject.SetActive(false);
-                Login_p.gameObject.SetActive(false);
+                Set_off();
+                panel = (from a in AllPanels where a.gameObject.name == "List_p" select a).FirstOrDefault();
+                panel.gameObject.SetActive(true);
                 break;
             case 2:
-                Home_p.gameObject.SetActive(false);
-                List_p.gameObject.SetActive(false);
-                Learn_p.gameObject.SetActive(true);
-                Search_p.gameObject.SetActive(false);
-                Profile_p.gameObject.SetActive(false);
-                Login_p.gameObject.SetActive(false);
+                Set_off();
+                panel = (from a in AllPanels where a.gameObject.name == "Learn_p" select a).FirstOrDefault();
+                panel.gameObject.SetActive(true);
                 break;
             case 3:
-                Home_p.gameObject.SetActive(false);
-                List_p.gameObject.SetActive(false);
-                Learn_p.gameObject.SetActive(false);
-                Search_p.gameObject.SetActive(false);
-                Profile_p.gameObject.SetActive(true);
-                Login_p.gameObject.SetActive(false);
+                Set_off();
+                panel = (from a in AllPanels where a.gameObject.name == "Profile_p" select a).FirstOrDefault();
+                panel.gameObject.SetActive(true);
                 break;
             case 4:
-                Home_p.gameObject.SetActive(false);
-                List_p.gameObject.SetActive(false);
-                Learn_p.gameObject.SetActive(false);
-                Search_p.gameObject.SetActive(true);
-                Profile_p.gameObject.SetActive(false);
-                Login_p.gameObject.SetActive(false);
+                Set_off();
+                panel = (from a in AllPanels where a.gameObject.name == "Search_p" select a).FirstOrDefault();
+                panel.gameObject.SetActive(true);
                 break;
             case 5:
-                Home_p.gameObject.SetActive(false);
-                List_p.gameObject.SetActive(false);
-                Learn_p.gameObject.SetActive(false);
-                Search_p.gameObject.SetActive(false);
-                Profile_p.gameObject.SetActive(false);
-                Login_p.gameObject.SetActive(true);
+                Set_off();
+                panel = (from a in AllPanels where a.gameObject.name == "SigninPage" select a).FirstOrDefault();
+                panel.gameObject.SetActive(true);
                 break;
+        }
+    }
+
+    private void Set_off()
+    {
+        for(int i = 0; i < AllPanels.Length; i++)
+        {
+            AllPanels[i].gameObject.SetActive(false);
         }
     }
 }

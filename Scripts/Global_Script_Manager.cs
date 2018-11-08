@@ -44,6 +44,7 @@ public class Global_Script_Manager : MonoBehaviour
         UserF_prj = GameObject.Find("UserF_prj");
         Userlvl = GameObject.Find("Userlvl");
         UserBioText = GameObject.Find("UserBioText");
+        UserGigsText = GameObject.Find("UserGigs");
     }
 
     public void SetValuetext()
@@ -125,6 +126,11 @@ public class Global_Script_Manager : MonoBehaviour
     public string ReadUserName()
     {
         return userinfo[0].username;
+    }
+
+    public string ReadPro_imageURL()
+    {
+        return userinfo[0].pro_image;
     }
 
     public string ReadIsSeller()
