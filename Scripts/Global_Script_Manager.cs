@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class Global_Script_Manager : MonoBehaviour
 {
-    private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserFullNameEdit, UserBioEdit, UserEmailEdit,
-        UserPhoneEdit, UserAgeEdit, UserSexEdit;
+    private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserGigsText, UserFullNameEdit, UserBioEdit, UserGigsEdit, UserEmailEdit,
+        UserPhoneEdit, UserAgeEdit, UserSexEdit, UserShabaEdit, UserMelliEdit, UserEduationEdit, UserCityEdit, UserAddressEdit;
     private UserInfo[] userinfo;
     [HideInInspector]
     public CategoryNames CatInfo;
@@ -60,6 +60,10 @@ public class Global_Script_Manager : MonoBehaviour
             UserBioText.gameObject.GetComponent<RtlText>().text = "درباره شما ...";
         else
             UserBioText.gameObject.GetComponent<RtlText>().text = userinfo[0].bio;
+        if (CheckForEmpty(userinfo[0].major_field) == false)
+            UserGigsText.gameObject.GetComponent<RtlText>().text = "زمینه های مهارت شما ...";
+        else
+            UserGigsText.gameObject.GetComponent<RtlText>().text = userinfo[0].major_field;
 
     }
 
@@ -67,10 +71,16 @@ public class Global_Script_Manager : MonoBehaviour
     {
         UserFullNameEdit = GameObject.Find("EditFullName");
         UserBioEdit = GameObject.Find("EditBio");
+        UserGigsEdit = GameObject.Find("EditGigs");
         UserEmailEdit = GameObject.Find("EditEmail");
         UserPhoneEdit = GameObject.Find("EditPhoneNumber");
         UserAgeEdit = GameObject.Find("EditAge");
         UserSexEdit = GameObject.Find("EditSex");
+        UserShabaEdit = GameObject.Find("EditShaba");
+        UserMelliEdit = GameObject.Find("EditMelli");
+        UserEduationEdit = GameObject.Find("EditEducationD");
+        UserCityEdit = GameObject.Find("EditCity");
+        UserAddressEdit = GameObject.Find("EditAddress");
     }
 
     public void SetValuetextForEdit()
@@ -81,11 +91,35 @@ public class Global_Script_Manager : MonoBehaviour
         if (CheckForEmpty(userinfo[0].bio) != false)
             UserBioEdit.gameObject.GetComponent<InputField>().text = userinfo[0].bio;
 
+        if(CheckForEmpty(userinfo[0].major_field) != false)
+            UserGigsEdit.gameObject.GetComponent<InputField>().text = userinfo[0].major_field;
+
         if (CheckForEmpty(userinfo[0].email) != false)
             UserEmailEdit.gameObject.GetComponent<InputField>().text = userinfo[0].email;
 
         if (CheckForEmpty(userinfo[0].phone) != false)
             UserPhoneEdit.gameObject.GetComponent<InputField>().text = userinfo[0].phone;
+
+        if (CheckForEmpty(userinfo[0].shaba) != false)
+            UserShabaEdit.gameObject.GetComponent<InputField>().text = userinfo[0].shaba;
+
+        if (CheckForEmpty(userinfo[0].melli) != false)
+            UserMelliEdit.gameObject.GetComponent<InputField>().text = userinfo[0].melli;
+
+        if (CheckForEmpty(userinfo[0].madrak_tahsili) != false)
+            UserEduationEdit.gameObject.GetComponent<InputField>().text = userinfo[0].madrak_tahsili;
+
+        if (CheckForEmpty(userinfo[0].city) != false)
+            UserCityEdit.gameObject.GetComponent<InputField>().text = userinfo[0].city;
+
+        if (CheckForEmpty(userinfo[0].address) != false)
+            UserAddressEdit.gameObject.GetComponent<InputField>().text = userinfo[0].address;
+
+        if (CheckForEmpty(userinfo[0].gender) != false && userinfo[0].gender == "مرد")
+            UserSexEdit.gameObject.GetComponent<Dropdown>().value = 0;
+        else
+            UserSexEdit.gameObject.GetComponent<Dropdown>().value = 1;
+
     }
 
     public string ReadUserName()

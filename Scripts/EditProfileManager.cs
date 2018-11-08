@@ -13,7 +13,7 @@ public class EditProfileManager : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
 
-    public InputField Email, PhoneNumber, Bio, Gigs, FullName, NewPassword, NewPasswordConferm, Password;
+    public InputField Email, PhoneNumber, Bio, Gigs, FullName, Shaba, Melli, EducationD, City, Address, NewPassword, NewPasswordConferm, Password;
     public Dropdown Age, Sex;
     public RtlText BioText, GigsText;
     public GameObject PassMessage;
@@ -123,6 +123,31 @@ public class EditProfileManager : MonoBehaviour
                 if (ParamsList.Params.Exists(o => o.Key == "age"))
                     ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "age"));
                 ParamsList.Params.Add(new Param() { Key = "age", Value = Age.options[Age.value].text});
+                break;
+            case 7:
+                if (ParamsList.Params.Exists(o => o.Key == "shaba"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "shaba"));
+                ParamsList.Params.Add(new Param() { Key = "shaba", Value = Shaba.text });
+                break;
+            case 8:
+                if (ParamsList.Params.Exists(o => o.Key == "melli"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "melli"));
+                ParamsList.Params.Add(new Param() { Key = "melli", Value = Melli.text });
+                break;
+            case 9:
+                if (ParamsList.Params.Exists(o => o.Key == "madrak_tahsili"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "madrak_tahsili"));
+                ParamsList.Params.Add(new Param() { Key = "madrak_tahsili", Value = EducationD.text });
+                break;
+            case 10:
+                if (ParamsList.Params.Exists(o => o.Key == "city"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "city"));
+                ParamsList.Params.Add(new Param() { Key = "city", Value = City.text });
+                break;
+            case 11:
+                if (ParamsList.Params.Exists(o => o.Key == "address"))
+                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "address"));
+                ParamsList.Params.Add(new Param() { Key = "address", Value = Address.text });
                 break;
         }
         //StartCoroutine(DoEdit(1));
