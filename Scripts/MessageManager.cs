@@ -18,16 +18,28 @@ public class MessageManager : MonoBehaviour
     private GameObject[] AllItems;
     private Transform[] transform, transforms1;
     private dynamic[] Mydynamics;
+    private string[] name;
+
+
+    [System.Serializable]
+    public class btn
+    {
+        public int id;
+        public string name;
+        public Button Button;
+    }
+
+    public List<btn> Btns = new List<btn>();
 
     void Awake()
     {
         GSM = GameObject.Find("Global script Manager");
     }
 
-    void Start ()
+    void Start()
     {
         StartCoroutine(GetActiveSession());
-	}
+    }
 
     private WWWForm SendData()
     {
@@ -54,7 +66,7 @@ public class MessageManager : MonoBehaviour
         {
             ActiveSession = JsonHelper.FromJson<Session>("{\"Items\": " + data.text + "}");
             ActiveSessionWeb = JsonHelper.FromJson<ReadSession>("{\"Items\": " + data.text + "}");
-            for(int i = 0; i < ActiveSession.Length; i++)
+            for (int i = 0; i < ActiveSession.Length; i++)
             {
                 if (ActiveSession[i].mode == "App")
                 {
@@ -90,16 +102,19 @@ public class MessageManager : MonoBehaviour
     private void AddPrefab()
     {
         AllItems = new GameObject[ActiveSessionCount];
-        for(int i = 0; i < ActiveSessionCount; i++)
+        name = new string[ActiveSessionCount];
+        for (int i = 0; i < ActiveSessionCount; i++)
         {
             GameObject Items = Instantiate(ItemsPrefab) as GameObject;
             Items.transform.SetParent(GameObject.Find("Messages_p/Scroll View/Viewport/Content").transform);
             AllItems[i] = Items;
-            if(Mydynamics[i].mode == "App")
+            if (Mydynamics[i].mode == "App")
             {
                 transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
                 transforms1 = transform[0].gameObject.transform.Cast<Transform>().ToArray();
-                transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(() => {DeleteSession(Mydynamics[i].name);});
+                name[i] = Mydynamics[i].name;
+                Btns.Add(new btn { id = i, name = Mydynamics[i].name, Button = transforms1[0].gameObject.GetComponent<Button>() });
+                //transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(delegate { DeleteSession("test"); });
                 transforms1[1].gameObject.GetComponent<RtlText>().text = "نوع دستگاه : " + Mydynamics[i].mode;
                 transforms1[2].gameObject.GetComponent<RtlText>().text = "IP دستگاه : " + Mydynamics[i].log.address;
                 transforms1[3].gameObject.GetComponent<RtlText>().text = "مدل دستگاه : " + Mydynamics[i].log.Device.DeviceModel;
@@ -111,7 +126,9 @@ public class MessageManager : MonoBehaviour
             {
                 transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
                 transforms1 = transform[0].gameObject.transform.Cast<Transform>().ToArray();
-                transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(() => {DeleteSession(Mydynamics[i].name);});
+                name[i] = Mydynamics[i].name;
+                Btns.Add(new btn { id = i, name = Mydynamics[i].name, Button = transforms1[0].gameObject.GetComponent<Button>() });
+                //transforms1[0].gameObject.GetComponent<Button>().onClick.AddListener(() => { DeleteSession(name[i]); });
                 transforms1[1].gameObject.GetComponent<RtlText>().text = "نوع دستگاه : " + Mydynamics[i].mode;
                 transforms1[2].gameObject.GetComponent<RtlText>().text = "IP دستگاه : " + Mydynamics[i].log.address;
                 transforms1[3].gameObject.GetComponent<RtlText>().text = "مرورگر دستگاه : " + Mydynamics[i].log.Device.Browser;
@@ -121,10 +138,45 @@ public class MessageManager : MonoBehaviour
             }
 
         }
+        for (int i = 0; i < ActiveSessionCount; i++)
+        {
+            Button[] bu = (from a in Btns where a.id == i select a.Button).ToArray();
+            string[] na = (from a in Btns where a.id == i select a.name).ToArray();
+            bu[0].onClick.AddListener(() => { DeleteSession(na[0]); });
+        }
     }
 
     public void DeleteSession(string name)
     {
-        Debug.Log("click");
+        Debug.Log(name);
+        StartCoroutine(DoDeleteSession(name));
+    }
+
+    private WWWForm SendDataForDelete(string name)
+    {
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 16);
+        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("session", name);
+        return web;
+    }
+
+    private IEnumerator DoDeleteSession(string name)
+    {
+        WWWForm WebGet = SendDataForDelete(name);
+        WWW data = new WWW(Url, WebGet);
+        yield return data;
+
+        Debug.Log(data.text);
+
+        if (data.text == "Wrong" || string.IsNullOrEmpty(data.text) || data.text.Contains("<!DOCTYPE html>"))
+        {
+            Debug.Log("Error");
+        }
+        else
+        {
+            Debug.Log("Deleted");
+        }
     }
 }

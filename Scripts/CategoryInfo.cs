@@ -186,6 +186,7 @@ public class SessionLog
 {
     public string address;
     public SessionDevice Device;
+    public LoginAT at;
 }
 
 [System.Serializable]
@@ -193,6 +194,7 @@ public class SessionLogWeb
 {
     public string address;
     public SessionWeb Device;
+    public LoginAT at;
 }
 
 [System.Serializable]

@@ -6978,6 +6978,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11444240, guid: 7c1b24f29526b1b45b743daa640c5b86, type: 2}
+      propertyPath: showGooglePlayDialog
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1b24f29526b1b45b743daa640c5b86, type: 2}
   m_IsPrefabAsset: 0
@@ -23756,6 +23760,7 @@ MonoBehaviour:
   ActiveSessionWeb: []
   ItemsPrefab: {fileID: 1336870011185750, guid: d55b8b7de82cb514bade211605ecb12c,
     type: 2}
+  Btns: []
 --- !u!1001 &797787947
 Prefab:
   m_ObjectHideFlags: 0
@@ -46506,11 +46511,11 @@ MonoBehaviour:
   Bio: {fileID: 1287259062}
   Gigs: {fileID: 158198444}
   FullName: {fileID: 430446592}
-  Shaba: {fileID: 0}
-  Melli: {fileID: 0}
-  EducationD: {fileID: 0}
-  City: {fileID: 0}
-  Address: {fileID: 0}
+  Shaba: {fileID: 1469299110}
+  Melli: {fileID: 923439942}
+  EducationD: {fileID: 582121523}
+  City: {fileID: 12937483}
+  Address: {fileID: 1908447705}
   NewPassword: {fileID: 1520782784}
   NewPasswordConferm: {fileID: 1340114378}
   Password: {fileID: 1489629371}

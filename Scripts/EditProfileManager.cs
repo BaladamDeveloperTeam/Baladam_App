@@ -89,7 +89,6 @@ public class EditProfileManager : MonoBehaviour
                 if (ParamsList.Params.Exists(o => o.Key == "name"))
                     ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "name"));
                 ParamsList.Params.Add(new Param() { Key = "name", Value = FullName.text});
-                //Debug.Log("are");
                 break;
             case 1:
                 if (ParamsList.Params.Exists(o => o.Key == "bio"))
