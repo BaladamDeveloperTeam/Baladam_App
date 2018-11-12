@@ -10,7 +10,7 @@ public class MessageManager : MonoBehaviour
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    private GameObject GSM;
+    private Global_Script_Manager GSM;
     public Session[] ActiveSession;
     public ReadSession[] ActiveSessionWeb;
     private int ActiveSessionCount;
@@ -33,7 +33,7 @@ public class MessageManager : MonoBehaviour
 
     void Awake()
     {
-        GSM = GameObject.Find("Global script Manager");
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
     }
 
     void Start()
@@ -46,7 +46,7 @@ public class MessageManager : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 9);
-        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("user", GSM.ReadUserName());
         return web;
     }
 
@@ -161,7 +161,7 @@ public class MessageManager : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 16);
-        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("user", GSM.ReadUserName());
         web.AddField("session", name);
         return web;
     }

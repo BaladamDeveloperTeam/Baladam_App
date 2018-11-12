@@ -17,7 +17,8 @@ public class SignIn : MonoBehaviour
     public InputField Password;
     public Toggle RememberMe;
     public GameObject Loading, thisPanel, Profile_p, Register_p;
-    private GameObject GSM, BNC;
+    private GameObject BNC;
+    private Global_Script_Manager GSM;
     public Session LoginSession;
     private Session[] OldSession;
     public static string IsSeller;
@@ -27,7 +28,7 @@ public class SignIn : MonoBehaviour
     void Awake()
     {
         Path = Application.persistentDataPath + "BaladamAppSettings.ini";
-        GSM = GameObject.Find("Global script Manager");
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
         BNC = GameObject.Find("BottomNav");
     }
 
@@ -120,8 +121,8 @@ public class SignIn : MonoBehaviour
             else
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-                GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
-                IsSeller = GSM.gameObject.GetComponent<Global_Script_Manager>().ReadIsSeller();
+                GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                IsSeller = GSM.ReadIsSeller();
                 if (RememberMe.isOn == true)
                 {
                     Coding coding = new Coding();
@@ -150,8 +151,8 @@ public class SignIn : MonoBehaviour
             else
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-                GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
-                IsSeller = GSM.gameObject.GetComponent<Global_Script_Manager>().ReadIsSeller();
+                GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                IsSeller = GSM.ReadIsSeller();
                 if (RememberMe.isOn == true)
                 {
                     Coding coding = new Coding();

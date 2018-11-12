@@ -18,13 +18,13 @@ public class EditProfileManager : MonoBehaviour
     public RtlText BioText, GigsText;
     public GameObject PassMessage;
     public Color Pass, Faild;
-    private GameObject GSM;
+    private Global_Script_Manager GSM;
     private string param, value;
     public ParamList ParamsList;
 
     void Awake()
     {
-        GSM = GameObject.Find("Global script Manager");
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
     }
 
     private WWWForm SendData()
@@ -32,7 +32,7 @@ public class EditProfileManager : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 15);
-        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("user", GSM.ReadUserName());
         web.AddField("param", JsonUtility.ToJson(ParamsList));
         return web;
     }
@@ -43,7 +43,7 @@ public class EditProfileManager : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 10);
-        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("user", GSM.ReadUserName());
         web.AddField("pass", coding.Md5Sum(Password.text));
         web.AddField("new", coding.Md5Sum(NewPasswordConferm.text));
         return web;

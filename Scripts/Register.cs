@@ -20,7 +20,8 @@ public class Register : MonoBehaviour
     public Toggle AceptRules;
     public GameObject Loading, thisPanel, Login_p, Verifi_p;
     public Button RegesterBtn;
-    private GameObject BNC, GSM;
+    private GameObject BNC;
+    private Global_Script_Manager GSM;
     private SendSMS sendsms = new SendSMS();
     private string VerifiCode;
     private float Second = 60, Min = 1;
@@ -34,7 +35,7 @@ public class Register : MonoBehaviour
         RegesterBtn.enabled = false;
         RegesterBtn.interactable = false;
         BNC = GameObject.Find("BottomNav");
-        GSM = GameObject.Find("Global script Manager");
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
         Path = Application.persistentDataPath + "BaladamAppSettings.ini";
     }
 
@@ -188,7 +189,7 @@ public class Register : MonoBehaviour
             else
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-                GSM.gameObject.GetComponent<Global_Script_Manager>().SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
                 //if (RememberMe.isOn == true)
                 //{
                 //    Coding coding = new Coding();

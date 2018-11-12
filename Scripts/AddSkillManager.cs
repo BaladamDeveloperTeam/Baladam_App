@@ -21,7 +21,8 @@ public class AddSkillManager : MonoBehaviour
     public Skill[] UserSkill = new Skill[1];
     public Dropdown SelectCategory, SelectSubCategory;
     private Toggle IsExpress;
-    private GameObject GSM, SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p
+    private Global_Script_Manager GSM;
+    private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p
         , ExpressCost, ExpressTime, Loading, AddSkillMessage, ImagePicker_p, ImagePicker_Content, ImagePickerNumber;
     public GameObject[] SkillPoints, Cost, Period;
     public Image[] image = new Image[4];
@@ -29,8 +30,8 @@ public class AddSkillManager : MonoBehaviour
 
     private void Awake()
     {
-        GSM = GameObject.Find("Global script Manager");
-        foreach(string CatText in GSM.gameObject.GetComponent<Global_Script_Manager>().CatInfo.name)
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
+        foreach(string CatText in GSM.CatInfo.name)
         {
             SelectCategory.options.Add(new Dropdown.OptionData() {text=CatText});
         }
@@ -204,7 +205,7 @@ public class AddSkillManager : MonoBehaviour
         if (ImageName[0] == null)
         {
             i = 0;
-            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.ReadUserName()));
             ImageName[0] = Pimg.GetPath();
             image[0].sprite = Pimg.GetSprite();
             var tempColor = image[0].color;
@@ -216,7 +217,7 @@ public class AddSkillManager : MonoBehaviour
         else if (ImageName[1] == null)
         {
             i = 1;
-            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.ReadUserName()));
             ImageName[1] = Pimg.GetPath();
             image[1].sprite = Pimg.GetSprite();
             var tempColor = image[1].color;
@@ -228,7 +229,7 @@ public class AddSkillManager : MonoBehaviour
         else if (ImageName[2] == null)
         {
             i = 2;
-            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.ReadUserName()));
             ImageName[2] = Pimg.GetPath();
             image[2].sprite = Pimg.GetSprite();
             var tempColor = image[2].color;
@@ -240,7 +241,7 @@ public class AddSkillManager : MonoBehaviour
         else if (ImageName[3] == null)
         {
             i = 3;
-            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName()));
+            Pimg.OnPressShowPicker(i.ToString() + coding.Md5Sum(DateTime.Now + GSM.ReadUserName()));
             ImageName[3] = Pimg.GetPath();
             image[3].sprite = Pimg.GetSprite();
             var tempColor = image[3].color;
@@ -307,7 +308,7 @@ public class AddSkillManager : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             UploadFiles UP = new UploadFiles();
-            UP.UploadFile(@UserSkill[0].ImageName[i], GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+            UP.UploadFile(@UserSkill[0].ImageName[i], GSM.ReadUserName());
         }
 
         SetSkillPointsParametr();
@@ -319,7 +320,7 @@ public class AddSkillManager : MonoBehaviour
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 13);
-        web.AddField("user", GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
+        web.AddField("user", GSM.ReadUserName());
         web.AddField("skill", JsonHelper.ToJson(UserSkill));
         return web;
     }
