@@ -12,15 +12,16 @@ public class Profile_Click_Handler : MonoBehaviour
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     public GameObject Drawer, BlackPanel, EditProfile_p, AddSkill_p;
     public Animator DrawerAnim, BlackPanelAnim;
-    private GameObject GSM;
+    private Global_Script_Manager GSM;
     private ImageClass selectImage;
     public Image Pro_Image, Banner_Image;
     public ParamList EditParam;
     public Transform[] MenuItems;
+    public ParamList ParamsList;
 
     void Awake()
     { 
-        GSM = GameObject.Find("Global script Manager");
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
         MenuItems = Drawer.transform.Cast<Transform>().ToArray();
         selectImage = this.gameObject.GetComponent<ImageClass>();
     }
@@ -29,6 +30,10 @@ public class Profile_Click_Handler : MonoBehaviour
     {
         IsSeller();
         StartCoroutine(LoadProfileImage());
+#if UNITY_ANDROID
+        ParamsList.Params.Add(new Param() { Key = "Pushe_Id", Value = Pushe.GetPusheId() });
+        StartCoroutine(SavePusheID());
+#endif
     }
 
     void Update ()
@@ -57,7 +62,7 @@ public class Profile_Click_Handler : MonoBehaviour
 
     public IEnumerator LoadProfileImage()
     {
-        string url = GSM.gameObject.GetComponent<Global_Script_Manager>().ReadPro_imageURL();
+        string url = GSM.ReadPro_imageURL();
         if (!string.IsNullOrEmpty(url))
         {
             WWW www = new WWW(url);
@@ -108,15 +113,15 @@ public class Profile_Click_Handler : MonoBehaviour
                 selectImage.OnPressShowPicker("Pro_Image.png");
                 Pro_Image.sprite = selectImage.GetSprite();
                 UploadFiles UP = new UploadFiles();
-                UP.UploadFile(selectImage.GetPath(), "/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
-                EditParam.Params.Add(new Param() { Key = "pro_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName() + "/" + "Pro_Image.png"});
+                UP.UploadFile(selectImage.GetPath(), "/storage/Profile/" + GSM.ReadUserName());
+                EditParam.Params.Add(new Param() { Key = "pro_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.ReadUserName() + "/" + "Pro_Image.png"});
                 StartCoroutine(DoEdit_ProImage());
                 break;
             case 3:     //OpenEditProfile
                 CloseDrawerClick();
                 EditProfile_p.gameObject.SetActive(true);
-                GSM.gameObject.GetComponent<Global_Script_Manager>().FindObjectsForEdit();
-                GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetextForEdit();
+                GSM.FindObjectsForEdit();
+                GSM.SetValuetextForEdit();
                 break;
             case 4:     //OpenMyProfile
                 CloseDrawerClick();
@@ -135,8 +140,8 @@ public class Profile_Click_Handler : MonoBehaviour
                 selectImage.OnPressShowPicker("Banner_Image.png");
                 Banner_Image.sprite = selectImage.GetSprite();
                 UploadFiles UP1 = new UploadFiles();
-                UP1.UploadFile(selectImage.GetPath(), "/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName());
-                EditParam.Params.Add(new Param() { Key = "banner_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.gameObject.GetComponent<Global_Script_Manager>().ReadUserName() + "/" + "Banner_Image.png" });
+                UP1.UploadFile(selectImage.GetPath(), "/storage/Profile/" + GSM.ReadUserName());
+                EditParam.Params.Add(new Param() { Key = "banner_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.ReadUserName() + "/" + "Banner_Image.png" });
                 StartCoroutine(DoEdit_ProImage());
                 break;
         }
@@ -190,7 +195,7 @@ public class Profile_Click_Handler : MonoBehaviour
         yield return data;
 
         Debug.Log(data.text);
-        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+        if (data.text == "Wrong" || string.IsNullOrEmpty(data.text) || data.text.Contains("<!DOCTYPE html>"))
         {
             Debug.Log("Error");
         }  
@@ -218,7 +223,7 @@ public class Profile_Click_Handler : MonoBehaviour
         yield return data;
 
         Debug.Log(data.text);
-        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+        if (data.text == "Wrong" || string.IsNullOrEmpty(data.text) || data.text.Contains("<!DOCTYPE html>"))
         {
             Debug.Log("Error");
         }
@@ -227,5 +232,24 @@ public class Profile_Click_Handler : MonoBehaviour
             Debug.Log("Upload ProImage To Database.");
         }
 
+    }
+
+    private WWWForm SendDataForPusheID()
+    {
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 15);
+        web.AddField("user", GSM.ReadUserName());
+        web.AddField("param", JsonUtility.ToJson(ParamsList));
+        return web;
+    }
+
+    private IEnumerator SavePusheID()
+    {
+        WWWForm WebGet = SendDataForPusheID();
+        WWW data = new WWW(Url, WebGet);
+        yield return data;
+
+        Debug.Log(data.text);
     }
 }

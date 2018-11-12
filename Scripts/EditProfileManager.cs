@@ -51,7 +51,7 @@ public class EditProfileManager : MonoBehaviour
 
     private IEnumerator DoEdit(int item)
     {
-        switch(item)
+        switch (item)
         {
             case 1:
                 WWWForm WebGet = SendData();
@@ -66,7 +66,7 @@ public class EditProfileManager : MonoBehaviour
                 yield return dataPass;
 
                 Debug.Log(dataPass.text);
-                if(dataPass.text == "Password Restarted")
+                if (dataPass.text == "Password Restarted")
                 {
                     PassMessage.gameObject.SetActive(true);
                     PassMessage.gameObject.GetComponent<RtlText>().color = Pass;
@@ -83,78 +83,85 @@ public class EditProfileManager : MonoBehaviour
 
     public void DoEditCaller(int itema)
     {
-        switch (itema)
+        try
         {
-            case 0:
-                if (ParamsList.Params.Exists(o => o.Key == "name"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "name"));
-                ParamsList.Params.Add(new Param() { Key = "name", Value = FullName.text});
-                break;
-            case 1:
-                if (ParamsList.Params.Exists(o => o.Key == "bio"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "bio"));
-                ParamsList.Params.Add(new Param() { Key = "bio", Value = Bio.text});
-                break;
-            case 2:
-                if (ParamsList.Params.Exists(o => o.Key == "major_field"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "major_field"));
-                ParamsList.Params.Add(new Param() { Key = "major_field", Value = Gigs.text});
-                break;
-            case 3:
-                if (ParamsList.Params.Exists(o => o.Key == "email"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "email"));
-                ParamsList.Params.Add(new Param() { Key = "email", Value = Email.text});
-                break;
-            case 4:
-                if (ParamsList.Params.Exists(o => o.Key == "phone"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "phone"));
-                ParamsList.Params.Add(new Param() { Key = "phone", Value = PhoneNumber.text});
-                break;
-            case 5:
-                if (ParamsList.Params.Exists(o => o.Key == "gender"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "gender"));
-                if (Sex.options[Sex.value].text == "ﺩﺮﻣ")
-                    ParamsList.Params.Add(new Param() { Key = "gender", Value = "مرد"});
-                else if(Sex.options[Sex.value].text == "ﻥﺯ")
-                    ParamsList.Params.Add(new Param() { Key = "gender", Value = "زن"});
-                break;
-            case 6:
-                if (ParamsList.Params.Exists(o => o.Key == "age"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "age"));
-                ParamsList.Params.Add(new Param() { Key = "age", Value = Age.options[Age.value].text});
-                break;
-            case 7:
-                if (ParamsList.Params.Exists(o => o.Key == "shaba"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "shaba"));
-                ParamsList.Params.Add(new Param() { Key = "shaba", Value = Shaba.text });
-                break;
-            case 8:
-                if (ParamsList.Params.Exists(o => o.Key == "melli"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "melli"));
-                ParamsList.Params.Add(new Param() { Key = "melli", Value = Melli.text });
-                break;
-            case 9:
-                if (ParamsList.Params.Exists(o => o.Key == "madrak_tahsili"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "madrak_tahsili"));
-                ParamsList.Params.Add(new Param() { Key = "madrak_tahsili", Value = EducationD.text });
-                break;
-            case 10:
-                if (ParamsList.Params.Exists(o => o.Key == "city"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "city"));
-                ParamsList.Params.Add(new Param() { Key = "city", Value = City.text });
-                break;
-            case 11:
-                if (ParamsList.Params.Exists(o => o.Key == "address"))
-                    ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "address"));
-                ParamsList.Params.Add(new Param() { Key = "address", Value = Address.text });
-                break;
+            switch (itema)
+            {
+                case 0:
+                    if (ParamsList.Params.Exists(o => o.Key == "name"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "name"));
+                    ParamsList.Params.Add(new Param() { Key = "name", Value = FullName.text });
+                    break;
+                case 1:
+                    if (ParamsList.Params.Exists(o => o.Key == "bio"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "bio"));
+                    ParamsList.Params.Add(new Param() { Key = "bio", Value = Bio.text });
+                    break;
+                case 2:
+                    if (ParamsList.Params.Exists(o => o.Key == "major_field"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "major_field"));
+                    ParamsList.Params.Add(new Param() { Key = "major_field", Value = Gigs.text });
+                    break;
+                case 3:
+                    if (ParamsList.Params.Exists(o => o.Key == "email"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "email"));
+                    ParamsList.Params.Add(new Param() { Key = "email", Value = Email.text });
+                    break;
+                case 4:
+                    if (ParamsList.Params.Exists(o => o.Key == "phone"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "phone"));
+                    ParamsList.Params.Add(new Param() { Key = "phone", Value = PhoneNumber.text });
+                    break;
+                case 5:
+                    if (ParamsList.Params.Exists(o => o.Key == "gender"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "gender"));
+                    if (Sex.options[Sex.value].text == "ﺩﺮﻣ")
+                        ParamsList.Params.Add(new Param() { Key = "gender", Value = "مرد" });
+                    else if (Sex.options[Sex.value].text == "ﻥﺯ")
+                        ParamsList.Params.Add(new Param() { Key = "gender", Value = "زن" });
+                    break;
+                case 6:
+                    if (ParamsList.Params.Exists(o => o.Key == "age"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "age"));
+                    ParamsList.Params.Add(new Param() { Key = "age", Value = Age.options[Age.value].text });
+                    break;
+                case 7:
+                    if (ParamsList.Params.Exists(o => o.Key == "shaba"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "shaba"));
+                    ParamsList.Params.Add(new Param() { Key = "shaba", Value = Shaba.text });
+                    break;
+                case 8:
+                    if (ParamsList.Params.Exists(o => o.Key == "melli"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "melli"));
+                    ParamsList.Params.Add(new Param() { Key = "melli", Value = Melli.text });
+                    break;
+                case 9:
+                    if (ParamsList.Params.Exists(o => o.Key == "madrak_tahsili"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "madrak_tahsili"));
+                    ParamsList.Params.Add(new Param() { Key = "madrak_tahsili", Value = EducationD.text });
+                    break;
+                case 10:
+                    if (ParamsList.Params.Exists(o => o.Key == "city"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "city"));
+                    ParamsList.Params.Add(new Param() { Key = "city", Value = City.text });
+                    break;
+                case 11:
+                    if (ParamsList.Params.Exists(o => o.Key == "address"))
+                        ParamsList.Params.Remove(ParamsList.Params.Find(o => o.Key == "address"));
+                    ParamsList.Params.Add(new Param() { Key = "address", Value = Address.text });
+                    break;
+            }
+        }
+        catch
+        {
+            Debug.Log("Error");
         }
         //StartCoroutine(DoEdit(1));
     }
 
     public void CheckEmail()
     {
-        if(Email.text.Contains('@') &&(Email.text.Contains(".com") || Email.text.Contains(".ir") || Email.text.Contains(".co")))
+        if (Email.text.Contains('@') && (Email.text.Contains(".com") || Email.text.Contains(".ir") || Email.text.Contains(".co")))
         {
             Email.image.color = Pass;
         }
@@ -166,7 +173,7 @@ public class EditProfileManager : MonoBehaviour
 
     public void CheckPhoneNumber()
     {
-        if(PhoneNumber.text.Length == 11)
+        if (PhoneNumber.text.Length == 11)
         {
             PhoneNumber.image.color = Pass;
         }
@@ -178,7 +185,7 @@ public class EditProfileManager : MonoBehaviour
 
     public void CheckPassword()
     {
-        if(NewPassword.text.Any(char.IsLower) && NewPassword.text.Any(char.IsUpper) && NewPassword.text.Any(char.IsNumber))
+        if (NewPassword.text.Any(char.IsLower) && NewPassword.text.Any(char.IsUpper) && NewPassword.text.Any(char.IsNumber))
         {
             NewPassword.image.color = Pass;
         }

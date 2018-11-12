@@ -19,7 +19,7 @@ public class MessageManager : MonoBehaviour
     private Transform[] transform, transforms1;
     private dynamic[] Mydynamics;
     private string[] name;
-
+    private Animator[] Anims;
 
     [System.Serializable]
     public class btn
@@ -103,6 +103,7 @@ public class MessageManager : MonoBehaviour
     {
         AllItems = new GameObject[ActiveSessionCount];
         name = new string[ActiveSessionCount];
+        Anims = new Animator[ActiveSessionCount];
         for (int i = 0; i < ActiveSessionCount; i++)
         {
             GameObject Items = Instantiate(ItemsPrefab) as GameObject;
@@ -142,14 +143,17 @@ public class MessageManager : MonoBehaviour
         {
             Button[] bu = (from a in Btns where a.id == i select a.Button).ToArray();
             string[] na = (from a in Btns where a.id == i select a.name).ToArray();
-            bu[0].onClick.AddListener(() => { DeleteSession(na[0]); });
+            int[] id = (from a in Btns where a.id == i select a.id).ToArray();
+            bu[0].onClick.AddListener(() => { DeleteSession(na[0], id[0]); });
+            Anims[i] = bu[0].gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<Animator>();
         }
     }
 
-    public void DeleteSession(string name)
+    public void DeleteSession(string name, int item)
     {
         Debug.Log(name);
-        StartCoroutine(DoDeleteSession(name));
+        StartCoroutine(DoDeleteSession(name, item));
+        
     }
 
     private WWWForm SendDataForDelete(string name)
@@ -162,10 +166,11 @@ public class MessageManager : MonoBehaviour
         return web;
     }
 
-    private IEnumerator DoDeleteSession(string name)
+    private IEnumerator DoDeleteSession(string name, int item)
     {
         WWWForm WebGet = SendDataForDelete(name);
         WWW data = new WWW(Url, WebGet);
+        Anims[item].SetTrigger("Delete");
         yield return data;
 
         Debug.Log(data.text);
@@ -173,10 +178,12 @@ public class MessageManager : MonoBehaviour
         if (data.text == "Wrong" || string.IsNullOrEmpty(data.text) || data.text.Contains("<!DOCTYPE html>"))
         {
             Debug.Log("Error");
+            Anims[item].SetTrigger("Error");
         }
         else
         {
             Debug.Log("Deleted");
+            Destroy(AllItems[item]);
         }
     }
 }
