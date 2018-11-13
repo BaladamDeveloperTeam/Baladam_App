@@ -27,6 +27,7 @@ public class AddSkillManager : MonoBehaviour
     public GameObject[] SkillPoints, Cost, Period;
     public Image[] image = new Image[4];
     public Animator ImagePickerAnim;
+    public ImageClass Pimg;
 
     private void Awake()
     {
@@ -201,7 +202,7 @@ public class AddSkillManager : MonoBehaviour
     {
         security.Coding coding = new security.Coding();
         int i = 0;
-        ImageClass Pimg = this.gameObject.GetComponent<ImageClass>();
+        //ImageClass Pimg = GameObject.Find("Profile_p/Skills/SkillScriptManager").gameObject.GetComponent<ImageClass>();
         if (ImageName[0] == null)
         {
             i = 0;

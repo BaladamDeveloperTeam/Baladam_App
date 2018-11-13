@@ -4,7 +4,7 @@ using UnityEngine;
 using SmsIrRestful;
 using security;
 
-public class SendSMS : MonoBehaviour
+public class SendSMS
 {
 
     private string VerficationCode;
@@ -84,15 +84,4 @@ public class SendSMS : MonoBehaviour
     {
         return VerficationCode;
     }
-
-    void Start ()
-    {
-		
-	}
-	
-
-	void Update ()
-    {
-		
-	}
 }

@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class ImageClass : MonoBehaviour
 {
 
-    [SerializeField]
-    private Unimgpicker imagePicker;
+    
+    public Unimgpicker imagePicker;
     private Sprite FinalImage;
     private string ImagePath;
     public Image image;
