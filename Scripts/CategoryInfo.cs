@@ -102,6 +102,29 @@ public class gigsInfo
 }
 
 [System.Serializable]
+public class MySkills
+{
+    public string _id;
+    public string accept;
+    public string pz_id;
+    public string status;
+    public SearchGigs_Skills skills;
+    public string[] gigs;
+    public string[] url;
+    public int comments;
+    public string title;
+    public string subtitle;
+    public string decep;
+    public double rate;
+    public string skillCode;
+    public int vip;
+    public string name;
+    public Skillexpress express;
+    public string updated_at;
+    public string created_at;
+}
+
+[System.Serializable]
 public class Skillexpress
 {
     public string more_cost;

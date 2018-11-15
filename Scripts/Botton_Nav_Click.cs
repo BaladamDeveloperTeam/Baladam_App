@@ -52,6 +52,12 @@ public class Botton_Nav_Click : MonoBehaviour
         File.Close();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
+
     public void Home_nClick()
     {
         State = 0;

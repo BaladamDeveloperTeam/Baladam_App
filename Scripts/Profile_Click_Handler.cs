@@ -82,26 +82,16 @@ public class Profile_Click_Handler : MonoBehaviour
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 
-    public void OpenDrawerClick()
-    {
-        click(0);
-        Screen.fullScreen = false;
-    }
-
-    public void CloseDrawerClick()
-    {
-        click(1);
-        Screen.fullScreen = false;
-    }
+    
 
     void click(int Item)
     {
         switch(Item)
         {
             case 0:   //OpenDrawe
-                if (Drawer.gameObject.active == true)
+                if (Drawer.gameObject.activeInHierarchy == true)
                     DrawerAnim.SetTrigger("Start");
-                if (Drawer.gameObject.active == false)
+                if (Drawer.gameObject.activeInHierarchy == false)
                 Drawer.gameObject.SetActive(true);
                 Debug.Log("Open");
                 //BlackPanelAnim.SetTrigger("Start");
@@ -127,6 +117,7 @@ public class Profile_Click_Handler : MonoBehaviour
                 EditProfile_p.gameObject.SetActive(true);
                 Messages_p.gameObject.SetActive(false);
                 AddSkill_p.gameObject.SetActive(false);
+                Skills_p.gameObject.SetActive(false);
                 GSM.FindObjectsForEdit();
                 GSM.SetValuetextForEdit();
                 break;
@@ -134,12 +125,13 @@ public class Profile_Click_Handler : MonoBehaviour
                 CloseDrawerClick();
                 EditProfile_p.gameObject.SetActive(false);
                 AddSkill_p.gameObject.SetActive(false);
+                Skills_p.gameObject.SetActive(false);
                 Messages_p.gameObject.SetActive(false);
                 break;
-            case 5:     //OpenAddSkill
+            case 5:     //OpenSkills
                 CloseDrawerClick();
                 //Skills_p.gameObject.SetActive(false);
-                AddSkill_p.gameObject.SetActive(true);
+                Skills_p.gameObject.SetActive(true);
                 EditProfile_p.gameObject.SetActive(false);
                 Messages_p.gameObject.SetActive(false);
                 break;
@@ -160,12 +152,22 @@ public class Profile_Click_Handler : MonoBehaviour
                 CloseDrawerClick();
                 Messages_p.gameObject.SetActive(true);
                 EditProfile_p.gameObject.SetActive(false);
-                AddSkill_p.gameObject.SetActive(false);
+                Skills_p.gameObject.SetActive(false);
                 break;
-            case 9:     //OpenSkills
-                Skills_p.gameObject.SetActive(true);
+            case 9:     //OpenAddSkills
+                AddSkill_p.gameObject.SetActive(true);
                 break;
         }
+    }
+
+    public void OpenDrawerClick()
+    {
+        click(0);
+    }
+
+    public void CloseDrawerClick()
+    {
+        click(1);
     }
 
     public void SelectPro_ImageBtn()

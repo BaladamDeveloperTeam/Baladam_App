@@ -151,8 +151,8 @@ public class Search_panel_Handler : MonoBehaviour
                     US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<RtlText>().text = SearchedResult[0].user[i].username;
                     US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.GetComponent<RtlText>().text = SearchedResult[0].user[i].name;
                     US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.GetComponent<RtlText>().text = "سطح : " + SearchedResult[0].user[i].lvl;
-                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.GetComponent<RtlText>().text = "امتیاز : " + SearchedResult[0].user[i].rate.ToString();
-                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(4).gameObject.GetComponent<RtlText>().text = "پروژه های تکمیل شده : " + SearchedResult[0].user[i].f_prj.ToString();
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.GetComponent<RtlText>().text = "پروژه های تکمیل شده : " + SearchedResult[0].user[i].f_prj.ToString();
+                    US[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(4).gameObject.GetComponent<RtlText>().text = "امتیاز : " + SearchedResult[0].user[i].rate.ToString();
                 }
             }
             //TODO:improve Performance
