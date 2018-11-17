@@ -19,6 +19,10 @@ public class SkillsPanelManager : MonoBehaviour
     public MySkills[] UserSkills;
     public GameObject Loading;
     public Transform[] MySkilltransform_p, MySkilltransform;
+    [HideInInspector]
+    public string SelectedSkillCode;
+    [HideInInspector]
+    public int SelectedID;
 
     [System.Serializable]
     public class btn
@@ -26,6 +30,7 @@ public class SkillsPanelManager : MonoBehaviour
         public int id;
         public string _id;
         public string name;
+        public string SkillCode;
         public Button Button;
     }
 
@@ -95,14 +100,15 @@ public class SkillsPanelManager : MonoBehaviour
             MySkilltransform[1].gameObject.GetComponent<RtlText>().text = UserSkills[i].skills.box[0].cost + " ت";
             MySkilltransform[2].gameObject.GetComponent<RtlText>().text = UserSkills[i].name;
             MySkilltransform[4].gameObject.GetComponent<RtlText>().text = UserSkills[i].rate.ToString();
-            Btns.Add(new btn { id = i, _id = UserSkills[i]._id, name = UserSkills[i].name, Button = AllItems[i].gameObject.GetComponent<Button>() });
+            Btns.Add(new btn { id = i, _id = UserSkills[i]._id, name = UserSkills[i].name, SkillCode = UserSkills[i].skillCode, Button = AllItems[i].gameObject.GetComponent<Button>() });
         }
         for (int i = 0; i < UserSkills.Length; i++)
         {
             Button[] bu = (from a in Btns where a.id == i select a.Button).ToArray();
             string[] _id = (from a in Btns where a.id == i select a._id).ToArray();
+            string[] SkillCode = (from a in Btns where a.id == i select a.SkillCode).ToArray();
             int[] id = (from a in Btns where a.id == i select a.id).ToArray();
-            bu[0].onClick.AddListener(() => { ShowSkill(_id[0]); });
+            bu[0].onClick.AddListener(() => { ShowSkill(_id[0], SkillCode[0], id[0]); });
         }
         GameObject AddNew = Instantiate(AddNewSkillPrefab) as GameObject;
         AddNew.transform.SetParent(GameObject.Find("Skills/ShowAllSkills/Scroll View/Viewport/Content").transform);
@@ -140,8 +146,9 @@ public class SkillsPanelManager : MonoBehaviour
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 
-    public void ShowSkill(string _id)
+    public void ShowSkill(string _id, string SkillCode, int id)
     {
+        SelectedSkillCode = SkillCode;
         Debug.Log(_id);
     }
 }
