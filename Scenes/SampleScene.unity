@@ -29048,7 +29048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &846456261
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30094,10 +30094,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b7d66319467c14f9a394f9ed8e4efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectCategory: {fileID: 0}
-  SelectSubCategory: {fileID: 0}
+  SelectCategory: {fileID: 973054008}
+  SelectSubCategory: {fileID: 1105018309}
   ParamsList:
     Params: []
+  SkillPointPrefab: {fileID: 1692801024431730, guid: 2d2e85fba9b554141a535411e06a0428,
+    type: 2}
 --- !u!1 &872745728
 GameObject:
   m_ObjectHideFlags: 0
@@ -39984,6 +39986,7 @@ MonoBehaviour:
   AddNewSkillPrefab: {fileID: 1499535979405724, guid: efa7aacc72132e4468ca7269229ebae9,
     type: 2}
   AddSkill_p: {fileID: 718102490}
+  EditSkills_p: {fileID: 846456260}
   UserSkills: []
   Loading: {fileID: 41776527}
   MySkilltransform_p: []

@@ -15,7 +15,7 @@ public class SkillsPanelManager : MonoBehaviour
     private GameObject[] AllItems;
     private GameObject ShowPlace;
     private Sprite Temp;
-    public GameObject MySkillPrefab, AddNewSkillPrefab, AddSkill_p;
+    public GameObject MySkillPrefab, AddNewSkillPrefab, AddSkill_p, EditSkills_p;
     public MySkills[] UserSkills;
     public GameObject Loading;
     public Transform[] MySkilltransform_p, MySkilltransform;
@@ -149,6 +149,8 @@ public class SkillsPanelManager : MonoBehaviour
     public void ShowSkill(string _id, string SkillCode, int id)
     {
         SelectedSkillCode = SkillCode;
+        SelectedID = id;
+        EditSkills_p.gameObject.SetActive(true);
         Debug.Log(_id);
     }
 }

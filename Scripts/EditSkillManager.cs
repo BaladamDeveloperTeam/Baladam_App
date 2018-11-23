@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UPersian.Components;
 
 public class EditSkillManager : MonoBehaviour
 {
@@ -13,10 +15,13 @@ public class EditSkillManager : MonoBehaviour
     private string SubCategoryJson = "";
     private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p
         , ExpressCost, ExpressTime, Loading, AddSkillMessage, ImagePicker_p, ImagePicker_Content, ImagePickerNumber;
+    private GameObject[] Boxs;
     public Dropdown SelectCategory, SelectSubCategory;
     private Toggle IsExpress;
     private SkillsPanelManager SPM;
     public ParamList ParamsList;
+    private Transform[] SkillBoxItem;
+    public GameObject SkillPointPrefab;
 
     private void Awake()
     {
@@ -26,7 +31,7 @@ public class EditSkillManager : MonoBehaviour
             SelectCategory.options.Add(new Dropdown.OptionData() { text = CatText });
         }
         FindObject();
-        FillGameObject();
+        //FillGameObject();
     }
 
     private void FindObject()
@@ -37,9 +42,8 @@ public class EditSkillManager : MonoBehaviour
         SkillSubCategory = GameObject.Find(ObjectPath + "SelectSubCategory_p/SelectSubCategory");
         SkillDescription = GameObject.Find(ObjectPath + "InsertDescription_p/InsertDescription");
         Express_p = GameObject.Find(ObjectPath + "Express_p");
-        ExpressCost = GameObject.Find(ObjectPath + "InsertExpressCost_p/InsertExpressCost");
-        ExpressTime = GameObject.Find(ObjectPath + "InsertExpressTime_p/InsertExpressTime");
-        Express_p.gameObject.SetActive(false);
+        ExpressCost = GameObject.Find(ObjectPath + "Express_p/InsertExpressCost_p/InsertExpressCost");
+        ExpressTime = GameObject.Find(ObjectPath + "Express_p/InsertExpressTime_p/InsertExpressTime");
         Loading = GameObject.Find("Skills/EditSkill_p/WaitForAddSkill");
         Loading.gameObject.SetActive(false);
         AddSkillMessage = GameObject.Find(ObjectPath + "AddSkillMessage");
@@ -49,6 +53,7 @@ public class EditSkillManager : MonoBehaviour
         //ImagePickerNumber = GameObject.Find("ImagePicker_p/Bottom/ImageCounter");
         //ImagePicker_p.gameObject.SetActive(false);
         SPM = GameObject.Find("Profile_p/Skills/Skills_p Manager").gameObject.GetComponent<SkillsPanelManager>();
+        Boxs = GameObject.FindGameObjectsWithTag("SkillBox");
 
         IsExpress = GameObject.Find("IsExpress_t").GetComponent<Toggle>();
     }
@@ -56,6 +61,71 @@ public class EditSkillManager : MonoBehaviour
     private void FillGameObject()
     {
         SkillName.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].name;
+        SkillCategory.gameObject.GetComponent<Dropdown>().value = ChangeCategoryTextToID(SPM.UserSkills[SPM.SelectedID].title);
+        SkillSubCategory.gameObject.GetComponentsInChildren<RtlText>()[0].text = SPM.UserSkills[SPM.SelectedID].subtitle;
+        for(int i = 0; i < SPM.UserSkills[SPM.SelectedID].skills.box[0].options.Length - 1; i++)
+        {
+            GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
+            Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+            Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
+            Items.transform.SetParent(GameObject.Find("SkillBox/SkillPoints").transform);
+        }
+        for (int i = 0; i < SPM.UserSkills[SPM.SelectedID].skills.box[1].options.Length - 1; i++)
+        {
+            GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
+            Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+            Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
+            Items.transform.SetParent(GameObject.Find("SkillBox(1)/SkillPoints").transform);
+        }
+        for (int i = 0; i < SPM.UserSkills[SPM.SelectedID].skills.box[2].options.Length - 1; i++)
+        {
+            GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
+            Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+            Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
+            Items.transform.SetParent(GameObject.Find("SkillBox(2)/SkillPoints").transform);
+        }
+        for (int i = 0; i < Boxs.Length; i++)
+        {
+            SkillBoxItem = Boxs[i].transform.Cast<Transform>().ToArray();
+            Transform SkillPoints_p = (from a in SkillBoxItem where a.gameObject.name == "SkillPoints" select a).FirstOrDefault();
+        }
+        SkillDescription.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].decep;
+        ExpressCost.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].express.more_cost;
+        ExpressTime.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].express.more_time;
+        Express_p.gameObject.SetActive(false);
+    }
+
+    private int ChangeCategoryTextToID(string name)
+    {
+        switch(name)
+        {
+            case "طراحی و گرافیک":
+                return 1;
+                break;
+            case "تکنولوژی و برنامه نویسی":
+                return 2;
+                break;
+            case "بازاریابی":
+                return 3;
+                break;
+            case "نوشتنی ها و ترجمه":
+                return 4;
+                break;
+            case "ویدیو و انیمیشن":
+                return 5;
+                break;
+            case "موسیقی و صدا":
+                return 6;
+                break;
+            case "تجارت و کسب و کار":
+                return 7;
+                break;
+            case "تفریح و سرگرمی":
+                return 8;
+                break;
+            default:
+                return 0;
+        }
     }
 
     private WWWForm SendData()
