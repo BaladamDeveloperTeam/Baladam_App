@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class EditSkillManager : MonoBehaviour
     private string SubCategoryJson = "";
     private GameObject SkillName, SkillCategory, SkillSubCategory, SkillDescription, Express_p
         , ExpressCost, ExpressTime, Loading, AddSkillMessage, ImagePicker_p, ImagePicker_Content, ImagePickerNumber;
-    private GameObject[] Boxs;
+    public GameObject[] Boxs;
     public Dropdown SelectCategory, SelectSubCategory;
     private Toggle IsExpress;
     private SkillsPanelManager SPM;
@@ -61,71 +62,73 @@ public class EditSkillManager : MonoBehaviour
     private void FillGameObject()
     {
         SkillName.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].name;
-        SkillCategory.gameObject.GetComponent<Dropdown>().value = ChangeCategoryTextToID(SPM.UserSkills[SPM.SelectedID].title);
+        SkillCategory.gameObject.GetComponent<Dropdown>().value = Convert.ToInt32(SPM.UserSkills[SPM.SelectedID].title);
+        StartCoroutine(GetSubCategorys());
         SkillSubCategory.gameObject.GetComponentsInChildren<RtlText>()[0].text = SPM.UserSkills[SPM.SelectedID].subtitle;
         for(int i = 0; i < SPM.UserSkills[SPM.SelectedID].skills.box[0].options.Length - 1; i++)
-        {
+        { 
             GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
             Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
             Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
             Items.transform.SetParent(GameObject.Find("SkillBox/SkillPoints").transform);
+            Items.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
+        SkillBoxItem = Boxs[0].transform.Cast<Transform>().ToArray();
+        Transform SkillPoints_p0 = (from a in SkillBoxItem where a.gameObject.name == "SkillPoints" select a).FirstOrDefault();
+        Boxs[0].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(Boxs[0].gameObject.GetComponent<RectTransform>().sizeDelta.x, 480 + ((SPM.UserSkills[SPM.SelectedID].skills.box[0].options.Length - 1) * 100));
+        CalHeight(SPM.UserSkills[SPM.SelectedID].skills.box[0].options.Length, SkillPoints_p0.gameObject);
+        Boxs[0].gameObject.GetComponent<SkillBoxManager>().SetSkillPointNumber(SPM.UserSkills[SPM.SelectedID].skills.box[0].options.Length);
         for (int i = 0; i < SPM.UserSkills[SPM.SelectedID].skills.box[1].options.Length - 1; i++)
         {
             GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
             Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
             Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
             Items.transform.SetParent(GameObject.Find("SkillBox(1)/SkillPoints").transform);
+            Items.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
+        SkillBoxItem = Boxs[1].transform.Cast<Transform>().ToArray();
+        Transform SkillPoints_p1 = (from a in SkillBoxItem where a.gameObject.name == "SkillPoints" select a).FirstOrDefault();
+        Boxs[1].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(Boxs[1].gameObject.GetComponent<RectTransform>().sizeDelta.x, 480 + ((SPM.UserSkills[SPM.SelectedID].skills.box[1].options.Length - 1) * 100));
+        CalHeight(SPM.UserSkills[SPM.SelectedID].skills.box[1].options.Length, SkillPoints_p1.gameObject);
+        Boxs[1].gameObject.GetComponent<SkillBoxManager>().SetSkillPointNumber(SPM.UserSkills[SPM.SelectedID].skills.box[1].options.Length);
         for (int i = 0; i < SPM.UserSkills[SPM.SelectedID].skills.box[2].options.Length - 1; i++)
         {
             GameObject Items = Instantiate(SkillPointPrefab) as GameObject;
             Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
             Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
             Items.transform.SetParent(GameObject.Find("SkillBox(2)/SkillPoints").transform);
+            Items.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
+        SkillBoxItem = Boxs[2].transform.Cast<Transform>().ToArray();
+        Transform SkillPoints_p2 = (from a in SkillBoxItem where a.gameObject.name == "SkillPoints" select a).FirstOrDefault();
+        Boxs[2].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(Boxs[2].gameObject.GetComponent<RectTransform>().sizeDelta.x, 480 + ((SPM.UserSkills[SPM.SelectedID].skills.box[2].options.Length - 1) * 100));
+        CalHeight(SPM.UserSkills[SPM.SelectedID].skills.box[2].options.Length, SkillPoints_p2.gameObject);
+        Boxs[2].gameObject.GetComponent<SkillBoxManager>().SetSkillPointNumber(SPM.UserSkills[SPM.SelectedID].skills.box[2].options.Length);
         for (int i = 0; i < Boxs.Length; i++)
         {
             SkillBoxItem = Boxs[i].transform.Cast<Transform>().ToArray();
             Transform SkillPoints_p = (from a in SkillBoxItem where a.gameObject.name == "SkillPoints" select a).FirstOrDefault();
+            InputField[] InsertSkillPoints = SkillPoints_p.gameObject.GetComponentsInChildren<InputField>();
+            for(int j = 0; j < InsertSkillPoints.Length; j++)
+            {
+                InsertSkillPoints[j].text = SPM.UserSkills[SPM.SelectedID].skills.box[i].options[j];
+            }
+            Transform InsertSkillCost_p = (from a in SkillBoxItem where a.gameObject.name == "InsertSkillCost_p" select a).FirstOrDefault();
+            InsertSkillCost_p.gameObject.GetComponentInChildren<InputField>().text = SPM.UserSkills[SPM.SelectedID].skills.box[i].cost;
+            Transform InsertSkillPeriod_p = (from a in SkillBoxItem where a.gameObject.name == "InsertSkillPeriod_p" select a).FirstOrDefault();
+            InsertSkillPeriod_p.gameObject.GetComponentInChildren<InputField>().text = SPM.UserSkills[SPM.SelectedID].skills.box[i].time;
         }
         SkillDescription.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].decep;
         ExpressCost.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].express.more_cost;
         ExpressTime.gameObject.GetComponent<InputField>().text = SPM.UserSkills[SPM.SelectedID].express.more_time;
+        FixUnityBug();
         Express_p.gameObject.SetActive(false);
     }
 
-    private int ChangeCategoryTextToID(string name)
+    public void CalHeight(int ItemCount, GameObject SkillPoints)
     {
-        switch(name)
-        {
-            case "طراحی و گرافیک":
-                return 1;
-                break;
-            case "تکنولوژی و برنامه نویسی":
-                return 2;
-                break;
-            case "بازاریابی":
-                return 3;
-                break;
-            case "نوشتنی ها و ترجمه":
-                return 4;
-                break;
-            case "ویدیو و انیمیشن":
-                return 5;
-                break;
-            case "موسیقی و صدا":
-                return 6;
-                break;
-            case "تجارت و کسب و کار":
-                return 7;
-                break;
-            case "تفریح و سرگرمی":
-                return 8;
-                break;
-            default:
-                return 0;
-        }
+        int ItemHeight = 100;
+        SkillPoints.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(SkillPoints.gameObject.GetComponent<RectTransform>().sizeDelta.x, ItemHeight * ItemCount);
     }
 
     private WWWForm SendData()
@@ -193,6 +196,26 @@ public class EditSkillManager : MonoBehaviour
         catch
         {
             Debug.Log("Error");
+        }
+    }
+
+    private void FixUnityBug()
+    {
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x - 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y - 0.01f);
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x + 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y + 0.01f);
+    }
+
+
+    public void IsExpressCheack()
+    {
+        switch (IsExpress.isOn)
+        {
+            case true:
+                Express_p.gameObject.SetActive(true);
+                break;
+            default:
+                Express_p.gameObject.SetActive(false);
+                break;
         }
     }
 

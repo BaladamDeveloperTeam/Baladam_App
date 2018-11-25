@@ -19,7 +19,12 @@ public class SkillBoxManager : MonoBehaviour
         //SkillNumber.text = "بسته شماره ی " + SkillBoxs.Length;
     }
 
-    private void CalHeight(int ItemCount)
+    public void SetSkillPointNumber(int Count)
+    {
+        SkillPointNumber = Count;
+    }
+
+    public void CalHeight(int ItemCount)
     {
         int ItemHeight = 100;
         SkillPoints.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(SkillPoints.gameObject.GetComponent<RectTransform>().sizeDelta.x, ItemHeight * ItemCount);
