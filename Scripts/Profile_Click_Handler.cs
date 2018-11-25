@@ -33,10 +33,8 @@ public class Profile_Click_Handler : MonoBehaviour
     {
         IsSeller();
         StartCoroutine(LoadProfileImage());
-#if UNITY_ANDROID
         ParamsList.Params.Add(new Param() { Key = "Pushe_Id", Value = Pushe.GetPusheId() });
         StartCoroutine(SavePusheID());
-#endif
     }
 
     void Update ()

@@ -158,7 +158,7 @@ public class EditSkillManager : MonoBehaviour
         }
     }
 
-    private WWWForm SendDataFomEdit()
+    private WWWForm SendDataForEdit()
     {
         WWWForm web = new WWWForm();
         web.AddField("Master", masterKey);
@@ -168,9 +168,9 @@ public class EditSkillManager : MonoBehaviour
         return web;
     }
 
-    private IEnumerator DoEditSkill(int item)
+    private IEnumerator DoEditSkill()
     {
-        WWWForm WebGet = SendDataFomEdit();
+        WWWForm WebGet = SendDataForEdit();
         WWW data = new WWW(Url, WebGet);
         yield return data;
 
@@ -197,6 +197,29 @@ public class EditSkillManager : MonoBehaviour
         {
             Debug.Log("Error");
         }
+    }
+
+    private WWWForm SendDataForDelete()
+    {
+        WWWForm web = new WWWForm();
+        web.AddField("Master", masterKey);
+        web.AddField("Chooser", 18);
+        web.AddField("skillcode", SPM.SelectedSkillCode);
+        return web;
+    }
+
+    private IEnumerator DoDeleteSkill()
+    {
+        WWWForm WebGet = SendDataForDelete();
+        WWW data = new WWW(Url, WebGet);
+        yield return data;
+
+        Debug.Log(data.text);
+    }
+
+    public void Delete()
+    {
+        StartCoroutine(DoDeleteSkill());
     }
 
     private void FixUnityBug()
