@@ -41,7 +41,7 @@ public class Register : MonoBehaviour
 
     private void Update()
     {
-        if(StartTimer == true)
+        if (StartTimer == true)
         {
             Second -= Time.deltaTime;
             if (Second <= 0 && Min >= 1)
@@ -57,7 +57,7 @@ public class Register : MonoBehaviour
 
     public void ActiveBtn()
     {
-        if(AceptRules.isOn == true)
+        if (AceptRules.isOn == true)
         {
             RegesterBtn.enabled = true;
             RegesterBtn.interactable = true;
@@ -71,7 +71,7 @@ public class Register : MonoBehaviour
 
     public bool CheckPassword()
     {
-        if(Username.text.Length < 5)
+        if (Username.text.Length < 5)
         {
             ErrorText.text = "نام کاربری باید حداقل دارای 5 حرف باشد.";
             return false;
@@ -125,7 +125,7 @@ public class Register : MonoBehaviour
             if (data.text == "user" || data.text == "" || data.text == null ||
                 data.text.Contains("<!DOCTYPE html>") || data.text == "duplucate")
                 ErrorText.gameObject.SetActive(true);
-            else if(data.text == "Register")
+            else if (data.text == "Register")
             {
                 //SignIn signIn = new SignIn();
                 //signIn.DoSingInOther(Username.text, Password2.text);
@@ -176,32 +176,32 @@ public class Register : MonoBehaviour
     private IEnumerator DoSingIn()
     {
 
-            WWWForm WebGet = SendDataLogin();
-            WWW data = new WWW(Url, WebGet);
-            Loading.gameObject.SetActive(true);
-            yield return data;
-            Loading.gameObject.SetActive(false);
+        WWWForm WebGet = SendDataLogin();
+        WWW data = new WWW(Url, WebGet);
+        Loading.gameObject.SetActive(true);
+        yield return data;
+        Loading.gameObject.SetActive(false);
 
-            ReceivedJson = data.text;
-            Debug.Log(data.text);
-            if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
-                ErrorText.gameObject.SetActive(true);
-            else
-            {
-                BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-                GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
-                //if (RememberMe.isOn == true)
-                //{
-                //    Coding coding = new Coding();
-                //    File.Open(Path);
-                //    File.WriteValue("UserSignIn", "IsSignIn", 1);
-                //    File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);
-                //    File.WriteValue("UserSignIn", "Username", Username.text);
-                //    File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text));
-                //    File.Close();
-                //}
+        ReceivedJson = data.text;
+        Debug.Log(data.text);
+        if (data.text == "Wrong" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
+            ErrorText.gameObject.SetActive(true);
+        else
+        {
+            BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
+            GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+            //if (RememberMe.isOn == true)
+            //{
+            //    Coding coding = new Coding();
+            //    File.Open(Path);
+            //    File.WriteValue("UserSignIn", "IsSignIn", 1);
+            //    File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);
+            //    File.WriteValue("UserSignIn", "Username", Username.text);
+            //    File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text));
+            //    File.Close();
+            //}
 
-            }
+        }
     }
 
     public void DoRegisterBtn()
@@ -226,8 +226,8 @@ public class Register : MonoBehaviour
             Verifi_p.gameObject.SetActive(true);
             //if (sendsms.GetCredit() > 0)
             {
-                //sendsms.sendSMSRegisterVerification(Phone.text);
-                StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
+                sendsms.sendSMSRegisterVerification(Phone.text, global::SendSMS.SendKind.Normal);
+                //StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
                 VerifiCode = sendsms.ReadVerfi();
                 Verifi_p.gameObject.SetActive(true);
                 StartTimer = true;

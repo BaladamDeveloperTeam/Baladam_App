@@ -8,31 +8,64 @@ public class SendSMS
 {
 
     private string VerficationCode;
+    public enum SendKind { Normal, Fast};
 
-    public void sendSMSRegisterVerification(string PhoneNumber)
+    public void sendSMSRegisterVerification(string PhoneNumber, SendKind sendKind)
     {
-        Coding coding = new Coding();
-        Random rnd = new Random();
-        int number = Random.Range(11111, 99999);
-        VerficationCode = coding.Md5Sum(number.ToString());
-
-        var token = new Token().GetToken("174e6ec07ea335dd486ec0", "mohada01");
-
-        var restVerificationCode = new RestVerificationCode()
+        if (sendKind == SendKind.Fast)
         {
-            Code = number.ToString(),
-            MobileNumber = PhoneNumber
-        };
+            Coding coding = new Coding();
+            Random rnd = new Random();
+            int number = Random.Range(11111, 99999);
+            VerficationCode = coding.Md5Sum(number.ToString());
 
-        var restVerificationCodeRespone = new VerificationCode().Send(token, restVerificationCode);
+            var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
 
-        if (restVerificationCodeRespone.IsSuccessful)
-        {
-            Debug.Log("Send");
+            var restVerificationCode = new RestVerificationCode()
+            {
+                Code = number.ToString(),
+                MobileNumber = PhoneNumber
+            };
+
+            var restVerificationCodeRespone = new VerificationCode().Send(token, restVerificationCode);
+
+            if (restVerificationCodeRespone.IsSuccessful)
+            {
+                Debug.Log("Send");
+            }
+            else
+            {
+                Debug.Log("Error");
+            }
         }
-        else
+        else if(sendKind == SendKind.Normal)
         {
-            Debug.Log("Error");
+            Coding coding = new Coding();
+            Random rnd = new Random();
+            int number = Random.Range(11111, 99999);
+            VerficationCode = coding.Md5Sum(number.ToString());
+
+            var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
+
+            var messageSendObject = new MessageSendObject()
+            {
+                Messages = new List<string> { "بلدم ! \n کاربر گرامی با تشکر از ثبت نام شما کد ثبت نام :" + number.ToString() }.ToArray(),
+                MobileNumbers = new List<string> { PhoneNumber }.ToArray(),
+                LineNumber = "30004747473203",
+                SendDateTime = null,
+                CanContinueInCaseOfError = true
+            };
+
+            MessageSendResponseObject messageSendResponseObject = new MessageSend().Send(token, messageSendObject);
+
+            if (messageSendResponseObject.IsSuccessful)
+            {
+                Debug.Log("Send");
+            }
+            else
+            {
+                Debug.Log("Error");
+            }
         }
     }
 
@@ -44,7 +77,7 @@ public class SendSMS
         int number = Random.Range(11111, 99999);
         VerficationCode = coding.Md5Sum(number.ToString());
 
-        var token = new Token().GetToken("174e6ec07ea335dd486ec0", "mohada01");
+        var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
 
         var ultraFastSend = new UltraFastSend()
         {
@@ -74,7 +107,7 @@ public class SendSMS
 
     public int GetCredit()
     {
-        var token = new Token().GetToken("174e6ec07ea335dd486ec0", "mohada01");
+        var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
 
         CreditResponse credit = new Credit().GetCredit(token);
         return (int)credit.Credit;

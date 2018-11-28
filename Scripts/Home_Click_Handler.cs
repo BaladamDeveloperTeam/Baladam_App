@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmsIrRestful;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -45,8 +46,33 @@ public class Home_Click_Handler : MonoBehaviour
         c.Params.Add(new Param() { Key = "346345", Value = "1234"});
         c.Params.Add(new Param() { Key = "nasdgfgsme", Value = "wetrewt"});
         c.Params.Add(new Param() { Key = "ghdfhdfghfd", Value = "543453hgjkgugu"});
-        var a =  JsonUtility.ToJson(c);
-        
+        var a =  JsonUtility.ToJson(c);  
+    }
+
+    public void send()
+    {
+        var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
+
+        var messageSendObject = new MessageSendObject()
+        {
+            Messages = new List<string> { "بلدم!" +
+            "کد فعال سازی شما \n /n 22222" }.ToArray(),
+            MobileNumbers = new List<string> { "09197279882" }.ToArray(),
+            LineNumber = "30004747473203",
+            SendDateTime = null,
+            CanContinueInCaseOfError = true
+        };
+
+        MessageSendResponseObject messageSendResponseObject = new MessageSend().Send(token, messageSendObject);
+
+        if (messageSendResponseObject.IsSuccessful)
+        {
+            Debug.Log("Send");
+        }
+        else
+        {
+            Debug.Log("Error");
+        }
     }
 
 }
