@@ -68,7 +68,22 @@ public class UserInfo
     public int wallet;
     public string updated_at;
     public string created_at;
-    public Session session;
+    public Session[] session;
+    public MySkills[] skill;
+    public Buy buy;
+    public Sell sell;
+}
+
+[System.Serializable]
+public class Buy
+{
+}
+
+
+[System.Serializable]
+public class Sell
+{
+
 }
 
 [System.Serializable]
@@ -172,7 +187,7 @@ public class Skill
     public string SkillCategory;
     public string SkillSubCategory;
     public string SkillDescription;
-    public string[] ImageName = { "", "", "", ""};
+    public string[] ImageName = { "", "", "", "" };
     public SkillPoint[] SkillPoints = new SkillPoint[3];
     public int IsExpress;
     public int ExpressCost;
@@ -250,6 +265,16 @@ public class Param
 public class ParamList
 {
     public List<Param> Params = new List<Param>();
+}
+
+[System.Serializable]
+public class SkillButton
+{
+    public int id;
+    public string _id;
+    public string name;
+    public string SkillCode;
+    public UnityEngine.UI.Button Button;
 }
 
 

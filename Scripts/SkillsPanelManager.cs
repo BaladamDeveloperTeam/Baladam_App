@@ -24,17 +24,7 @@ public class SkillsPanelManager : MonoBehaviour
     [HideInInspector]
     public int SelectedID;
 
-    [System.Serializable]
-    public class btn
-    {
-        public int id;
-        public string _id;
-        public string name;
-        public string SkillCode;
-        public Button Button;
-    }
-
-    public List<btn> Btns = new List<btn>();
+    public List<SkillButton> SkillButton = new List<SkillButton>();
 
 
     void Awake()
@@ -100,14 +90,14 @@ public class SkillsPanelManager : MonoBehaviour
             MySkilltransform[1].gameObject.GetComponent<RtlText>().text = UserSkills[i].skills.box[0].cost + " ت";
             MySkilltransform[2].gameObject.GetComponent<RtlText>().text = UserSkills[i].name;
             MySkilltransform[4].gameObject.GetComponent<RtlText>().text = UserSkills[i].rate.ToString();
-            Btns.Add(new btn { id = i, _id = UserSkills[i]._id, name = UserSkills[i].name, SkillCode = UserSkills[i].skillCode, Button = AllItems[i].gameObject.GetComponent<Button>() });
+            SkillButton.Add(new SkillButton { id = i, _id = UserSkills[i]._id, name = UserSkills[i].name, SkillCode = UserSkills[i].skillCode, Button = AllItems[i].gameObject.GetComponent<Button>() });
         }
         for (int i = 0; i < UserSkills.Length; i++)
         {
-            Button[] bu = (from a in Btns where a.id == i select a.Button).ToArray();
-            string[] _id = (from a in Btns where a.id == i select a._id).ToArray();
-            string[] SkillCode = (from a in Btns where a.id == i select a.SkillCode).ToArray();
-            int[] id = (from a in Btns where a.id == i select a.id).ToArray();
+            Button[] bu = (from a in SkillButton where a.id == i select a.Button).ToArray();
+            string[] _id = (from a in SkillButton where a.id == i select a._id).ToArray();
+            string[] SkillCode = (from a in SkillButton where a.id == i select a.SkillCode).ToArray();
+            int[] id = (from a in SkillButton where a.id == i select a.id).ToArray();
             bu[0].onClick.AddListener(() => { ShowSkill(_id[0], SkillCode[0], id[0]); });
         }
         GameObject AddNew = Instantiate(AddNewSkillPrefab) as GameObject;

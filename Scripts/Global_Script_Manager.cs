@@ -12,6 +12,8 @@ public class Global_Script_Manager : MonoBehaviour
     private UserInfo[] userinfo;
     [HideInInspector]
     public CategoryNames CatInfo;
+    private string SelectedSkillCode = "No Item Selected";
+    private string SelectedSellerID;
 
     void Awake()
     {
@@ -34,6 +36,16 @@ public class Global_Script_Manager : MonoBehaviour
     public void SetCategoryName(CategoryNames CatInfo)
     {
         this.CatInfo = CatInfo;
+    }
+
+    public void SetSkillCode(string SkillCode)
+    {
+        this.SelectedSkillCode = SkillCode;
+    }
+
+    public void SetSellerID(string SellerID)
+    {
+        this.SelectedSellerID = SellerID;
     }
 
     private void FindObjects()
@@ -133,9 +145,19 @@ public class Global_Script_Manager : MonoBehaviour
         return userinfo[0].pro_image;
     }
 
+    public string ReadUserID()
+    {
+        return userinfo[0]._id;
+    }
+
     public string ReadIsSeller()
     {
         return userinfo[0].is_seller.ToString();
+    }
+
+    public string ReadSelectedSkillCode()
+    {
+        return SelectedSkillCode;
     }
 
     //public void SetOldSession(Session[] session)
