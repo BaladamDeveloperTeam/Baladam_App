@@ -18,7 +18,6 @@ public class Home_Click_Handler : MonoBehaviour
     private string GetJson = "";
     public Text PlaceHolder;
     private GetCat GetCat;
-    private Sprite Temp;
     public Transform[] MySkilltransform_p, MySkilltransform;
     private Global_Script_Manager GSM;
 
@@ -96,7 +95,6 @@ public class Home_Click_Handler : MonoBehaviour
             if (UserSkills[i].url.Length > 0)
             {
                 StartCoroutine(GetImageFromURL(UserSkills[i].url[0]));
-                MySkilltransform[0].gameObject.GetComponent<Image>().sprite = Temp;
             }
             MySkilltransform[1].gameObject.GetComponent<RtlText>().text = UserSkills[i].skills.box[0].cost + " ت";
             MySkilltransform[2].gameObject.GetComponent<RtlText>().text = UserSkills[i].name;
@@ -105,11 +103,11 @@ public class Home_Click_Handler : MonoBehaviour
         }
         for (int i = 0; i < UserSkills.Length; i++)
         {
-            Button[] bu = (from a in SkillButton where a.id == i select a.Button).ToArray();
-            string[] _id = (from a in SkillButton where a.id == i select a._id).ToArray();
-            string[] SkillCode = (from a in SkillButton where a.id == i select a.SkillCode).ToArray();
-            int[] id = (from a in SkillButton where a.id == i select a.id).ToArray();
-            bu[0].onClick.AddListener(() => { ShowSkill(_id[0], SkillCode[0], id[0]); });
+            Button bu = (from a in SkillButton where a.id == i select a.Button).FirstOrDefault();
+            string _id = (from a in SkillButton where a.id == i select a._id).FirstOrDefault();
+            string SkillCode = (from a in SkillButton where a.id == i select a.SkillCode).FirstOrDefault();
+            int id = (from a in SkillButton where a.id == i select a.id).FirstOrDefault();
+            bu.onClick.AddListener(() => { ShowSkill(_id, SkillCode, id); });
         }
     }
 
@@ -119,10 +117,9 @@ public class Home_Click_Handler : MonoBehaviour
         if (!string.IsNullOrEmpty(url))
         {
             WWW www = new WWW(url);
-            //Temp = SpriteFromTex2D(www.texture);
             yield return www;
-            //if (string.IsNullOrEmpty(www.error))
-            Temp = SpriteFromTex2D(www.texture);
+            if (string.IsNullOrEmpty(www.error))
+                MySkilltransform[0].gameObject.GetComponent<Image>().sprite = SpriteFromTex2D(www.texture);
             www.Dispose();
             www = null;
         }

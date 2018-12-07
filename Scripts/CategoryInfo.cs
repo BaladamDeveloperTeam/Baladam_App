@@ -137,6 +137,7 @@ public class MySkills
     public Skillexpress express;
     public string updated_at;
     public string created_at;
+    public Buy buy;
 }
 
 [System.Serializable]
