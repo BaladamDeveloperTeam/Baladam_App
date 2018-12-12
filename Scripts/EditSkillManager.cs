@@ -27,7 +27,7 @@ public class EditSkillManager : MonoBehaviour
     private void Awake()
     {
         GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
-        foreach (string CatText in GSM.CatInfo.name)
+        foreach (string CatText in GSM.CatInfo)
         {
             SelectCategory.options.Add(new Dropdown.OptionData() { text = CatText });
         }

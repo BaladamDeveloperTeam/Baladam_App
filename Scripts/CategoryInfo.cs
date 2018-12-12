@@ -13,6 +13,16 @@ public class CategoryInfo
 }
 
 [System.Serializable]
+public class LoadCategory
+{
+    public string _id;
+    public string name;
+    public string nameEN;
+    public string tags;
+    public SubCategoryInfo[] subs;
+}
+
+[System.Serializable]
 public class CategoryNames
 {
     public string[] name;

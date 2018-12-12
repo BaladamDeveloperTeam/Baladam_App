@@ -5,6 +5,7 @@ using UPersian.Components;
 using UPersian.Utils;
 using UnityEngine.UI;
 using security;
+using System;
 
 public class GetSubCategory : MonoBehaviour
 {
@@ -12,13 +13,19 @@ public class GetSubCategory : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string SubCategoryJson = "";
-    private SubCategoryInfo[] SubCatInfo;
+    public SubCategoryInfo[] SubCatInfo;
     public GameObject ShowPlace;
     public GameObject ItemsPrefab, ItemsPrefabLine, Loading;
     public string CategoryID;
     private GameObject[] AllItems, AllItemsLine;
 
     private bool[] Fill = new bool[8];
+    private Global_Script_Manager GSM;
+
+    void Awake()
+    {
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
+    }
 
     private WWWForm SendData()
     {
@@ -54,10 +61,18 @@ public class GetSubCategory : MonoBehaviour
 
     }
 
+    private void ReadSubCategoryFromGSM()
+    {
+        SubCatInfo = GSM.LoadCategory[Convert.ToInt32(CategoryID) - 1].subs;
+        Debug.Log("select :" + Category_Click_Handler.SelectedItem);
+        SetSubCategory(Category_Click_Handler.SelectedItem);
+    }
+
     public void GetSubCategoryBut(string databaseID)
     {
         CategoryID = databaseID;
-        StartCoroutine(GetSubCategorys());
+        //StartCoroutine(GetSubCategorys());
+        ReadSubCategoryFromGSM();
     }
 
     public void SetSubCategory(int Item)
@@ -68,7 +83,7 @@ public class GetSubCategory : MonoBehaviour
 
         for (int i = 0; i < SubCatInfo.Length; i++)
         {
-            //if (SubCatInfo[i].databaseID == Item.ToString() && Fill[Item - 1] == false)
+            if (Fill[Item - 1] == false)
             {
 
                 GameObject Items = Instantiate(ItemsPrefab) as GameObject;
@@ -95,9 +110,12 @@ public class GetSubCategory : MonoBehaviour
         }
         for(int i = 0; i < AllItems.Length; i++)
         {
-            Debug.Log(AllItems[i].gameObject.GetComponent<RectTransform>().localScale);
-            AllItems[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-            AllItemsLine[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            if (Fill[Item - 1] == false)
+            {
+                Debug.Log(AllItems[i].gameObject.GetComponent<RectTransform>().localScale);
+                AllItems[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                AllItemsLine[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            }
         }
         Debug.Log(Item);
         Fill[Item - 1] = true;

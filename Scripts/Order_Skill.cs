@@ -16,7 +16,7 @@ public class Order_Skill : MonoBehaviour
     private Image TopImage, TopBtnBackGround;
     private GameObject Content;
     private Button BackBtn;
-    public RtlText SkillName; 
+    public RtlText SkillName, SkillDecep;
     public MySkills[] SelectedSkill;
 
     private void Awake()
@@ -38,12 +38,14 @@ public class Order_Skill : MonoBehaviour
         TopImage = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/Top/TopImage").gameObject.GetComponent<Image>();
         BackBtn = GameObject.Find("ShowSkill_p/Scroll View/Viewport/TopBtn/BackBtn").gameObject.GetComponent<Button>();
         TopBtnBackGround = GameObject.Find("ShowSkill_p/Scroll View/Viewport/TopBtn").gameObject.GetComponent<Image>();
-        BackBtn.onClick.AddListener(() => 
+        BackBtn.onClick.AddListener(() =>
         {
             this.gameObject.SetActive(false);
         });
         Content = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content");
         SkillName = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/SkillName_p/SkillName_text").gameObject.GetComponent<RtlText>();
+        SkillDecep = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/SkillDecep_text").gameObject.GetComponent<RtlText>();
+
     }
 
     private void FillObject()
@@ -51,12 +53,14 @@ public class Order_Skill : MonoBehaviour
         if (SelectedSkill[0].url.Length >= 1)
             StartCoroutine(GetImageFromURL(SelectedSkill[0].url[0]));
         SkillName.text = SelectedSkill[0].name;
+        SkillDecep.text = SelectedSkill[0].decep;
+        FixUnityBug();
     }
 
-    void Start ()
+    void Start()
     {
-        
-	}
+
+    }
 
     private void Update()
     {
@@ -74,6 +78,12 @@ public class Order_Skill : MonoBehaviour
                 tempColor.a = a;
             else
                 tempColor.a = 1;
+            TopBtnBackGround.color = tempColor;
+        }
+        else
+        {
+            var tempColor = TopBtnBackGround.color;
+            tempColor.a = 1;
             TopBtnBackGround.color = tempColor;
         }
     }
@@ -116,7 +126,7 @@ public class Order_Skill : MonoBehaviour
 
         Loading.gameObject.SetActive(true);
         yield return data;
-        
+
         GetJson = data.text;
 
         Debug.Log(data.text);
@@ -150,5 +160,11 @@ public class Order_Skill : MonoBehaviour
     static Sprite SpriteFromTex2D(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    private void FixUnityBug()
+    {
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x - 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y - 0.01f);
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x + 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y + 0.01f);
     }
 }

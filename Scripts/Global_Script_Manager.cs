@@ -4,6 +4,7 @@ using UnityEngine;
 using UPersian.Components;
 using UPersian.Utils;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Global_Script_Manager : MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class Global_Script_Manager : MonoBehaviour
         UserPhoneEdit, UserAgeEdit, UserSexEdit, UserShabaEdit, UserMelliEdit, UserEduationEdit, UserCityEdit, UserAddressEdit;
     private UserInfo[] userinfo;
     [HideInInspector]
-    public CategoryNames CatInfo;
+    public string[] CatInfo;
     private string SelectedSkillCode = "No Item Selected";
     private string SelectedSellerID;
+
+    public LoadCategory[] LoadCategory;
 
     void Awake()
     {
@@ -33,7 +36,7 @@ public class Global_Script_Manager : MonoBehaviour
         SetValuetext();
     }
 
-    public void SetCategoryName(CategoryNames CatInfo)
+    public void SetCategoryName(string[] CatInfo)
     {
         this.CatInfo = CatInfo;
     }
@@ -46,6 +49,11 @@ public class Global_Script_Manager : MonoBehaviour
     public void SetSellerID(string SellerID)
     {
         this.SelectedSellerID = SellerID;
+    }
+
+    public void SetLoadCategory(LoadCategory[] loadCategories)
+    {
+        this.LoadCategory = loadCategories;
     }
 
     private void FindObjects()
