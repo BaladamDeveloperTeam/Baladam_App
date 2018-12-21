@@ -35,8 +35,6 @@ public class ManageTheme : MonoBehaviour
     void Start ()
     {
         //Pages = GameObject.FindGameObjectsWithTag("Pages");
-        
-
 		if(EnableDarkTheme == false)
         {
             Mycamera.gameObject.GetComponent<Camera>().backgroundColor = BackGroundLight;
@@ -60,7 +58,6 @@ public class ManageTheme : MonoBehaviour
             }
             BottomNav.gameObject.GetComponent<Image>().color = BottomNavDark;
             Header.gameObject.GetComponent<Image>().color = HederDark;
-            
         }
 	}
 
@@ -69,7 +66,6 @@ public class ManageTheme : MonoBehaviour
     {
         
         //Pages = GameObject.FindGameObjectsWithTag("Pages");
-
         if (EnableDarkTheme == true)
         {
             ItemBackGround = GameObject.FindGameObjectsWithTag("ItemBackGround");

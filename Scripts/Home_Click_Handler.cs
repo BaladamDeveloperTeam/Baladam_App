@@ -13,12 +13,11 @@ public class Home_Click_Handler : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     public GameObject SkillPrefab, ShowSkill_p;
-    public MySkills[] UserSkills;
+    private MySkills[] UserSkills;
     private GameObject[] AllItems;
     private string GetJson = "";
-    public Text PlaceHolder;
     private GetCat GetCat;
-    public Transform[] MySkilltransform_p, MySkilltransform;
+    private Transform[] MySkilltransform_p, MySkilltransform;
     private Global_Script_Manager GSM;
 
     public List<SkillButton> SkillButton = new List<SkillButton>();
