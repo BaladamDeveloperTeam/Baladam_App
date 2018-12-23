@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224996562193111874}
   - component: {fileID: 222462343114627716}
+  - component: {fileID: 114932807629662690}
   - component: {fileID: 114405371137828650}
   - component: {fileID: 114315851203736524}
   m_Layer: 5
@@ -70,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224434372936916448}
   - component: {fileID: 222306435169408950}
+  - component: {fileID: 114177211988031202}
   - component: {fileID: 114301061570558204}
   - component: {fileID: 114317717750768350}
   m_Layer: 5
@@ -97,6 +99,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114177211988031202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534633487887592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114301061570558204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,6 +296,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114932807629662690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320304194517260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &222306435169408950
 CanvasRenderer:
   m_ObjectHideFlags: 1

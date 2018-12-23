@@ -77,7 +77,10 @@ public class ManageTheme : MonoBehaviour
             }
             for (int i = 0; i < Texts.Length; i++)
             {
-                Texts[i].color = Color.white;
+                if (Texts[i].gameObject.GetComponent<TextColorManager>().ChangeColorInDarkMode == false)
+                    Texts[i].color = Color.white;
+                else
+                    Texts[i].color = Texts[i].gameObject.GetComponent<TextColorManager>().DarkColor;
             }
             for (int i = 0; i < BackGround.Length; i++)
             {

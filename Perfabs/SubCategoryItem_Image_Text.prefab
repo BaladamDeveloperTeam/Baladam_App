@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224958048177656864}
   - component: {fileID: 222298765328329498}
+  - component: {fileID: 114402486365749212}
   - component: {fileID: 114870443993905322}
   m_Layer: 0
   m_Name: CategoryText
@@ -132,6 +133,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114402486365749212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920044525644150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114870443993905322
 MonoBehaviour:
   m_ObjectHideFlags: 1

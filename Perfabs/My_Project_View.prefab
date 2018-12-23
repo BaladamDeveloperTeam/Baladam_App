@@ -35,6 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224875115043898648}
   - component: {fileID: 222885397251262102}
+  - component: {fileID: 114549444218354214}
   - component: {fileID: 114813499086856466}
   - component: {fileID: 114137190078729914}
   m_Layer: 5
@@ -53,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224662670404064866}
   - component: {fileID: 222076931492708772}
+  - component: {fileID: 114136449918255762}
   - component: {fileID: 114010753430948064}
   - component: {fileID: 114284482838800948}
   m_Layer: 5
@@ -71,6 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224784911289288166}
   - component: {fileID: 222974156429130560}
+  - component: {fileID: 114410309327060606}
   - component: {fileID: 114596092483578904}
   - component: {fileID: 114449303834272882}
   m_Layer: 5
@@ -166,6 +169,19 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\u0628\u0631\u0646\u0627\u0645\u0647 \u0646\u0648\u064A\u0633\u064A c#
     , c++ , java \u0628\u0627 \u062A\u0636\u0645\u064A\u0646 \u06A9\u064A\u0641\u064A\u062A"
+--- !u!114 &114136449918255762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218112548875222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114137190078729914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,6 +258,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 1
+--- !u!114 &114410309327060606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1422659032054044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114449303834272882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,6 +282,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4728b011492ad4c981d2e16136bad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114549444218354214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1124900604051418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114596092483578904
 MonoBehaviour:
   m_ObjectHideFlags: 1

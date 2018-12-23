@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224385095393670428}
   - component: {fileID: 222210971269405806}
+  - component: {fileID: 114918626634133762}
   - component: {fileID: 114963373415026070}
   - component: {fileID: 114611315144475878}
   m_Layer: 5
@@ -104,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224846451940114652}
   - component: {fileID: 222242175647882252}
+  - component: {fileID: 114515759542785894}
   - component: {fileID: 114443936348184398}
   - component: {fileID: 114033254319171288}
   m_Layer: 5
@@ -285,6 +287,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114515759542785894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753623794715010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114611315144475878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -323,6 +338,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114918626634133762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1208471686926074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114963373415026070
 MonoBehaviour:
   m_ObjectHideFlags: 1

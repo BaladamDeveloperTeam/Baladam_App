@@ -12,6 +12,7 @@ public class Order_Skill : MonoBehaviour
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private Global_Script_Manager GSM;
     private string GetJson = "";
+    private int SelectedBox = 1;
     public GameObject Loading;
     private Image TopImage, TopBtnBackGround, SkillBox0Footer, SkillBox1Footer, SkillBox2Footer;
     public Color UnSelectedColor = new Color(245, 245, 245);
@@ -86,6 +87,7 @@ public class Order_Skill : MonoBehaviour
             SkillBoxDecep.text += SelectedSkill[0].skills.box[0].options[i] + "\n";
         }
         DeliveryTime.text = SelectedSkill[0].skills.box[0].time + " روز ";
+        SelectedBox = 0;
         FixUnityBug();
     }
 
@@ -103,6 +105,7 @@ public class Order_Skill : MonoBehaviour
             SkillBoxDecep.text += SelectedSkill[0].skills.box[1].options[i] + "\n";
         }
         DeliveryTime.text = SelectedSkill[0].skills.box[1].time + " روز ";
+        SelectedBox = 1;
         FixUnityBug();
     }
 
@@ -120,6 +123,7 @@ public class Order_Skill : MonoBehaviour
             SkillBoxDecep.text += SelectedSkill[0].skills.box[2].options[i] + "\n";
         }
         DeliveryTime.text = SelectedSkill[0].skills.box[2].time + " روز ";
+        SelectedBox = 2;
         FixUnityBug();
     }
 
@@ -162,8 +166,8 @@ public class Order_Skill : MonoBehaviour
         web.AddField("skillcode", SkillCode);
         web.AddField("shopper", GSM.ReadUserID());
         web.AddField("seller", SelectedSkill[0].pz_id);
-        web.AddField("box", "");                                            //Need fix
-        web.AddField("ex", "");                                             //Need fix    
+        web.AddField("box", SelectedBox);
+        web.AddField("ex", 0);                                             //Need fix    
         return web;
     }
 
@@ -221,6 +225,11 @@ public class Order_Skill : MonoBehaviour
             www.Dispose();
             www = null;
         }
+    }
+
+    public void DoBuy()
+    {
+        StartCoroutine(BuySkill());
     }
 
     static Sprite SpriteFromTex2D(Texture2D texture)

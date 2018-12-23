@@ -38,6 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224447949540194218}
   - component: {fileID: 222472478410604116}
+  - component: {fileID: 114248152697734500}
   - component: {fileID: 114158319581467284}
   - component: {fileID: 114719822393655906}
   m_Layer: 5
@@ -56,6 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224194963095827670}
   - component: {fileID: 222217285748942664}
+  - component: {fileID: 114864033968930134}
   - component: {fileID: 114196044341687302}
   - component: {fileID: 114279746835756090}
   m_Layer: 5
@@ -149,6 +151,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0637\u0631\u0627\u062D\u064A \u0648 \u06AF\u0631\u0627\u0641\u064A\u06A9"
+--- !u!114 &114248152697734500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1350834356223898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114279746835756090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,6 +281,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114864033968930134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405948824363856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &222217285748942664
 CanvasRenderer:
   m_ObjectHideFlags: 1

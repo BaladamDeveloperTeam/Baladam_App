@@ -57,6 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224523410547110834}
   - component: {fileID: 222899954958496850}
+  - component: {fileID: 114097709868634234}
   - component: {fileID: 114563789477730588}
   m_Layer: 5
   m_Name: Placeholder
@@ -91,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224820529840703586}
   - component: {fileID: 222283379504492828}
+  - component: {fileID: 114040708762761336}
   - component: {fileID: 114685304673012020}
   m_Layer: 5
   m_Name: Text
@@ -99,6 +101,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114040708762761336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1773309712924998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 0
+  DarkColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &114097709868634234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722196903749522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31153083c17e56f4e9220b0c95f80b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeColorInDarkMode: 1
+  DarkColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
 --- !u!114 &114181738121908624
 MonoBehaviour:
   m_ObjectHideFlags: 1
