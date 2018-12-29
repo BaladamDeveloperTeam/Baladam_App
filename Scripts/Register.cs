@@ -108,6 +108,9 @@ public class Register : MonoBehaviour
         web.AddField("user", Username.text);
         web.AddField("pass", coding.Md5Sum(Password.text));
         web.AddField("phone", Phone.text);
+        if(Pushe.GetPusheId() != "No")
+            web.AddField("pushe", Pushe.GetPusheId());
+        web.AddField("pushe", "test");
         return web;
     }
 
@@ -207,7 +210,7 @@ public class Register : MonoBehaviour
     public void DoRegisterBtn()
     {
         Coding coding = new Coding();
-        if (VerifiCode == coding.Md5Sum(Code.text))
+        if (VerifiCode == Code.text)
             StartCoroutine(DoRegister());
         else
             Debug.Log("Worng Code");

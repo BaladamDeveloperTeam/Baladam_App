@@ -20,8 +20,8 @@ public class Order_Skill : MonoBehaviour
     public Color UnSelectedTextColor = new Color(103, 58, 183);
     private GameObject Content;
     private Button BackBtn;
-    private RtlText SkillName, SkillDecep, SkillBox0Cost, SkillBox1Cost, SkillBox2Cost, SkillBoxDecep, DeliveryTime;
-    private MySkills[] SelectedSkill;
+    private RtlText SellerUsername, SellerLvl, SkillName, SkillDecep, SkillBox0Cost, SkillBox1Cost, SkillBox2Cost, SkillBoxDecep, DeliveryTime;
+    private SelectedSkills[] SelectedSkill;
 
     private void Awake()
     {
@@ -46,6 +46,8 @@ public class Order_Skill : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         });
+        SellerUsername = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/UserInfo/UserName").gameObject.GetComponent<RtlText>();
+        SellerLvl = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/UserInfo/Userlvl").gameObject.GetComponent<RtlText>();
         Content = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content");
         SkillName = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/SkillName_p/SkillName_text").gameObject.GetComponent<RtlText>();
         SkillDecep = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/SkillDecep_text").gameObject.GetComponent<RtlText>();
@@ -63,6 +65,8 @@ public class Order_Skill : MonoBehaviour
     {
         if (SelectedSkill[0].url.Length >= 1)
             StartCoroutine(GetImageFromURL(SelectedSkill[0].url[0]));
+        SellerUsername.text = SelectedSkill[0].seller.username;
+        SellerLvl.text = "کاربر " + SelectedSkill[0].seller.lvl;
         SkillName.text = SelectedSkill[0].name;
         SkillDecep.text = SelectedSkill[0].decep;
         SkillBox0Cost.text = "ت " + SelectedSkill[0].skills.box[0].cost;
@@ -82,7 +86,7 @@ public class Order_Skill : MonoBehaviour
         SkillBox0Cost.color = SelectedColor;
         SkillBox1Cost.color = UnSelectedTextColor;
         SkillBox2Cost.color = UnSelectedTextColor;
-        for(int i = 0; i < SelectedSkill[0].skills.box[0].options.Length; i++)
+        for (int i = 0; i < SelectedSkill[0].skills.box[0].options.Length; i++)
         {
             SkillBoxDecep.text += SelectedSkill[0].skills.box[0].options[i] + "\n";
         }
@@ -167,7 +171,8 @@ public class Order_Skill : MonoBehaviour
         web.AddField("shopper", GSM.ReadUserID());
         web.AddField("seller", SelectedSkill[0].pz_id);
         web.AddField("box", SelectedBox);
-        web.AddField("ex", 0);                                             //Need fix    
+        web.AddField("ex", 0);                              //Need fix 
+        web.AddField("cost", SelectedSkill[0].skills.box[SelectedBox].cost);
         return web;
     }
 
@@ -176,7 +181,9 @@ public class Order_Skill : MonoBehaviour
         WWWForm WebGet = SendDataForBuy();
         WWW data = new WWW(Url, WebGet);
         yield return data;
-
+#if UNITY_ANDROID && !UNITY_EDITOR
+        Pushe.SendSimpleNotifToUser(SelectedSkill[0].seller.Pushe_Id, "بلدم!!!", "کاربر گرامی یک سفارش برای شما ثبت شد");
+#endif
         Debug.Log(data.text);
     }
 
@@ -207,7 +214,7 @@ public class Order_Skill : MonoBehaviour
         }
         else
         {
-            SelectedSkill = JsonHelper.FromJson<MySkills>("{\"Items\": [" + GetJson + "]}");
+            SelectedSkill = JsonHelper.FromJson<SelectedSkills>("{\"Items\": [" + GetJson + "]}");
         }
         FillObject();
         Loading.gameObject.SetActive(false);

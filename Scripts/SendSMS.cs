@@ -17,7 +17,7 @@ public class SendSMS
             Coding coding = new Coding();
             Random rnd = new Random();
             int number = Random.Range(11111, 99999);
-            VerficationCode = coding.Md5Sum(number.ToString());
+            VerficationCode = number.ToString();
 
             var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
 
@@ -43,7 +43,7 @@ public class SendSMS
             Coding coding = new Coding();
             Random rnd = new Random();
             int number = Random.Range(11111, 99999);
-            VerficationCode = coding.Md5Sum(number.ToString());
+            VerficationCode = number.ToString();
 
             var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
 
@@ -75,7 +75,7 @@ public class SendSMS
         Coding coding = new Coding();
         Random rnd = new Random();
         int number = Random.Range(11111, 99999);
-        VerficationCode = coding.Md5Sum(number.ToString());
+        VerficationCode = number.ToString();
 
         var token = new Token().GetToken("ddcda1c76e994aff3e3a1c7", "45m127*2210");
 

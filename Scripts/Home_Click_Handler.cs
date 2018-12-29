@@ -137,4 +137,10 @@ public class Home_Click_Handler : MonoBehaviour
         Debug.Log(SkillCode);
     }
 
+    public void test()
+    {
+        Pushe.SendSimpleNotifToUser("pid_39be-710d-31", "سلام محسن", "سلااااااام");
+        Debug.Log("send");
+    }
+
 }

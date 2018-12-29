@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UPersian.Components;
 
 public class Pushe : MonoBehaviour
 {
     private AndroidJavaObject activityContext = null;
     public bool showGooglePlayDialog = true; //if it is true, user will see a dialog for installing GooglePlayService if it is not installed on her/his device
     public string channel = "pusheUnityChannel";
+    public RtlText id;
 
     void Start()
     {
@@ -35,7 +37,7 @@ public class Pushe : MonoBehaviour
                     }));
 
             }
-
+            id.text = GetPusheId();
         }
         catch
         {
@@ -130,6 +132,7 @@ public class Pushe : MonoBehaviour
 	 **/
     public static string GetPusheId()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaClass activityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject context = activityClass.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass pluginClass = new AndroidJavaClass("co.ronash.pushe.Pushe");
@@ -137,7 +140,8 @@ public class Pushe : MonoBehaviour
         {
             return pluginClass.CallStatic<string>("getPusheId", new object[1] { context });
         }
-        return "";
+#endif
+        return "No";
     }
 
     /**

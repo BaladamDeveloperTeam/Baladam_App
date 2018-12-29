@@ -85,8 +85,52 @@ public class UserInfo
 }
 
 [System.Serializable]
+public class SellerInfo
+{
+    public string _id;
+    public string username;
+    public string phone;
+    public string melli;
+    public string email;
+    public string lvl;
+    public double rate;
+    public int f_prj;
+    public int c_prj;
+    public int count_skill;
+    public int is_seller;
+    public int app_run;
+    public string name;
+    public string shaba;
+    public int is_send_melli_shenasname;
+    public int raters;
+    public string bio;
+    public string gender;
+    public string age;
+    public string madrak_tahsili;
+    public string major_field;
+    public string city;
+    public string town;
+    public string address;
+    public string pro_image;
+    public string banner_pro;
+    public int is_vip;
+    public int wallet;
+    public string updated_at;
+    public string created_at;
+    public Session[] session;
+    public string Pushe_Id;
+}
+
+[System.Serializable]
 public class Buy
 {
+
+}
+
+[System.Serializable]
+public class Comment
+{
+
 }
 
 
@@ -147,7 +191,33 @@ public class MySkills
     public Skillexpress express;
     public string updated_at;
     public string created_at;
-    public Buy buy;
+    public Buy[] buy;
+}
+
+[System.Serializable]
+public class SelectedSkills
+{
+    public string _id;
+    public string accept;
+    public string pz_id;
+    public string status;
+    public SearchGigs_Skills skills;
+    public string[] gigs;
+    public string[] url;
+    public int comments;
+    public string title;
+    public string subtitle;
+    public string decep;
+    public double rate;
+    public string skillCode;
+    public int vip;
+    public string name;
+    public Skillexpress express;
+    public string updated_at;
+    public string created_at;
+    public Buy[] buy;
+    public SellerInfo seller;
+    public Comment comment;
 }
 
 [System.Serializable]
