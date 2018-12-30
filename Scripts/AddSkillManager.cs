@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Linq;
-using DeadMosquito.AndroidGoodies;
+//using DeadMosquito.AndroidGoodies;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -161,37 +161,37 @@ public class AddSkillManager : MonoBehaviour
         }
     }
 
-    private void OnPickGalleryImage()
-    {
-        // Whether to generate thumbnails
-        var shouldGenerateThumbnails = true;
+    //private void OnPickGalleryImage()
+    //{
+    //    // Whether to generate thumbnails
+    //    var shouldGenerateThumbnails = true;
 
-        // if image is larger it will be downscaled to the max size proportionally
-        var imageResultSize = ImageResultSize.Max2048;
-        AGGallery.PickImageFromGallery(
-            selectedImage =>
-            {
-                var imageTexture2D = selectedImage.LoadTexture2D();
+    //    // if image is larger it will be downscaled to the max size proportionally
+    //    var imageResultSize = ImageResultSize.Max2048;
+    //    AGGallery.PickImageFromGallery(
+    //        selectedImage =>
+    //        {
+    //            var imageTexture2D = selectedImage.LoadTexture2D();
 
-                string msg = string.Format("{0} was loaded from gallery with size {1}x{2}",
-                    selectedImage.OriginalPath, imageTexture2D.width, imageTexture2D.height);
-                AGUIMisc.ShowToast(msg);
-                Debug.Log(msg);
-                image[0].sprite = SpriteFromTex2D(imageTexture2D);
-                if(ImageName[0] == null)
-                    ImageName[0] = selectedImage.DisplayName;
-                else if(ImageName[1] == null)
-                    ImageName[1] = selectedImage.DisplayName;
-                else if (ImageName[2] == null)
-                    ImageName[2] = selectedImage.DisplayName;
-                else if (ImageName[3] == null)
-                    ImageName[3] = selectedImage.DisplayName;
-                    // Clean up
-                    Resources.UnloadUnusedAssets();
-            },
-            errorMessage => AGUIMisc.ShowToast("Cancelled picking image from gallery: " + errorMessage),
-            imageResultSize, shouldGenerateThumbnails);
-    }
+    //            string msg = string.Format("{0} was loaded from gallery with size {1}x{2}",
+    //                selectedImage.OriginalPath, imageTexture2D.width, imageTexture2D.height);
+    //            AGUIMisc.ShowToast(msg);
+    //            Debug.Log(msg);
+    //            image[0].sprite = SpriteFromTex2D(imageTexture2D);
+    //            if(ImageName[0] == null)
+    //                ImageName[0] = selectedImage.DisplayName;
+    //            else if(ImageName[1] == null)
+    //                ImageName[1] = selectedImage.DisplayName;
+    //            else if (ImageName[2] == null)
+    //                ImageName[2] = selectedImage.DisplayName;
+    //            else if (ImageName[3] == null)
+    //                ImageName[3] = selectedImage.DisplayName;
+    //                // Clean up
+    //                Resources.UnloadUnusedAssets();
+    //        },
+    //        errorMessage => AGUIMisc.ShowToast("Cancelled picking image from gallery: " + errorMessage),
+    //        imageResultSize, shouldGenerateThumbnails);
+    //}
 
     static Sprite SpriteFromTex2D(Texture2D texture)
     {

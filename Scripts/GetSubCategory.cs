@@ -6,6 +6,7 @@ using UPersian.Utils;
 using UnityEngine.UI;
 using security;
 using System;
+using System.Linq;
 
 public class GetSubCategory : MonoBehaviour
 {
@@ -14,13 +15,16 @@ public class GetSubCategory : MonoBehaviour
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string SubCategoryJson = "";
     public SubCategoryInfo[] SubCatInfo;
-    public GameObject ShowPlace;
+    public GameObject ShowPlace, ShowSubCategorySkill_p;
     public GameObject ItemsPrefab, ItemsPrefabLine, Loading;
     public string CategoryID;
     private GameObject[] AllItems, AllItemsLine;
+    private Transform[] transform;
 
     private bool[] Fill = new bool[8];
     private Global_Script_Manager GSM;
+
+    List<SubCategoryButton> SubCatButton = new List<SubCategoryButton>();
 
     void Awake()
     {
@@ -74,12 +78,13 @@ public class GetSubCategory : MonoBehaviour
         //StartCoroutine(GetSubCategorys());
         ReadSubCategoryFromGSM();
     }
-
+    int subCategoryid = 0;
     public void SetSubCategory(int Item)
     {
         int SubCategoryItemNumber = 0;
         AllItems = new GameObject[SubCatInfo.Length];
         AllItemsLine = new GameObject[SubCatInfo.Length];
+        SubCatButton.Clear();
 
         for (int i = 0; i < SubCatInfo.Length; i++)
         {
@@ -102,13 +107,24 @@ public class GetSubCategory : MonoBehaviour
                 Image image = Items.gameObject.GetComponentInChildren<Image>();
                 text[0].text = SubCatInfo[i].SubName;
                 text[1].text = SubCatInfo[i].SubNameEN;
+                transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
+                SubCatButton.Add(new SubCategoryButton { id = i, name = SubCatInfo[i].SubName, subId = SubCatInfo[i].subID, Button =  transform[0].gameObject.GetComponent<Button>() });
             }
             //if (SubCatInfo[i].databaseID == Item.ToString())
             {
                 SubCategoryItemNumber++;
+                subCategoryid++;
             }
         }
-        for(int i = 0; i < AllItems.Length; i++)
+        for (int i = 0; i < SubCatInfo.Length; i++)
+        {
+            Button bu = (from a in SubCatButton where a.id == i select a.Button).FirstOrDefault();
+            string name = (from a in SubCatButton where a.id == i select a.name).FirstOrDefault();
+            string subId = (from a in SubCatButton where a.id == i select a.subId).FirstOrDefault();
+            int id = (from a in SubCatButton where a.id == i select a.id).FirstOrDefault();
+            bu.onClick.AddListener(() => { ShowSubCategorySkills(subId, name, id); });
+        }
+        for (int i = 0; i < AllItems.Length; i++)
         {
             if (Fill[Item - 1] == false)
             {
@@ -120,13 +136,13 @@ public class GetSubCategory : MonoBehaviour
         Debug.Log(Item);
         Fill[Item - 1] = true;
         ShowPlace.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0, CalHeight(SubCategoryItemNumber));
-        switch (Item)
-        {
-            case 1:
-                
-                break;
+    }
 
-        }
+    public void ShowSubCategorySkills(string SubID, string Name, int id)
+    {
+        GSM.SetSubCategoryId(SubID);
+        ShowSubCategorySkill_p.gameObject.SetActive(true);
+        Debug.Log(SubID);
     }
 
     private int CalHeight(int ItemCount)

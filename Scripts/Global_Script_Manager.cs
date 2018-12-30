@@ -15,6 +15,7 @@ public class Global_Script_Manager : MonoBehaviour
     public string[] CatInfo;
     private string SelectedSkillCode = "No Item Selected";
     private string SelectedSellerID;
+    private string SelectedSubCategoryId = "No Item Selected";
 
     public LoadCategory[] LoadCategory;
 
@@ -44,6 +45,11 @@ public class Global_Script_Manager : MonoBehaviour
     public void SetSkillCode(string SkillCode)
     {
         this.SelectedSkillCode = SkillCode;
+    }
+
+    public void SetSubCategoryId(string SubCategoryId)
+    {
+        this.SelectedSubCategoryId = SubCategoryId;
     }
 
     public void SetSellerID(string SellerID)
@@ -166,6 +172,11 @@ public class Global_Script_Manager : MonoBehaviour
     public string ReadSelectedSkillCode()
     {
         return SelectedSkillCode;
+    }
+
+    public string ReadSelectedSubcategoryId()
+    {
+        return SelectedSubCategoryId;
     }
 
     //public void SetOldSession(Session[] session)

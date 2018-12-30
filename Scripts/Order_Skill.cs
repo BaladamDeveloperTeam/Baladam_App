@@ -14,7 +14,7 @@ public class Order_Skill : MonoBehaviour
     private string GetJson = "";
     private int SelectedBox = 1;
     public GameObject Loading;
-    private Image TopImage, TopBtnBackGround, SkillBox0Footer, SkillBox1Footer, SkillBox2Footer;
+    private Image SellerImage, TopImage, TopBtnBackGround, SkillBox0Footer, SkillBox1Footer, SkillBox2Footer;
     public Color UnSelectedColor = new Color(245, 245, 245);
     public Color SelectedColor = new Color(103, 58, 183);
     public Color UnSelectedTextColor = new Color(103, 58, 183);
@@ -48,6 +48,7 @@ public class Order_Skill : MonoBehaviour
         });
         SellerUsername = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/UserInfo/UserName").gameObject.GetComponent<RtlText>();
         SellerLvl = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/UserInfo/Userlvl").gameObject.GetComponent<RtlText>();
+        SellerImage = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/UserInfo/UserProfile").gameObject.GetComponent<Image>();
         Content = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content");
         SkillName = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/SkillName_p/SkillName_text").gameObject.GetComponent<RtlText>();
         SkillDecep = GameObject.Find("ShowSkill_p/Scroll View/Viewport/Content/SkillDecep_text").gameObject.GetComponent<RtlText>();
@@ -64,9 +65,11 @@ public class Order_Skill : MonoBehaviour
     private void FillObject()
     {
         if (SelectedSkill[0].url.Length >= 1)
-            StartCoroutine(GetImageFromURL(SelectedSkill[0].url[0]));
+            StartCoroutine(GetImageFromURL(SelectedSkill[0].url[0], TopImage));
         SellerUsername.text = SelectedSkill[0].seller.username;
         SellerLvl.text = "کاربر " + SelectedSkill[0].seller.lvl;
+        if (!string.IsNullOrEmpty(SelectedSkill[0].seller.pro_image))
+            StartCoroutine(GetImageFromURL(SelectedSkill[0].seller.pro_image, SellerImage));
         SkillName.text = SelectedSkill[0].name;
         SkillDecep.text = SelectedSkill[0].decep;
         SkillBox0Cost.text = "ت " + SelectedSkill[0].skills.box[0].cost;
@@ -220,7 +223,7 @@ public class Order_Skill : MonoBehaviour
         Loading.gameObject.SetActive(false);
     }
 
-    public IEnumerator GetImageFromURL(string URL)
+    public IEnumerator GetImageFromURL(string URL, Image Target)
     {
         string url = URL;
         if (!string.IsNullOrEmpty(url))
@@ -228,7 +231,7 @@ public class Order_Skill : MonoBehaviour
             WWW www = new WWW(url);
             yield return www;
             if (string.IsNullOrEmpty(www.error))
-                TopImage.sprite = SpriteFromTex2D(www.texture);
+                Target.sprite = SpriteFromTex2D(www.texture);
             www.Dispose();
             www = null;
         }

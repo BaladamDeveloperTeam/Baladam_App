@@ -132,7 +132,7 @@ public class Register : MonoBehaviour
             {
                 //SignIn signIn = new SignIn();
                 //signIn.DoSingInOther(Username.text, Password2.text);
-                StartCoroutine(DoSingIn());
+                //StartCoroutine(DoSingIn());
             }
         }
         else

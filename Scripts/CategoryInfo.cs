@@ -358,6 +358,15 @@ public class SkillButton
     public UnityEngine.UI.Button Button;
 }
 
+[System.Serializable]
+public class SubCategoryButton
+{
+    public int id;
+    public string name;
+    public string subId;
+    public UnityEngine.UI.Button Button;
+}
+
 
 public static class JsonHelper
 {
