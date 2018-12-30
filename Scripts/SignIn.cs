@@ -123,9 +123,10 @@ public class SignIn : MonoBehaviour
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
                 GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
                 IsSeller = GSM.ReadIsSeller();
+                Coding coding = new Coding();
+                Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
                 if (RememberMe.isOn == true)
                 {
-                    Coding coding = new Coding();
                     File.Open(Path);
                     File.WriteValue("UserSignIn", "IsSignIn", 1);
                     File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);
@@ -153,9 +154,10 @@ public class SignIn : MonoBehaviour
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
                 GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
                 IsSeller = GSM.ReadIsSeller();
+                Coding coding = new Coding();
+                Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
                 if (RememberMe.isOn == true)
                 {
-                    Coding coding = new Coding();
                     File.Open(Path);
                     File.WriteValue("UserSignIn", "IsSignIn", 1);
                     File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);

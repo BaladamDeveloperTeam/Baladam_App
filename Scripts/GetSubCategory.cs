@@ -122,13 +122,19 @@ public class GetSubCategory : MonoBehaviour
             string name = (from a in SubCatButton where a.id == i select a.name).FirstOrDefault();
             string subId = (from a in SubCatButton where a.id == i select a.subId).FirstOrDefault();
             int id = (from a in SubCatButton where a.id == i select a.id).FirstOrDefault();
-            bu.onClick.AddListener(() => { ShowSubCategorySkills(subId, name, id); });
+            try
+            {
+                bu.onClick.AddListener(() => { ShowSubCategorySkills(subId, name, id); });
+            }
+            catch
+            {
+                //Debug.Log("Error");
+            }
         }
         for (int i = 0; i < AllItems.Length; i++)
         {
             if (Fill[Item - 1] == false)
             {
-                Debug.Log(AllItems[i].gameObject.GetComponent<RectTransform>().localScale);
                 AllItems[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 AllItemsLine[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             }
@@ -142,6 +148,7 @@ public class GetSubCategory : MonoBehaviour
     {
         GSM.SetSubCategoryId(SubID);
         ShowSubCategorySkill_p.gameObject.SetActive(true);
+        Global_Script_Manager.SetLog(2, SubID);
         Debug.Log(SubID);
     }
 

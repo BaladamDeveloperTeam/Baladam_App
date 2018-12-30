@@ -183,6 +183,7 @@ public class MessageManager : MonoBehaviour
         else
         {
             Debug.Log("Deleted");
+            Global_Script_Manager.SetLog(13, AllItems[item].name);
             Destroy(AllItems[item]);
         }
     }

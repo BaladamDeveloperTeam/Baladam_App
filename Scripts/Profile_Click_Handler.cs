@@ -84,6 +84,7 @@ public class Profile_Click_Handler : MonoBehaviour
 
     void click(int Item)
     {
+        Coding coding = new Coding();
         switch(Item)
         {
             case 0:   //OpenDrawe
@@ -94,14 +95,15 @@ public class Profile_Click_Handler : MonoBehaviour
                 Debug.Log("Open");
                 //BlackPanelAnim.SetTrigger("Start");
                 //BlackPanel.gameObject.SetActive(true);
+                Global_Script_Manager.SetLog(4, "OpenDrawe");
                 break;
             case 1:     //CloseDrawe
                 //BlackPanelAnim.SetTrigger("End");
                 DrawerAnim.SetTrigger("End");
+                Global_Script_Manager.SetLog(4, "CloseDrawe");
                 break;
             case 2:     //SelectPro_Image
                 Unimgpicker.gameObject.SetActive(true);
-                Coding coding = new Coding();
                 selectImage.OnPressShowPicker("Pro_Image.png");
                 Pro_Image.sprite = selectImage.GetSprite();
                 UploadFiles UP = new UploadFiles();
@@ -109,6 +111,7 @@ public class Profile_Click_Handler : MonoBehaviour
                 EditParam.Params.Add(new Param() { Key = "pro_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.ReadUserName() + "/" + "Pro_Image.png"});
                 StartCoroutine(DoEdit_ProImage());
                 Unimgpicker.gameObject.SetActive(false);
+                Global_Script_Manager.SetLog(4, "SelectPro_Image");
                 break;
             case 3:     //OpenEditProfile
                 CloseDrawerClick();
@@ -118,6 +121,7 @@ public class Profile_Click_Handler : MonoBehaviour
                 Skills_p.gameObject.SetActive(false);
                 GSM.FindObjectsForEdit();
                 GSM.SetValuetextForEdit();
+                Global_Script_Manager.SetLog(4, "OpenEditProfile");
                 break;
             case 4:     //OpenMyProfile
                 CloseDrawerClick();
@@ -125,6 +129,7 @@ public class Profile_Click_Handler : MonoBehaviour
                 AddSkill_p.gameObject.SetActive(false);
                 Skills_p.gameObject.SetActive(false);
                 Messages_p.gameObject.SetActive(false);
+                Global_Script_Manager.SetLog(4, "OpenMyProfile");
                 break;
             case 5:     //OpenSkills
                 CloseDrawerClick();
@@ -132,9 +137,11 @@ public class Profile_Click_Handler : MonoBehaviour
                 Skills_p.gameObject.SetActive(true);
                 EditProfile_p.gameObject.SetActive(false);
                 Messages_p.gameObject.SetActive(false);
+                Global_Script_Manager.SetLog(4, "OpenSkills");
                 break;
             case 6:     //DoExitBtn
                 StartCoroutine(DoExit());
+                Global_Script_Manager.SetLog(12, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
                 break;
             case 7:     //SelectBanner_Image
                 Unimgpicker.gameObject.SetActive(true);
@@ -145,15 +152,18 @@ public class Profile_Click_Handler : MonoBehaviour
                 EditParam.Params.Add(new Param() { Key = "banner_image", Value = "http://baladam1.me:81/storage/Profile/" + GSM.ReadUserName() + "/" + "Banner_Image.png" });
                 StartCoroutine(DoEdit_ProImage());
                 Unimgpicker.gameObject.SetActive(false);
+                Global_Script_Manager.SetLog(4, "SelectBanner_Image");
                 break;
             case 8:     //OpenMessage_p
                 CloseDrawerClick();
                 Messages_p.gameObject.SetActive(true);
                 EditProfile_p.gameObject.SetActive(false);
                 Skills_p.gameObject.SetActive(false);
+                Global_Script_Manager.SetLog(4, "OpenMessage_p");
                 break;
             case 9:     //OpenAddSkills
                 AddSkill_p.gameObject.SetActive(true);
+                Global_Script_Manager.SetLog(4, "OpenAddSkills");
                 break;
         }
     }

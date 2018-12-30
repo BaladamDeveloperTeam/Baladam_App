@@ -5,9 +5,11 @@ using UPersian.Components;
 using UPersian.Utils;
 using UnityEngine.UI;
 using System.Linq;
+using System.IO;
 
 public class Global_Script_Manager : MonoBehaviour
 {
+    private static string path = null;
     private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserGigsText, UserFullNameEdit, UserBioEdit, UserGigsEdit, UserEmailEdit,
         UserPhoneEdit, UserAgeEdit, UserSexEdit, UserShabaEdit, UserMelliEdit, UserEduationEdit, UserCityEdit, UserAddressEdit;
     private UserInfo[] userinfo;
@@ -18,10 +20,12 @@ public class Global_Script_Manager : MonoBehaviour
     private string SelectedSubCategoryId = "No Item Selected";
 
     public LoadCategory[] LoadCategory;
+    private static List<Log> AppLog = new List<Log>();
+    private static string[] json = new string[20];
 
     void Awake()
     {
-        
+        path = Application.persistentDataPath + "BaladamAppLog.json";
     }
 
 
@@ -190,5 +194,38 @@ public class Global_Script_Manager : MonoBehaviour
             return false;
         else
             return true;
+    }
+
+    public static void SetLog(int _id, string _Detail)
+    {
+        int ID = int.Parse(1.ToString() + _id.ToString());
+        AppLog.Add(new Log { id = ID, Detail = _Detail, Time = System.DateTime.Now.ToString() });
+        if (AppLog.Count() >= 15)
+        {
+            Log[] logs = AppLog.ToArray();
+            for (int i = 0; i < 15; i++)
+            {
+                json[i] = JsonUtility.ToJson(logs[i]);
+                using (FileStream fs = new FileStream(path, FileMode.Open))
+                //if (File.Exists(path)) 
+                {
+                    using (StreamWriter w = File.AppendText(path))
+                    {
+                        w.WriteLine(json[i]);
+                    }
+                }
+                //else
+                //{
+                //    using (FileStream fse = new FileStream(path, FileMode.Create))
+                //    {
+                //        using (StreamWriter w = File.AppendText(path))
+                //        {
+                //            w.WriteLine(json[i]);
+                //        }
+                //    }
+                //}
+            }
+            AppLog.Clear();
+        }
     }
 }

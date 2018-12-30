@@ -132,7 +132,7 @@ public class Register : MonoBehaviour
             {
                 //SignIn signIn = new SignIn();
                 //signIn.DoSingInOther(Username.text, Password2.text);
-                //StartCoroutine(DoSingIn());
+                StartCoroutine(DoSingIn());
             }
         }
         else
@@ -193,6 +193,8 @@ public class Register : MonoBehaviour
         {
             BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
             GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+            Coding coding = new Coding();
+            Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
             //if (RememberMe.isOn == true)
             //{
             //    Coding coding = new Coding();
@@ -211,7 +213,10 @@ public class Register : MonoBehaviour
     {
         Coding coding = new Coding();
         if (VerifiCode == Code.text)
+        {
             StartCoroutine(DoRegister());
+            Global_Script_Manager.SetLog(19, SystemInfo.deviceUniqueIdentifier);
+        }
         else
             Debug.Log("Worng Code");
     }

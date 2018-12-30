@@ -72,6 +72,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 1;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 1:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -117,6 +118,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 2;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 2:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -162,6 +164,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 3;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 3:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -207,6 +210,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 4;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 4:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -252,6 +256,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 5;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 5:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -296,6 +301,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 6;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 6:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -341,6 +347,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 7;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
             case 7:
                 for (int i = 0; i < UnderCategory.Length; i++)
@@ -386,6 +393,7 @@ public class Category_Click_Handler : MonoBehaviour
                     }
                 }
                 SelectedItem = 8;
+                Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
         }
     }

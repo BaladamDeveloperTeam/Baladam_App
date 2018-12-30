@@ -63,6 +63,7 @@ public class Botton_Nav_Click : MonoBehaviour
         State = 0;
         ChangeColor(State);
         Show_p(State);
+        Global_Script_Manager.SetLog(4, "Home_n");
     }
 
     public void List_nClick()
@@ -70,6 +71,7 @@ public class Botton_Nav_Click : MonoBehaviour
         State = 1;
         ChangeColor(State);
         Show_p(State);
+        Global_Script_Manager.SetLog(4, "List_n");
     }
 
     public void Learn_nClick()
@@ -78,6 +80,7 @@ public class Botton_Nav_Click : MonoBehaviour
         ChangeColor(State);
         Show_p(State);
         //LocalNotification.SendNotification(1, 5000, "بلدم", "یک درخواست برای شما دریافت شد", new Color32(0xff, 0x44, 0x44, 255), true, true, true, "app_icon");
+        Global_Script_Manager.SetLog(4, "Learn_n");
     }
 
     public void Profile_nClick()
@@ -87,6 +90,7 @@ public class Botton_Nav_Click : MonoBehaviour
         Show_p(State);
         Login_n.gameObject.SetActive(false);
         Profile_n.gameObject.SetActive(true);
+        Global_Script_Manager.SetLog(4, "Profile_n");
     }
 
     public void Search_nClick()
@@ -95,6 +99,7 @@ public class Botton_Nav_Click : MonoBehaviour
         ChangeColor(State);
         Show_p(State);
         //LocalNotification.SendNotification(1, 5000, "بلدم", "یک درخواست برای شما دریافت شد", new Color32(0xff, 0x44, 0x44, 255));
+        Global_Script_Manager.SetLog(4, "Search_n");
     }
 
     public void Login_nClick()
@@ -102,6 +107,7 @@ public class Botton_Nav_Click : MonoBehaviour
         State = 5;
         ChangeColor(State);
         Show_p(State);
+        Global_Script_Manager.SetLog(4, "Login_n");
     }
 
     void ChangeColor(int Item)

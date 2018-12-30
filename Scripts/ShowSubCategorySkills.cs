@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using UPersian.Components;
 
 public class ShowSubCategorySkills : MonoBehaviour
 {
@@ -10,8 +13,13 @@ public class ShowSubCategorySkills : MonoBehaviour
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private Global_Script_Manager GSM;
     private string GetJson = "";
-    public GameObject Loading;
+    public GameObject Loading, ShowSkill_Long;
+    private GameObject Content;
+    private Image TopImage, TopBtnBackGround;
+    private Button BackBtn;
     public SelectedSkills[] SubcategorySkill;
+    private GameObject[] AllItems;
+    private Transform[] transform0, transforms1;
 
     private void Awake()
     {
@@ -29,12 +37,41 @@ public class ShowSubCategorySkills : MonoBehaviour
 
     private void FindObjects()
     {
-
+        //TopImage = GameObject.Find("ShowSubCategory_p/Scroll View/Viewport/Content/Top/TopImage").gameObject.GetComponent<Image>();
+        BackBtn = GameObject.Find("ShowSubCategory_p/Scroll View/Viewport/TopBtn/BackBtn").gameObject.GetComponent<Button>();
+        TopBtnBackGround = GameObject.Find("ShowSubCategory_p/Scroll View/Viewport/TopBtn").gameObject.GetComponent<Image>();
+        BackBtn.onClick.AddListener(() =>
+        {
+            this.gameObject.SetActive(false);
+            Global_Script_Manager.SetLog(4, "Back_Btn From ShowSubCategory_p To List_p");
+        });
+        Content = GameObject.Find("ShowSubCategory_p/Scroll View/Viewport/Content");
     }
 
     private void FillObject()
     {
 
+    }
+
+    private void AddPrefab()
+    {
+        AllItems = new GameObject[SubcategorySkill.Length];
+        for(int i = 0; i < SubcategorySkill.Length; i++)
+        {
+            GameObject Items = Instantiate(ShowSkill_Long) as GameObject;
+            Items.transform.SetParent(GameObject.Find("ShowSubCategory_p/Scroll View/Viewport/Content/Skills").transform);
+            AllItems[i] = Items;
+            transform0 = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
+            transforms1 = transform0[0].gameObject.transform.Cast<Transform>().ToArray();
+            transforms1[0].gameObject.GetComponent<RtlText>().text = SubcategorySkill[i].name;
+            transforms1[2].gameObject.GetComponent<RtlText>().text = SubcategorySkill[i].rate.ToString();
+            if (SubcategorySkill[i].url.Length >= 1)
+                StartCoroutine(GetImageFromURL(SubcategorySkill[i].url[0], transforms1[3].gameObject.GetComponent<Image>()));
+            if (!string.IsNullOrEmpty(SubcategorySkill[i].seller.pro_image))
+                StartCoroutine(GetImageFromURL(SubcategorySkill[i].seller.pro_image, transforms1[4].gameObject.GetComponent<Image>()));
+            transforms1[5].gameObject.GetComponent<RtlText>().text = "ت " + SubcategorySkill[i].skills.box[0].cost;
+        }
+        FixUnityBug();
     }
 
     private WWWForm SendDataForReadSkills()
@@ -64,14 +101,66 @@ public class ShowSubCategorySkills : MonoBehaviour
         }
         else
         {
-            SubcategorySkill = JsonHelper.FromJson<SelectedSkills>("{\"Items\": [" + GetJson + "]}");
+            SubcategorySkill = JsonHelper.FromJson<SelectedSkills>("{\"Items\": " + GetJson + "}");
         }
         FillObject();
+        AddPrefab();
         Loading.gameObject.SetActive(false);
+    }
+
+    public IEnumerator GetImageFromURL(string URL, Image Target)
+    {
+        string url = URL;
+        if (!string.IsNullOrEmpty(url))
+        {
+            WWW www = new WWW(url);
+            yield return www;
+            if (string.IsNullOrEmpty(www.error))
+                Target.sprite = SpriteFromTex2D(www.texture);
+            www.Dispose();
+            www = null;
+        }
+    }
+
+    static Sprite SpriteFromTex2D(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 
     void Start()
     {
 
+    }
+
+    private void Update()
+    {
+        SetTopColor();
+    }
+
+    private void SetTopColor()
+    {
+        float a = Content.gameObject.GetComponent<RectTransform>().localPosition.y;
+        if (a <= 418)
+        {
+            a = a / 418;
+            var tempColor = TopBtnBackGround.color;
+            if (a <= 1)
+                tempColor.a = a;
+            else
+                tempColor.a = 1;
+            TopBtnBackGround.color = tempColor;
+        }
+        else
+        {
+            var tempColor = TopBtnBackGround.color;
+            tempColor.a = 1;
+            TopBtnBackGround.color = tempColor;
+        }
+    }
+
+    private void FixUnityBug()
+    {
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x - 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y - 0.01f);
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.gameObject.GetComponent<RectTransform>().sizeDelta.x + 0.01f, this.gameObject.GetComponent<RectTransform>().sizeDelta.y + 0.01f);
     }
 }

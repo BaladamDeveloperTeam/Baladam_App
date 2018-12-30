@@ -54,7 +54,14 @@ public class GetCat : MonoBehaviour
 
     public void GetCatBut()
     {
-        StartCoroutine(GetCats());
+        try
+        {
+            StartCoroutine(GetCats());
+        }
+        catch
+        {
+            StartCoroutine(GetCats());
+        }
     }
 
     public void set_Title_text()

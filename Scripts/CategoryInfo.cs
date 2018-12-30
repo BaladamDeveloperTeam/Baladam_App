@@ -367,6 +367,15 @@ public class SubCategoryButton
     public UnityEngine.UI.Button Button;
 }
 
+[System.Serializable]
+public class Log
+{
+    //Mode : Web => 0, App => 1
+    public int id = 1;
+    public string Detail;
+    public string Time;
+}
+
 
 public static class JsonHelper
 {

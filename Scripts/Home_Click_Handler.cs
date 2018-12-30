@@ -22,12 +22,35 @@ public class Home_Click_Handler : MonoBehaviour
 
     public List<SkillButton> SkillButton = new List<SkillButton>();
 
-    void Start ()
+    void Start()
     {
         Screen.fullScreen = false;
         GetCat = this.gameObject.GetComponent<GetCat>();
         GetCat.GetCatBut();
-        StartCoroutine(GetAllUserSkills());
+        try
+        {
+
+            StartCoroutine(GetAllUserSkills());
+
+        }
+        catch
+        {
+            StartCoroutine(GetAllUserSkills());
+
+        }
+
+        //StartCoroutine(AttackTest(0.5f));
+    }
+
+    IEnumerator AttackTest(float time)
+    {
+        for (int q = 0; q < 5000; q++)
+        {
+            yield return new WaitForSeconds(time);
+
+            StartCoroutine(GetAllUserSkills());
+            Debug.Log("Send");
+        }
     }
 
     private void Awake()
@@ -44,7 +67,7 @@ public class Home_Click_Handler : MonoBehaviour
         //path = Path.Combine(path, "data.png");
         //DF.downloadWithFTP("ftp://138.201.32.126/BaladamSkillImage/test/0689768c0bc582f99f845db3e272a159b.png", path);
         //DF.ListOfDirectory("ftp://138.201.32.126/BaladamSkillImage/");
-        
+
         //DF.NewLibTestAsync();
     }
 
@@ -74,7 +97,7 @@ public class Home_Click_Handler : MonoBehaviour
             Debug.Log("Error");
         }
         else
-        { 
+        {
             UserSkills = JsonHelper.FromJson<MySkills>("{\"Items\": " + GetJson + "}");
         }
         AddPrefab();
