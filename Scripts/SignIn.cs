@@ -168,7 +168,7 @@ public class SignIn : MonoBehaviour
 
             }
         }
-        
+
     }
 
     //private WWWForm GetSession()
@@ -205,5 +205,13 @@ public class SignIn : MonoBehaviour
     {
         thisPanel.gameObject.SetActive(false);
         Register_p.gameObject.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+        }
     }
 }

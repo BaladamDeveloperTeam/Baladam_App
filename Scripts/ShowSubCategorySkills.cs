@@ -135,6 +135,11 @@ public class ShowSubCategorySkills : MonoBehaviour
     private void Update()
     {
         SetTopColor();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.gameObject.SetActive(false);
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From ShowSubCategory_p To List_p");
+        }
     }
 
     private void SetTopColor()

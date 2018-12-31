@@ -12,6 +12,9 @@ public class Home_Click_Handler : MonoBehaviour
 {
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private string Path;
+    private int AppRunTimes;
+    private INIParser File = new INIParser();
     public GameObject SkillPrefab, ShowSkill_p;
     private MySkills[] UserSkills;
     private GameObject[] AllItems;
@@ -21,6 +24,27 @@ public class Home_Click_Handler : MonoBehaviour
     private Global_Script_Manager GSM;
 
     public List<SkillButton> SkillButton = new List<SkillButton>();
+
+    void Awake()
+    {
+        Path = Application.persistentDataPath + "BaladamAppSettings.ini";
+        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
+        //if (!System.IO.File.Exists(Path))
+        //{
+        //    using (FileStream fs = System.IO.File.Create(Path))
+        //    {
+        //        Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("");
+        //        fs.Write(info, 0, info.Length);
+        //    }
+        //}
+        File.Open(Path);
+        AppRunTimes = File.ReadValue("RunInfo", "RunTime", 0);
+        AppRunTimes++;
+        File.WriteValue("RunInfo", "RunTime", AppRunTimes);
+        File.WriteValue("RunInfo", "UserCode", SystemInfo.deviceUniqueIdentifier);
+        File.WriteValue("RunInfo", "LastLogin", System.DateTime.Now);
+        File.Close();
+    }
 
     void Start()
     {
@@ -36,26 +60,20 @@ public class Home_Click_Handler : MonoBehaviour
         catch
         {
             StartCoroutine(GetAllUserSkills());
-
         }
 
-        //StartCoroutine(AttackTest(0.5f));
+        //StartCoroutine(AttackTest(0.1f));
     }
 
     IEnumerator AttackTest(float time)
     {
-        for (int q = 0; q < 5000; q++)
+        for (int q = 0; q < 1000; q++)
         {
             yield return new WaitForSeconds(time);
 
             StartCoroutine(GetAllUserSkills());
             Debug.Log("Send");
         }
-    }
-
-    private void Awake()
-    {
-        GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
     }
 
     public void Upload()
@@ -69,6 +87,10 @@ public class Home_Click_Handler : MonoBehaviour
         //DF.ListOfDirectory("ftp://138.201.32.126/BaladamSkillImage/");
 
         //DF.NewLibTestAsync();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     //TODO:Fix This Funny Test 
@@ -157,6 +179,7 @@ public class Home_Click_Handler : MonoBehaviour
         GSM.SetSkillCode(SkillCode);
         GSM.SetSellerID(SellerID);
         ShowSkill_p.gameObject.SetActive(true);
+        Global_Script_Manager.SetLog(3, SkillCode);
         Debug.Log(SkillCode);
     }
 

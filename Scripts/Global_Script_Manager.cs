@@ -196,18 +196,23 @@ public class Global_Script_Manager : MonoBehaviour
             return true;
     }
 
+    public static string GetTimestamp(System.DateTime value)
+    {
+        return value.ToString("yyyyMMddHHmmssffff");
+    }
+
     public static void SetLog(int _id, string _Detail)
     {
         int ID = int.Parse(1.ToString() + _id.ToString());
-        AppLog.Add(new Log { id = ID, Detail = _Detail, Time = System.DateTime.Now.ToString() });
+        AppLog.Add(new Log { id = ID, Detail = _Detail, Time = new System.DateTimeOffset(System.DateTime.UtcNow).ToUnixTimeSeconds().ToString() });
         if (AppLog.Count() >= 15)
         {
             Log[] logs = AppLog.ToArray();
             for (int i = 0; i < 15; i++)
             {
                 json[i] = JsonUtility.ToJson(logs[i]);
-                using (FileStream fs = new FileStream(path, FileMode.Open))
-                //if (File.Exists(path)) 
+                //using (FileStream fs = new FileStream(path, FileMode.Create))
+                if (File.Exists(path)) 
                 {
                     using (StreamWriter w = File.AppendText(path))
                     {

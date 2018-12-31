@@ -43,13 +43,13 @@ public class Search_panel_Handler : MonoBehaviour
         }
 
         if (data.text == "bad post" || data.text == "" || data.text == null || data.text.Contains("<!DOCTYPE html>"))
-           ErrorText.gameObject.SetActive(true);
+            ErrorText.gameObject.SetActive(true);
 
     }
 
     public void SearchTextUpdate()
     {
-        if(Searchtext.text.Length >= 2)
+        if (Searchtext.text.Length >= 2)
             StartCoroutine(DoSearch());
     }
 
@@ -73,7 +73,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(US_D[i]);
             }
         }
-        if(SearchedResult[0].category.Length == 0)
+        if (SearchedResult[0].category.Length == 0)
         {
             GameObject[] CS_D = GameObject.FindGameObjectsWithTag("SearchedCategory");
             for (int i = 0; i < CS_D.Length; i++)
@@ -89,12 +89,16 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(GS_D[i]);
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From Search_p To Home_p");
+        }
     }
 
     private void ShowCategory()
     {
         CS = GameObject.FindGameObjectsWithTag("SearchedCategory");
-        if(SearchedResult[0].category.Length != 0 && SearchedResult[0].category != null && Searchtext.text.Length >= 2)
+        if (SearchedResult[0].category.Length != 0 && SearchedResult[0].category != null && Searchtext.text.Length >= 2)
         {
             for (int i = 0; i < SearchedResult[0].category.Length; i++)
             {
@@ -128,6 +132,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(CS_D[i]);
             }
         }
+        Global_Script_Manager.SetLog(10, "Category" + " => " + Searchtext.text);
     }
 
     private void ShowUser()
@@ -173,6 +178,7 @@ public class Search_panel_Handler : MonoBehaviour
                 //Destroy(US[i]);
             }
         }
+        Global_Script_Manager.SetLog(10, "User" + " => " + Searchtext.text);
     }
 
     private void ShowGigs()
@@ -196,7 +202,7 @@ public class Search_panel_Handler : MonoBehaviour
                 {
                     GS[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<RtlText>().text = SearchedResult[0].gig[i].pz_id;
                     GS[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.GetComponent<RtlText>().text = SearchedResult[0].gig[i].name;
-                    for(int j = 0; j <  SearchedResult[0].gig[0].gigs.Length; j++)
+                    for (int j = 0; j < SearchedResult[0].gig[0].gigs.Length; j++)
                         GS[i].gameObject.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.GetComponent<RtlText>().text += " " + SearchedResult[0].gig[i].gigs[j];
                 }
             }
@@ -216,6 +222,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(GS_D[i]);
             }
         }
+        Global_Script_Manager.SetLog(10, "Gigs" + " => " + Searchtext.text);
     }
 
     IEnumerator Type()

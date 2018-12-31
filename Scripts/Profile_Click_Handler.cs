@@ -19,6 +19,7 @@ public class Profile_Click_Handler : MonoBehaviour
     public ParamList EditParam;
     public Transform[] MenuItems;
     public ParamList ParamsList;
+    private bool IsDraweOpen = false;
 
     void Awake()
     { 
@@ -39,8 +40,20 @@ public class Profile_Click_Handler : MonoBehaviour
 
     void Update ()
     {
-		//GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
-	}
+        //GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
+        if (Input.GetKeyDown(KeyCode.Escape) && IsDraweOpen == true)
+        {
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device CloseDrawe");
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && IsDraweOpen == false)
+        {
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From Profile_p to Home_p");
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && Messages_p.gameObject.activeSelf == true)
+        {
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From Messages_p to Profile_p");
+        }
+    }
 
     private void IsSeller()
     {
@@ -95,11 +108,13 @@ public class Profile_Click_Handler : MonoBehaviour
                 Debug.Log("Open");
                 //BlackPanelAnim.SetTrigger("Start");
                 //BlackPanel.gameObject.SetActive(true);
+                IsDraweOpen = true;
                 Global_Script_Manager.SetLog(4, "OpenDrawe");
                 break;
             case 1:     //CloseDrawe
                 //BlackPanelAnim.SetTrigger("End");
                 DrawerAnim.SetTrigger("End");
+                IsDraweOpen = false;
                 Global_Script_Manager.SetLog(4, "CloseDrawe");
                 break;
             case 2:     //SelectPro_Image

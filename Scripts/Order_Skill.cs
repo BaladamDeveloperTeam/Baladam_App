@@ -142,6 +142,11 @@ public class Order_Skill : MonoBehaviour
     private void Update()
     {
         SetTopColor();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.gameObject.SetActive(false);
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From ShowSkill_p To Home_p");
+        }
     }
 
     private void SetTopColor()

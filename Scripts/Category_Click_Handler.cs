@@ -11,27 +11,27 @@ public class Category_Click_Handler : MonoBehaviour
     public Image[] UnderCategory;
     public GameObject[] SubCategoryItems;
     public GameObject[] CategoryPanels;
-    
-    public bool Is3D = false; 
+
+    public bool Is3D = false;
 
     public Color UnSelectedColor = new Color(245, 245, 245);
     public Color SelectedColor = new Color(103, 58, 183);
 
     public static int SelectedItem = 1;
 
-	void Start ()
+    void Start()
     {
         click(0);
-	}
+    }
 
     public void click(int Item)
     {
         switch (Item)
         {
-            case 0:   
-                for(int i = 0; i < UnderCategory.Length; i++)
+            case 0:
+                for (int i = 0; i < UnderCategory.Length; i++)
                 {
-                    if(Item == i)
+                    if (Item == i)
                     {
                         UnderCategory[i].color = SelectedColor;
                     }
@@ -45,7 +45,7 @@ public class Category_Click_Handler : MonoBehaviour
 
                 if (Is3D)
                 {
-                    for(int i = 0; i < SubCategoryItems.Length; i++)
+                    for (int i = 0; i < SubCategoryItems.Length; i++)
                     {
                         if (i == Item)
                         {
@@ -60,9 +60,9 @@ public class Category_Click_Handler : MonoBehaviour
 
                 //////////////////////////////////////
 
-                for(int i = 0; i < CategoryPanels.Length; i++)
+                for (int i = 0; i < CategoryPanels.Length; i++)
                 {
-                    if(i == Item)
+                    if (i == Item)
                     {
                         CategoryPanels[i].gameObject.SetActive(true);
                     }
@@ -395,6 +395,14 @@ public class Category_Click_Handler : MonoBehaviour
                 SelectedItem = 8;
                 Global_Script_Manager.SetLog(1, SelectedItem.ToString());
                 break;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From List_p To Home_p");
         }
     }
 
