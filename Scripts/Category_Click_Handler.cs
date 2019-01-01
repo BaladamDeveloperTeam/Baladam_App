@@ -11,6 +11,7 @@ public class Category_Click_Handler : MonoBehaviour
     public Image[] UnderCategory;
     public GameObject[] SubCategoryItems;
     public GameObject[] CategoryPanels;
+    public GameObject ShowSubCategorySkill_p;
 
     public bool Is3D = false;
 
@@ -400,12 +401,10 @@ public class Category_Click_Handler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && ShowSubCategorySkill_p.gameObject.activeSelf == false)
         {
             Global_Script_Manager.SetLog(4, "Back_Btn_Device From List_p To Home_p");
             Global_Script_Manager.BNC.Home_nClick();
         }
     }
-
-
 }

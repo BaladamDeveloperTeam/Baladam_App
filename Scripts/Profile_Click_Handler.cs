@@ -10,7 +10,7 @@ public class Profile_Click_Handler : MonoBehaviour
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    public GameObject Drawer, BlackPanel, EditProfile_p, Skills_p, AddSkill_p, Messages_p;
+    public GameObject Drawer, BlackPanel, EditProfile_p, Skills_p, AddSkill_p, Messages_p, Main, MainNoSeller;
     public Animator DrawerAnim, BlackPanelAnim;
     private Global_Script_Manager GSM;
     private ImageClass selectImage;
@@ -67,6 +67,8 @@ public class Profile_Click_Handler : MonoBehaviour
             skill.gameObject.SetActive(false);
             Transform Edit = (from a in MenuItems where a.gameObject.name == "Menu_EditProfile(Seller)" select a).FirstOrDefault();
             Edit.gameObject.SetActive(false);
+            Main.gameObject.SetActive(false);
+            MainNoSeller.gameObject.SetActive(true);
         }
         else
         {
@@ -74,6 +76,8 @@ public class Profile_Click_Handler : MonoBehaviour
             skill.gameObject.SetActive(false);
             Transform Edit = (from a in MenuItems where a.gameObject.name == "Menu_EditProfile" select a).FirstOrDefault();
             Edit.gameObject.SetActive(false);
+            MainNoSeller.gameObject.SetActive(false);
+            Main.gameObject.SetActive(true);
         }
     }
 

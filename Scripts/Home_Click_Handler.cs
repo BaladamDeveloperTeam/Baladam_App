@@ -1,4 +1,5 @@
-﻿using SmsIrRestful;
+﻿using security;
+using SmsIrRestful;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ public class Home_Click_Handler : MonoBehaviour
     private GetCat GetCat;
     private Transform[] MySkilltransform_p, MySkilltransform;
     private Global_Script_Manager GSM;
+    Coding coding = new Coding();
 
     public List<SkillButton> SkillButton = new List<SkillButton>();
 
@@ -111,6 +113,7 @@ public class Home_Click_Handler : MonoBehaviour
             UserSkills = JsonHelper.FromJson<MySkills>("{\"Items\": " + GetJson + "}");
         }
         AddPrefab();
+        CalSize(UserSkills.Length);
         //ShowPlace.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0, CalHeight(UserSkills.Length));
     }
 
@@ -162,6 +165,11 @@ public class Home_Click_Handler : MonoBehaviour
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 
+    public void CalSize(int Items)
+    {
+        GameObject.Find("Content/Mod2/Scroll View (1)/Viewport/Content").gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(((Items * 292) - 800), 377.6f);
+    }
+
     public void ShowSkill(string SellerID, string SkillCode, int id)
     {
         GSM.SetSkillCode(SkillCode);
@@ -187,4 +195,18 @@ public class Home_Click_Handler : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        Global_Script_Manager.SetLog(20, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
+        Global_Script_Manager.SaveLog();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause == true)
+        {
+            Global_Script_Manager.SetLog(22, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
+            Global_Script_Manager.SaveLog();
+        }
+    }
 }
