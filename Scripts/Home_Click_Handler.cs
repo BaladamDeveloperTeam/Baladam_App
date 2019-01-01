@@ -29,14 +29,6 @@ public class Home_Click_Handler : MonoBehaviour
     {
         Path = Application.persistentDataPath + "BaladamAppSettings.ini";
         GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
-        //if (!System.IO.File.Exists(Path))
-        //{
-        //    using (FileStream fs = System.IO.File.Create(Path))
-        //    {
-        //        Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("");
-        //        fs.Write(info, 0, info.Length);
-        //    }
-        //}
         File.Open(Path);
         AppRunTimes = File.ReadValue("RunInfo", "RunTime", 0);
         AppRunTimes++;
@@ -87,10 +79,6 @@ public class Home_Click_Handler : MonoBehaviour
         //DF.ListOfDirectory("ftp://138.201.32.126/BaladamSkillImage/");
 
         //DF.NewLibTestAsync();
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
     }
 
     //TODO:Fix This Funny Test 
@@ -187,6 +175,16 @@ public class Home_Click_Handler : MonoBehaviour
     {
         Pushe.SendSimpleNotifToUser("pid_39be-710d-31", "سلام محسن", "سلااااااام");
         Debug.Log("send");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Global_Script_Manager.SetLog(4, "Back_Btn From Home_p to Exit");
+            Global_Script_Manager.SaveLog();
+            Application.Quit();
+        }
     }
 
 }

@@ -22,10 +22,12 @@ public class Global_Script_Manager : MonoBehaviour
     public LoadCategory[] LoadCategory;
     private static List<Log> AppLog = new List<Log>();
     private static string[] json = new string[20];
+    public static Botton_Nav_Click BNC;
 
     void Awake()
     {
         path = Application.persistentDataPath + "BaladamAppLog.json";
+        BNC = GameObject.Find("BottomNav").gameObject.GetComponent<Botton_Nav_Click>();
     }
 
 
@@ -232,5 +234,22 @@ public class Global_Script_Manager : MonoBehaviour
             }
             AppLog.Clear();
         }
+    }
+
+    public static void SaveLog()
+    {
+        Log[] logs = AppLog.ToArray();
+        for(int i = 0; i < AppLog.Count(); i++)
+        {
+            json[i] = JsonUtility.ToJson(logs[i]);
+            if (File.Exists(path))
+            {
+                using (StreamWriter w = File.AppendText(path))
+                {
+                    w.WriteLine(json[i]);
+                }
+            }
+        }
+        AppLog.Clear();
     }
 }

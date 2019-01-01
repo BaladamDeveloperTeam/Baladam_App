@@ -403,6 +403,7 @@ public class Category_Click_Handler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Global_Script_Manager.SetLog(4, "Back_Btn_Device From List_p To Home_p");
+            Global_Script_Manager.BNC.Home_nClick();
         }
     }
 

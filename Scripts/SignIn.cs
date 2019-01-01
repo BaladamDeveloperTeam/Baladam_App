@@ -211,7 +211,9 @@ public class SignIn : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
+            Global_Script_Manager.SetLog(4, "Back_Btn_Device From SignIn_p to Home_p");
+            //Botton_Nav_Click.Home_nClick();
+            Global_Script_Manager.BNC.Home_nClick();
         }
     }
 }

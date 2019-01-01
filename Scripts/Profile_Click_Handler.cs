@@ -43,14 +43,17 @@ public class Profile_Click_Handler : MonoBehaviour
         //GSM.gameObject.GetComponent<Global_Script_Manager>().SetValuetext();
         if (Input.GetKeyDown(KeyCode.Escape) && IsDraweOpen == true)
         {
+            click(1);
             Global_Script_Manager.SetLog(4, "Back_Btn_Device CloseDrawe");
         }
         else if(Input.GetKeyDown(KeyCode.Escape) && IsDraweOpen == false)
         {
+            Global_Script_Manager.BNC.Home_nClick();
             Global_Script_Manager.SetLog(4, "Back_Btn_Device From Profile_p to Home_p");
         }
         else if(Input.GetKeyDown(KeyCode.Escape) && Messages_p.gameObject.activeSelf == true)
         {
+            click(10);
             Global_Script_Manager.SetLog(4, "Back_Btn_Device From Messages_p to Profile_p");
         }
     }
@@ -179,6 +182,12 @@ public class Profile_Click_Handler : MonoBehaviour
             case 9:     //OpenAddSkills
                 AddSkill_p.gameObject.SetActive(true);
                 Global_Script_Manager.SetLog(4, "OpenAddSkills");
+                break;
+            case 10:
+                Messages_p.gameObject.SetActive(false);
+                EditProfile_p.gameObject.SetActive(false);
+                Skills_p.gameObject.SetActive(false);
+                Global_Script_Manager.SetLog(4, "CloseMessage_p");
                 break;
         }
     }

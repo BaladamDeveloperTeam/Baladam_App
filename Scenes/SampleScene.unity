@@ -17049,7 +17049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClickedColor: {r: 0.95294124, g: 0.48235297, b: 0.3372549, a: 1}
-  unClickedColor: {r: 0.7411765, g: 0.7411765, b: 0.7411765, a: 1}
+  unClickedColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   HomeImg: {fileID: 1288261923}
   ListImg: {fileID: 774323201}
   LearnImg: {fileID: 1856480499}
@@ -30377,7 +30377,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 995351155}
   m_HandleRect: {fileID: 995351154}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.99999964
   m_Size: 0.6644577
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -33587,6 +33587,7 @@ GameObject:
   - component: {fileID: 694214742}
   - component: {fileID: 694214741}
   - component: {fileID: 694214740}
+  - component: {fileID: 694214743}
   m_Layer: 0
   m_Name: ShowSkill_p
   m_TagString: BackGround
@@ -33663,6 +33664,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 694214738}
   m_CullTransparentMesh: 0
+--- !u!95 &694214743
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 694214738}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 32c30a61c8134174f94fcf4f41b9918e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!224 &694889463
 RectTransform:
   m_ObjectHideFlags: 0
@@ -54033,7 +54052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.00024414062}
   m_SizeDelta: {x: 0, y: 648.2}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1139844771

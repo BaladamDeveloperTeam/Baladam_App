@@ -92,6 +92,7 @@ public class Search_panel_Handler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Global_Script_Manager.SetLog(4, "Back_Btn_Device From Search_p To Home_p");
+            Global_Script_Manager.BNC.Home_nClick();
         }
     }
 
@@ -122,6 +123,7 @@ public class Search_panel_Handler : MonoBehaviour
             {
                 Destroy(CS_D[i]);
             }
+            Global_Script_Manager.SetLog(10, "Category" + " => " + Searchtext.text);
         }
         if (Searchtext.text == "" || Searchtext.text == null)
         {
@@ -132,7 +134,6 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(CS_D[i]);
             }
         }
-        Global_Script_Manager.SetLog(10, "Category" + " => " + Searchtext.text);
     }
 
     private void ShowUser()
@@ -167,6 +168,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(US_D[i]);
                 //Destroy(US[i]);
             }
+            Global_Script_Manager.SetLog(10, "User" + " => " + Searchtext.text);
         }
         if (Searchtext.text == "" || Searchtext.text == null)
         {
@@ -178,7 +180,6 @@ public class Search_panel_Handler : MonoBehaviour
                 //Destroy(US[i]);
             }
         }
-        Global_Script_Manager.SetLog(10, "User" + " => " + Searchtext.text);
     }
 
     private void ShowGigs()
@@ -212,6 +213,7 @@ public class Search_panel_Handler : MonoBehaviour
             {
                 Destroy(GS_D[i]);
             }
+            Global_Script_Manager.SetLog(10, "Gigs" + " => " + Searchtext.text);
         }
         if (Searchtext.text == "" || Searchtext.text == null)
         {
@@ -222,7 +224,6 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(GS_D[i]);
             }
         }
-        Global_Script_Manager.SetLog(10, "Gigs" + " => " + Searchtext.text);
     }
 
     IEnumerator Type()

@@ -215,7 +215,7 @@ public class Register : MonoBehaviour
         if (VerifiCode == Code.text)
         {
             StartCoroutine(DoRegister());
-            Global_Script_Manager.SetLog(19, SystemInfo.deviceUniqueIdentifier);
+            Global_Script_Manager.SetLog(19, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
         }
         else
             Debug.Log("Worng Code");
