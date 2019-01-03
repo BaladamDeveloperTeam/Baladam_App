@@ -59,6 +59,8 @@ public class ShowSubCategorySkills : MonoBehaviour
         for(int i = 0; i < SubcategorySkill.Length; i++)
         {
             GameObject Items = Instantiate(ShowSkill_Long) as GameObject;
+            Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+            Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
             Items.transform.SetParent(GameObject.Find("ShowSubCategory_p/Scroll View/Viewport/Content/Skills").transform);
             AllItems[i] = Items;
             transform0 = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
@@ -70,6 +72,10 @@ public class ShowSubCategorySkills : MonoBehaviour
             if (!string.IsNullOrEmpty(SubcategorySkill[i].seller.pro_image))
                 StartCoroutine(GetImageFromURL(SubcategorySkill[i].seller.pro_image, transforms1[4].gameObject.GetComponent<Image>()));
             transforms1[5].gameObject.GetComponent<RtlText>().text = "ت " + SubcategorySkill[i].skills.box[0].cost;
+        }
+        for (int i = 0; i < AllItems.Length; i++)
+        {
+            AllItems[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
         FixUnityBug();
     }

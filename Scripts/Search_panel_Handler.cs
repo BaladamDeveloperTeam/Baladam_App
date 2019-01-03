@@ -15,7 +15,7 @@ public class Search_panel_Handler : MonoBehaviour
     public RtlText ErrorText;
     public InputField Searchtext;
     public SearchResult[] SearchedResult;
-    private string SearchResult = "";
+    private string SearchResult = "", Old = "", Now;
     public GameObject SearchedUserPrefab, SearchedCategoryPrefab, SearchedGigsPrefab;
     private GameObject[] US, CS, GS;
 
@@ -55,9 +55,13 @@ public class Search_panel_Handler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ShowCategory();
-        ShowUser();
-        ShowGigs();
+        Now = Searchtext.text;
+        if (Now != Old)
+        {
+            ShowCategory();
+            ShowUser();
+            ShowGigs();
+        }
         if (Searchtext.text == "" || Searchtext.text.Length == 0)
         {
             SearchedResult[0].category = new CategoryInfo[0];
@@ -134,6 +138,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(CS_D[i]);
             }
         }
+        Old = Now;
     }
 
     private void ShowUser()
@@ -180,6 +185,7 @@ public class Search_panel_Handler : MonoBehaviour
                 //Destroy(US[i]);
             }
         }
+        Old = Now;
     }
 
     private void ShowGigs()
@@ -224,6 +230,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(GS_D[i]);
             }
         }
+        Old = Now;
     }
 
     IEnumerator Type()

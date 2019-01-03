@@ -19,6 +19,7 @@ public class Home_Click_Handler : MonoBehaviour
     public GameObject SkillPrefab, ShowSkill_p;
     private MySkills[] UserSkills;
     private GameObject[] AllItems;
+    public Transform[] AllPanels;
     private string GetJson = "";
     private GetCat GetCat;
     private Transform[] MySkilltransform_p, MySkilltransform;
@@ -38,6 +39,7 @@ public class Home_Click_Handler : MonoBehaviour
         File.WriteValue("RunInfo", "UserCode", SystemInfo.deviceUniqueIdentifier);
         File.WriteValue("RunInfo", "LastLogin", System.DateTime.Now);
         File.Close();
+        AllPanels = GameObject.Find("Panels").transform.Cast<Transform>().ToArray();
     }
 
     void Start()
@@ -55,7 +57,7 @@ public class Home_Click_Handler : MonoBehaviour
         {
             StartCoroutine(GetAllUserSkills());
         }
-
+        Global_Script_Manager.SetLog(20, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
         //StartCoroutine(AttackTest(0.1f));
     }
 
@@ -123,6 +125,8 @@ public class Home_Click_Handler : MonoBehaviour
         for (int i = 0; i < UserSkills.Length; i++)
         {
             GameObject Items = Instantiate(SkillPrefab) as GameObject;
+            Items.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
+            Items.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
             Items.transform.SetParent(GameObject.Find("Content/Mod2/Scroll View (1)/Viewport/Content").transform);
             AllItems[i] = Items;
             MySkilltransform_p = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
@@ -143,6 +147,10 @@ public class Home_Click_Handler : MonoBehaviour
             string SkillCode = (from a in SkillButton where a.id == i select a.SkillCode).FirstOrDefault();
             int id = (from a in SkillButton where a.id == i select a.id).FirstOrDefault();
             bu.onClick.AddListener(() => { ShowSkill(_id, SkillCode, id); });
+        }
+        for (int i = 0; i < AllItems.Length; i++)
+        {
+            AllItems[i].gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
     }
 
@@ -187,10 +195,11 @@ public class Home_Click_Handler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && CheckForBack_Btn() == true && ShowSkill_p.gameObject.activeSelf == false)
         {
             Global_Script_Manager.SetLog(4, "Back_Btn From Home_p to Exit");
             Global_Script_Manager.SaveLog();
+            Debug.Log("Exit");
             Application.Quit();
         }
     }
@@ -203,10 +212,20 @@ public class Home_Click_Handler : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
-        if (pause == true)
+        Global_Script_Manager.SetLog(22, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
+        Global_Script_Manager.SaveLog();
+    }
+
+    private bool CheckForBack_Btn()
+    {
+        for (int z = 0; z < AllPanels.Length; z++)
         {
-            Global_Script_Manager.SetLog(22, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
-            Global_Script_Manager.SaveLog();
+            if (AllPanels[z].gameObject.activeSelf == true && z > 0)
+            {
+                return false;
+            }
+            return true;
         }
+        return true;
     }
 }
