@@ -14220,7 +14220,7 @@ RectTransform:
   m_Father: {fileID: 1850979450}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.60023963}
+  m_AnchorMin: {x: 0, y: 0.63031316}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -35752,7 +35752,7 @@ MonoBehaviour:
   m_Content: {fileID: 22105840}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 0
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.3
@@ -50966,7 +50966,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2113169687}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -83283,6 +83283,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1525891417832204, guid: 325682aca27f4c047bad6a5454ec95b1, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 325682aca27f4c047bad6a5454ec95b1, type: 2}
   m_IsPrefabAsset: 0
@@ -100120,7 +100124,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 304193978}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.39976034
+  m_Size: 0.3696868
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -100623,7 +100627,7 @@ RectTransform:
   m_Father: {fileID: 2023893148}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.000000059604645}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}

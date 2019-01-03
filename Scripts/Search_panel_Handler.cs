@@ -127,7 +127,7 @@ public class Search_panel_Handler : MonoBehaviour
             {
                 Destroy(CS_D[i]);
             }
-            Global_Script_Manager.SetLog(10, "Category" + " => " + Searchtext.text);
+            Global_Script_Manager.SetLog(10, Searchtext.text);
         }
         if (Searchtext.text == "" || Searchtext.text == null)
         {
@@ -173,7 +173,7 @@ public class Search_panel_Handler : MonoBehaviour
                 Destroy(US_D[i]);
                 //Destroy(US[i]);
             }
-            Global_Script_Manager.SetLog(10, "User" + " => " + Searchtext.text);
+            Global_Script_Manager.SetLog(10, Searchtext.text);
         }
         if (Searchtext.text == "" || Searchtext.text == null)
         {
@@ -219,7 +219,7 @@ public class Search_panel_Handler : MonoBehaviour
             {
                 Destroy(GS_D[i]);
             }
-            Global_Script_Manager.SetLog(10, "Gigs" + " => " + Searchtext.text);
+            Global_Script_Manager.SetLog(10, Searchtext.text);
         }
         if (Searchtext.text == "" || Searchtext.text == null)
         {

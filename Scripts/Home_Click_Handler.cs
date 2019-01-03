@@ -57,7 +57,7 @@ public class Home_Click_Handler : MonoBehaviour
         {
             StartCoroutine(GetAllUserSkills());
         }
-        Global_Script_Manager.SetLog(20, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
+        Global_Script_Manager.SetLog(21, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
         //StartCoroutine(AttackTest(0.1f));
     }
 
