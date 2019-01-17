@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -86,6 +87,7 @@ public class ShowSubCategorySkills : MonoBehaviour
         web.AddField("Master", masterKey);
         web.AddField("Chooser", 23);
         web.AddField("subid", SubcategoryId);
+        web.AddField("load", 2);
         return web;
     }
 
