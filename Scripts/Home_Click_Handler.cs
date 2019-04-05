@@ -8,11 +8,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UPersian.Components;
+using System.Net;
+using RestSharp;
 
 public class Home_Click_Handler : MonoBehaviour
 {
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private readonly string API_Url = "http://f901c73a.ngrok.io/api/v1";
     private string Path;
     private int AppRunTimes;
     private INIParser File = new INIParser();
@@ -49,9 +52,7 @@ public class Home_Click_Handler : MonoBehaviour
         GetCat.GetCatBut();
         try
         {
-
             StartCoroutine(GetAllUserSkills());
-
         }
         catch
         {
@@ -59,17 +60,7 @@ public class Home_Click_Handler : MonoBehaviour
         }
         Global_Script_Manager.SetLog(21, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
         //StartCoroutine(AttackTest(0.1f));
-    }
-
-    IEnumerator AttackTest(float time)
-    {
-        for (int q = 0; q < 1000; q++)
-        {
-            yield return new WaitForSeconds(time);
-
-            StartCoroutine(GetAllUserSkills());
-            Debug.Log("Send");
-        }
+        BugsnagUnity.Bugsnag.StartSession();
     }
 
     public void Upload()
@@ -99,7 +90,6 @@ public class Home_Click_Handler : MonoBehaviour
     {
         WWWForm WebGet = SendData();
         WWW data = new WWW(Url, WebGet);
-
         yield return data;
 
         GetJson = data.text;
@@ -184,12 +174,13 @@ public class Home_Click_Handler : MonoBehaviour
         GSM.SetSellerID(SellerID);
         ShowSkill_p.gameObject.SetActive(true);
         Global_Script_Manager.SetLog(3, SkillCode);
-        Debug.Log(SkillCode);
+        Debug.Log(id);
     }
 
     public void test()
     {
         Pushe.SendSimpleNotifToUser("pid_39be-710d-31", "سلام محسن", "سلااااااام");
+        BugsnagUnity.Bugsnag.Notify(new System.InvalidOperationException("Test error"));
         Debug.Log("send");
     }
 
@@ -227,5 +218,45 @@ public class Home_Click_Handler : MonoBehaviour
             return true;
         }
         return true;
+        
     }
+
+    #region TestAPI
+
+    public void TestAPI()
+    {
+        //HttpWebRequest httpWeb = (HttpWebRequest)WebRequest.c
+        var client = new RestClient("http://localhost:8080/api/testUnity");
+        var request = new RestRequest(Method.GET);
+        request.AddHeader("Postman-Token", "ba5fee2b-f869-40d3-a016-95334ca5d4ec");
+        request.AddHeader("cache-control", "no-cache");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("X", "true");
+        request.AddHeader("X_TOKEN", "DJao310D%jdi!5");
+        request.AddParameter("name", "mohada");
+        IRestResponse response = client.Execute(request);
+        Debug.Log(response.Content);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+
+        var client1 = new RestClient(API_Url + "/user/50/from/0");
+        var request1 = new RestRequest(Method.GET);
+        request1.AddHeader("cache-control", "no-cache");
+        request1.AddHeader("Content-Type", "application/json");
+        request1.AddHeader("X", "true");
+        request1.AddHeader("X_TOKEN", "DJao310D%jdi!5");
+        IRestResponse response1 = client1.Execute(request);
+    }
+
+    IEnumerator AttackTest(float time)
+    {
+        for (int q = 0; q < 1000; q++)
+        {
+            yield return new WaitForSeconds(time);
+
+            StartCoroutine(GetAllUserSkills());
+            Debug.Log("Send");
+        }
+    }
+    #endregion
 }

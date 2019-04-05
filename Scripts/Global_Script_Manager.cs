@@ -19,7 +19,7 @@ public class Global_Script_Manager : MonoBehaviour
     private string SelectedSellerID;
     private string SelectedSubCategoryId = "No Item Selected";
 
-    public LoadCategory[] LoadCategory;
+    public Models.CategoryInfo[] LoadCategory;
     private static List<Log> AppLog = new List<Log>();
     private static string[] json = new string[20];
     public static Botton_Nav_Click BNC;
@@ -63,7 +63,7 @@ public class Global_Script_Manager : MonoBehaviour
         this.SelectedSellerID = SellerID;
     }
 
-    public void SetLoadCategory(LoadCategory[] loadCategories)
+    public void SetLoadCategory(Models.CategoryInfo[] loadCategories)
     {
         this.LoadCategory = loadCategories;
     }

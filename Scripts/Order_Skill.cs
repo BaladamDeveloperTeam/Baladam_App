@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using RestSharp;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UPersian.Components;
@@ -10,6 +13,7 @@ public class Order_Skill : MonoBehaviour
     private string SkillCode;
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    private readonly string API_Url = "http://f901c73a.ngrok.io/api/v1";
     private Global_Script_Manager GSM;
     private string GetJson = "";
     private int SelectedBox = 1;
@@ -225,6 +229,23 @@ public class Order_Skill : MonoBehaviour
             SelectedSkill = JsonHelper.FromJson<SelectedSkills>("{\"Items\": [" + GetJson + "]}");
         }
         FillObject();
+        Loading.gameObject.SetActive(false);
+    }
+
+    private async Task ReadCategory()
+    {
+        Loading.gameObject.SetActive(true);
+        var client = new RestClient(API_Url + "/skill/" + SkillCode);
+        var request = new RestRequest(Method.GET);
+        var cancellationTokenSource = new CancellationTokenSource();
+        request.AddHeader("cache-control", "no-cache");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("X", "true");
+        request.AddHeader("X_TOKEN", "DJao310D%jdi!5");
+        IRestResponse response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+        SelectedSkill = JsonHelper.FromJson<SelectedSkills>("{\"Items\": [" + response.Content + "]}");
+        FillObject();
+        Debug.Log(response.Content);
         Loading.gameObject.SetActive(false);
     }
 

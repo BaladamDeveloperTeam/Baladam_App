@@ -100,8 +100,6 @@ public class Profile_Click_Handler : MonoBehaviour
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 
-    
-
     void click(int Item)
     {
         Coding coding = new Coding();

@@ -14,7 +14,7 @@ public class GetSubCategory : MonoBehaviour
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
     private string SubCategoryJson = "";
-    public SubCategoryInfo[] SubCatInfo;
+    public Models.SubCategory[] SubCatInfo;
     public GameObject ShowPlace, ShowSubCategorySkill_p;
     public GameObject ItemsPrefab, ItemsPrefabLine, Loading;
     public string CategoryID;
@@ -58,7 +58,7 @@ public class GetSubCategory : MonoBehaviour
         Debug.Log(data.text);
         SubCategoryJson = data.text;
 
-        SubCatInfo = JsonHelper.FromJson<SubCategoryInfo>("{\"Items\": " + SubCategoryJson + "}");
+        SubCatInfo = JsonHelper.FromJson<Models.SubCategory>("{\"Items\": " + SubCategoryJson + "}");
 
         Debug.Log("select :" + Category_Click_Handler.SelectedItem);
         SetSubCategory(Category_Click_Handler.SelectedItem);
@@ -67,7 +67,7 @@ public class GetSubCategory : MonoBehaviour
 
     private void ReadSubCategoryFromGSM()
     {
-        SubCatInfo = GSM.LoadCategory[Convert.ToInt32(CategoryID) - 1].subs;
+        SubCatInfo = GSM.LoadCategory[Convert.ToInt32(CategoryID) - 1].subCategories;
         Debug.Log("select :" + Category_Click_Handler.SelectedItem);
         SetSubCategory(Category_Click_Handler.SelectedItem);
     }
@@ -105,10 +105,10 @@ public class GetSubCategory : MonoBehaviour
                 AllItemsLine[i] = ItemsLine;
                 RtlText[] text = Items.gameObject.GetComponentsInChildren<RtlText>();
                 Image image = Items.gameObject.GetComponentInChildren<Image>();
-                text[0].text = SubCatInfo[i].SubName;
-                text[1].text = SubCatInfo[i].SubNameEN;
+                text[0].text = SubCatInfo[i].name;
+                text[1].text = SubCatInfo[i].nameEN;
                 transform = AllItems[i].gameObject.transform.Cast<Transform>().ToArray();
-                SubCatButton.Add(new SubCategoryButton { id = i, name = SubCatInfo[i].SubName, subId = SubCatInfo[i].subID, Button =  transform[0].gameObject.GetComponent<Button>() });
+                SubCatButton.Add(new SubCategoryButton { id = i, name = SubCatInfo[i].name, subId = SubCatInfo[i].id, Button =  transform[0].gameObject.GetComponent<Button>() });
             }
             //if (SubCatInfo[i].databaseID == Item.ToString())
             {

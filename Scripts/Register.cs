@@ -6,12 +6,17 @@ using UPersian.Components;
 using UPersian.Utils;
 using System.Linq;
 using security;
+using Models;
 using System.Net.NetworkInformation;
+using RestSharp;
 
 public class Register : MonoBehaviour
 {
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
+    //private string API_Url = "http://192.168.88.246:8080/api/v1";
+    //private string API_Url = "http://192.168.10.128:8080/api/v1";
+    private string API_Url = "http://localhost:8080/api/v1";
     private string ReceivedJson, ReceivedGetJson, Path;
     private INIParser File = new INIParser();
 
@@ -29,6 +34,7 @@ public class Register : MonoBehaviour
 
     private string token_csrf;
     public Session LoginSession;
+    public Models.User register;
 
     void Awake()
     {
@@ -37,6 +43,7 @@ public class Register : MonoBehaviour
         BNC = GameObject.Find("BottomNav");
         GSM = GameObject.Find("Global script Manager").gameObject.GetComponent<Global_Script_Manager>();
         Path = Application.persistentDataPath + "BaladamAppSettings.ini";
+        Debug.Log(API_Url);
     }
 
     private void Update()
@@ -209,12 +216,40 @@ public class Register : MonoBehaviour
         }
     }
 
+    public void NewRegister()
+    {
+        Coding coding = new Coding();
+        token_csrf = "LATARY@" + coding.Md5Sum(Username.text.ToLower()) + coding.Sha1Sum(Username.text.ToLower());
+        var client = new RestClient(API_Url + "/user");
+        var request = new RestRequest(Method.POST);
+        //request.AddHeader("Postman-Token", "ba5fee2b-f869-40d3-a016-95334ca5d4ec");
+        request.AddHeader("cache-control", "no-cache");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("X", "true");
+        request.AddHeader("X_TOKEN", "DJao310D%jdi!5");
+        register.username = Username.text;
+        register.pwd = Password.text;
+        register.token = token_csrf;
+        register.contact.phone = Phone.text;
+        register.contact.mail = "jamal@yahoo.com";
+        register.profile.firstName = "mohammad";
+        register.profile.lastName = "jamali";
+        register.profile.melliCode = "2282511931";
+        register.profile.creditCard = "6273811101934609";
+        //request.AddParameter("undefined", "{\n    \"username\": \"mohada10\",\n    \"pwd\": \"22102210aA\",\n    \"token\": \"123i9(UDJ@!D:DASD\",\n    \"contact\":{\n    \t\"phone\":\"09197279883\",\n    \t\"mail\":\"jamalianm1@yahoo.com\"\n    },\n    \"seller\": false\n}", ParameterType.RequestBody);
+        request.AddParameter("User", JsonUtility.ToJson(register), ParameterType.RequestBody);
+        Debug.Log(JsonUtility.ToJson(register));
+        IRestResponse response = client.Execute(request);
+        Debug.Log(response.Content);
+    }
+
     public void DoRegisterBtn()
     {
         Coding coding = new Coding();
         if (VerifiCode == Code.text)
         {
-            StartCoroutine(DoRegister());
+            //StartCoroutine(DoRegister());
+            NewRegister();
             Global_Script_Manager.SetLog(19, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
         }
         else
@@ -234,9 +269,10 @@ public class Register : MonoBehaviour
             Verifi_p.gameObject.SetActive(true);
             //if (sendsms.GetCredit() > 0)
             {
-                sendsms.sendSMSRegisterVerification(Phone.text, global::SendSMS.SendKind.Normal);
+                //sendsms.sendSMSRegisterVerification(Phone.text, global::SendSMS.SendKind.Normal);
                 //StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
-                VerifiCode = sendsms.ReadVerfi();
+                //VerifiCode = sendsms.ReadVerfi();
+                VerifiCode = "11111";
                 Verifi_p.gameObject.SetActive(true);
                 StartTimer = true;
             }

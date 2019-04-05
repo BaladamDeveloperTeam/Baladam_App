@@ -153,7 +153,6 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Log(name);
         StartCoroutine(DoDeleteSession(name, item));
-        
     }
 
     private WWWForm SendDataForDelete(string name)
