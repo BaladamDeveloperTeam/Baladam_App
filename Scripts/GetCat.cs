@@ -14,7 +14,7 @@ public class GetCat : MonoBehaviour
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    private readonly string API_Url = "http://f901c73a.ngrok.io/api/v1";
+    private readonly string API_Url = "http://localhost:8080/api/v1";
     private string CategoryJson = "";
     public string[] CatInfo;
     public LoadCategory[] LoadCategory;

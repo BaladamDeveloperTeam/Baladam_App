@@ -35,7 +35,7 @@ public class Profile_Click_Handler : MonoBehaviour
         IsSeller();
         StartCoroutine(LoadProfileImage());
         ParamsList.Params.Add(new Param() { Key = "Pushe_Id", Value = Pushe.GetPusheId() });
-        StartCoroutine(SavePusheID());
+        //StartCoroutine(SavePusheID());
     }
 
     void Update ()
@@ -88,7 +88,7 @@ public class Profile_Click_Handler : MonoBehaviour
         {
             WWW www = new WWW(url);
             yield return www;
-            if(string.IsNullOrEmpty(www.error))
+            if (string.IsNullOrEmpty(www.error))
                 Pro_Image.sprite = SpriteFromTex2D(www.texture);
             www.Dispose();
             www = null;

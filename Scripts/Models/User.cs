@@ -7,6 +7,7 @@ namespace Models
     [System.Serializable]
     public class User
     {
+        public string id;
         public string username;
         public string pwd;
         public string token;
@@ -24,7 +25,7 @@ namespace Models
         public string phone;
         public string mail;
         public string address;
-        public string province;
+        public UserProvince province;
     }
 
     [System.Serializable]
@@ -34,6 +35,16 @@ namespace Models
         public string lastName;
         public string melliCode;
         public string creditCard;
+        public string image;
+        public string banner;
+    }
+
+    [System.Serializable]
+    public class UserProvince
+    {
+        public int country;
+        public int city;
+        public int town;
     }
 
     [System.Serializable]

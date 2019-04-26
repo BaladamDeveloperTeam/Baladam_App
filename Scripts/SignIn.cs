@@ -5,13 +5,18 @@ using UPersian.Components;
 using UnityEngine.UI;
 using security;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
+using RestSharp;
+using System.Threading;
+using Newtonsoft.Json;
 
 public class SignIn : MonoBehaviour
 {
 
     private readonly string masterKey = "$2y$10$ooZRpgP3iGc6qYju9/03W.34alpAopQ7frXimfKEloqRdvXibbNem";
     private readonly string Url = "http://baladam1.me:81/api/GetLiperosal/This_is_PaSSWord_45M127*22";
-    private string ReceivedJson, ReceivedGetJson, Path;
+    private readonly string API_Url = "http://localhost:8080/api/v1";
+    private string ReceivedJson, ReceivedGetJson, Path, Token;
     private INIParser File = new INIParser();
     public RtlText Username, ErrorText;
     public InputField Password;
@@ -22,6 +27,7 @@ public class SignIn : MonoBehaviour
     public Session LoginSession;
     private Session[] OldSession;
     public static string IsSeller;
+    public Models.User userInfos;
 
     private string token_csrf;
 
@@ -121,7 +127,7 @@ public class SignIn : MonoBehaviour
             else
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-                GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                //GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
                 IsSeller = GSM.ReadIsSeller();
                 Coding coding = new Coding();
                 Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
@@ -152,7 +158,7 @@ public class SignIn : MonoBehaviour
             else
             {
                 BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-                GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+                //GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
                 IsSeller = GSM.ReadIsSeller();
                 Coding coding = new Coding();
                 Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
@@ -169,6 +175,66 @@ public class SignIn : MonoBehaviour
             }
         }
 
+    }
+
+    private async Task GetToken()
+    {
+        Loading.gameObject.SetActive(true);
+        var client = new RestClient(API_Url + "/Oauth/Token");
+        var request = new RestRequest(Method.POST);
+        var cancellationTokenSource = new CancellationTokenSource();
+        request.AddHeader("cache-control", "no-cache");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("X", "true");
+        request.AddHeader("X_TOKEN", "DJao310D%jdi!5");
+        request.AddParameter("undefined", "{\n\t\"username\":\"" + Username.text + "\",\n\t\"pwd\":\"" + Password.text + "\"\n}", ParameterType.RequestBody);
+        IRestResponse response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+        Token = response.Content;
+        await Login();
+    }
+
+    private async Task Login()
+    {
+        var client = new RestClient(API_Url + "/Oauth/App/Login");
+        var request = new RestRequest(Method.POST);
+        var cancellationTokenSource1 = new CancellationTokenSource();
+        request.AddHeader("cache-control", "no-cache");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("X", "true");
+        request.AddHeader("X_TOKEN", "DJao310D%jdi!5");
+        request.AddHeader("Authorization", Token);
+        request.AddParameter("undefined", "{\n\t\n}", ParameterType.RequestBody);
+        IRestResponse response1 = await client.ExecuteTaskAsync(request, cancellationTokenSource1.Token);
+        ReceivedJson = response1.Content;
+        Debug.Log(response1.Content);
+        if (response1.Content == "User Don't Exist" || response1.Content == "" || response1.Content == null || response1.Content.Contains("<!DOCTYPE html>"))
+            ErrorText.gameObject.SetActive(true);
+        else
+        {
+            BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
+            //userInfos = JsonHelper.FromJson<Models.User>(response1.Content);
+            userInfos = JsonConvert.DeserializeObject<Models.User>(response1.Content);
+            GSM.SetUserInfo(userInfos);
+            IsSeller = GSM.ReadIsSeller();
+            Coding coding = new Coding();
+            Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
+            if (RememberMe.isOn == true)
+            {
+                File.Open(Path);
+                File.WriteValue("UserSignIn", "IsSignIn", 1);
+                File.WriteValue("UserSignIn", "SignTime", System.DateTime.Now);
+                File.WriteValue("UserSignIn", "Username", Username.text);
+                File.WriteValue("UserSignIn", "Code", coding.Md5Sum(SystemInfo.deviceUniqueIdentifier) + coding.Sha1Sum(Username.text));
+                File.Close();
+            }
+
+        }
+        Loading.gameObject.SetActive(false);
+    }
+
+    public async void DoLogin()
+    {
+        await GetToken();
     }
 
     //private WWWForm GetSession()

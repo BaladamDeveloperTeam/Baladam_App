@@ -12,7 +12,7 @@ public class Global_Script_Manager : MonoBehaviour
     private static string path = null;
     private GameObject UserFullName, UserC_prj, UserF_prj, UserRate, Userlvl, UserBioText, UserGigsText, UserFullNameEdit, UserBioEdit, UserGigsEdit, UserEmailEdit,
         UserPhoneEdit, UserAgeEdit, UserSexEdit, UserShabaEdit, UserMelliEdit, UserEduationEdit, UserCityEdit, UserAddressEdit;
-    private UserInfo[] userinfo;
+    public Models.User userinfo;
     [HideInInspector]
     public string[] CatInfo;
     private string SelectedSkillCode = "No Item Selected";
@@ -36,7 +36,7 @@ public class Global_Script_Manager : MonoBehaviour
 		
 	}
 
-    public void SetUserInfo(UserInfo[] userInfos)
+    public void SetUserInfo(Models.User userInfos)
     {
         userinfo = userInfos;
         FindObjects();
@@ -81,22 +81,22 @@ public class Global_Script_Manager : MonoBehaviour
 
     public void SetValuetext()
     {
-        if(CheckForEmpty(userinfo[0].name) == false)
+        if(CheckForEmpty(userinfo.profile.firstName) == false)
             UserFullName.gameObject.GetComponent<RtlText>().text = "بلدم";
         else
-            UserFullName.gameObject.GetComponent<RtlText>().text = userinfo[0].name;
-        UserRate.gameObject.GetComponent<RtlText>().text = userinfo[0].rate.ToString();
-        UserC_prj.gameObject.GetComponent<RtlText>().text = userinfo[0].c_prj.ToString();
-        UserF_prj.gameObject.GetComponent<RtlText>().text = userinfo[0].f_prj.ToString();
-        Userlvl.gameObject.GetComponent<RtlText>().text = userinfo[0].lvl;
-        if (CheckForEmpty(userinfo[0].bio) == false)
-            UserBioText.gameObject.GetComponent<RtlText>().text = "درباره شما ...";
-        else
-            UserBioText.gameObject.GetComponent<RtlText>().text = userinfo[0].bio;
-        if (CheckForEmpty(userinfo[0].major_field) == false)
-            UserGigsText.gameObject.GetComponent<RtlText>().text = "زمینه های مهارت شما ...";
-        else
-            UserGigsText.gameObject.GetComponent<RtlText>().text = userinfo[0].major_field;
+            UserFullName.gameObject.GetComponent<RtlText>().text = userinfo.profile.firstName;
+        //UserRate.gameObject.GetComponent<RtlText>().text = userinfo.rate.ToString();
+        //UserC_prj.gameObject.GetComponent<RtlText>().text = userinfo.c_prj.ToString();
+        //UserF_prj.gameObject.GetComponent<RtlText>().text = userinfo.f_prj.ToString();
+        //Userlvl.gameObject.GetComponent<RtlText>().text = userinfo.lvl;
+        //if (CheckForEmpty(userinfo.bio) == false)
+        //    UserBioText.gameObject.GetComponent<RtlText>().text = "درباره شما ...";
+        //else
+        //    UserBioText.gameObject.GetComponent<RtlText>().text = userinfo.bio;
+        //if (CheckForEmpty(userinfo.major_field) == false)
+        //    UserGigsText.gameObject.GetComponent<RtlText>().text = "زمینه های مهارت شما ...";
+        //else
+        //    UserGigsText.gameObject.GetComponent<RtlText>().text = userinfo.major_field;
 
     }
 
@@ -118,61 +118,61 @@ public class Global_Script_Manager : MonoBehaviour
 
     public void SetValuetextForEdit()
     {
-        if (CheckForEmpty(userinfo[0].name) != false)
-            UserFullNameEdit.gameObject.GetComponent<InputField>().text = userinfo[0].name;
+        //if (CheckForEmpty(userinfo.name) != false)
+        //    UserFullNameEdit.gameObject.GetComponent<InputField>().text = userinfo.name;
             
-        if (CheckForEmpty(userinfo[0].bio) != false)
-            UserBioEdit.gameObject.GetComponent<InputField>().text = userinfo[0].bio;
+        //if (CheckForEmpty(userinfo.bio) != false)
+        //    UserBioEdit.gameObject.GetComponent<InputField>().text = userinfo.bio;
 
-        if(CheckForEmpty(userinfo[0].major_field) != false)
-            UserGigsEdit.gameObject.GetComponent<InputField>().text = userinfo[0].major_field;
+        //if(CheckForEmpty(userinfo.major_field) != false)
+        //    UserGigsEdit.gameObject.GetComponent<InputField>().text = userinfo.major_field;
 
-        if (CheckForEmpty(userinfo[0].email) != false)
-            UserEmailEdit.gameObject.GetComponent<InputField>().text = userinfo[0].email;
+        //if (CheckForEmpty(userinfo.email) != false)
+        //    UserEmailEdit.gameObject.GetComponent<InputField>().text = userinfo.email;
 
-        if (CheckForEmpty(userinfo[0].phone) != false)
-            UserPhoneEdit.gameObject.GetComponent<InputField>().text = userinfo[0].phone;
+        //if (CheckForEmpty(userinfo.phone) != false)
+        //    UserPhoneEdit.gameObject.GetComponent<InputField>().text = userinfo.phone;
 
-        if (CheckForEmpty(userinfo[0].shaba) != false)
-            UserShabaEdit.gameObject.GetComponent<InputField>().text = userinfo[0].shaba;
+        //if (CheckForEmpty(userinfo.shaba) != false)
+        //    UserShabaEdit.gameObject.GetComponent<InputField>().text = userinfo.shaba;
 
-        if (CheckForEmpty(userinfo[0].melli) != false)
-            UserMelliEdit.gameObject.GetComponent<InputField>().text = userinfo[0].melli;
+        //if (CheckForEmpty(userinfo.melli) != false)
+        //    UserMelliEdit.gameObject.GetComponent<InputField>().text = userinfo.melli;
 
-        if (CheckForEmpty(userinfo[0].madrak_tahsili) != false)
-            UserEduationEdit.gameObject.GetComponent<InputField>().text = userinfo[0].madrak_tahsili;
+        //if (CheckForEmpty(userinfo.madrak_tahsili) != false)
+        //    UserEduationEdit.gameObject.GetComponent<InputField>().text = userinfo.madrak_tahsili;
 
-        if (CheckForEmpty(userinfo[0].city) != false)
-            UserCityEdit.gameObject.GetComponent<InputField>().text = userinfo[0].city;
+        //if (CheckForEmpty(userinfo.city) != false)
+        //    UserCityEdit.gameObject.GetComponent<InputField>().text = userinfo.city;
 
-        if (CheckForEmpty(userinfo[0].address) != false)
-            UserAddressEdit.gameObject.GetComponent<InputField>().text = userinfo[0].address;
+        //if (CheckForEmpty(userinfo.address) != false)
+        //    UserAddressEdit.gameObject.GetComponent<InputField>().text = userinfo.address;
 
-        if (CheckForEmpty(userinfo[0].gender) != false && userinfo[0].gender == "مرد")
-            UserSexEdit.gameObject.GetComponent<Dropdown>().value = 0;
-        else
-            UserSexEdit.gameObject.GetComponent<Dropdown>().value = 1;
+        //if (CheckForEmpty(userinfo.gender) != false && userinfo.gender == "مرد")
+        //    UserSexEdit.gameObject.GetComponent<Dropdown>().value = 0;
+        //else
+        //    UserSexEdit.gameObject.GetComponent<Dropdown>().value = 1;
 
     }
 
     public string ReadUserName()
     {
-        return userinfo[0].username;
+        return userinfo.username;
     }
 
     public string ReadPro_imageURL()
     {
-        return userinfo[0].pro_image;
+        return userinfo.profile.image;
     }
 
     public string ReadUserID()
     {
-        return userinfo[0]._id;
+        return userinfo.id;
     }
 
     public string ReadIsSeller()
     {
-        return userinfo[0].is_seller.ToString();
+        return userinfo.role.ToString();
     }
 
     public string ReadSelectedSkillCode()

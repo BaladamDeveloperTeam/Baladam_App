@@ -9,6 +9,8 @@ using security;
 using Models;
 using System.Net.NetworkInformation;
 using RestSharp;
+using System.Threading.Tasks;
+using System.Threading;
 
 public class Register : MonoBehaviour
 {
@@ -199,7 +201,7 @@ public class Register : MonoBehaviour
         else
         {
             BNC.gameObject.GetComponent<Botton_Nav_Click>().Profile_nClick();
-            GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
+            //GSM.SetUserInfo(JsonHelper.FromJson<UserInfo>("{\"Items\": [ " + ReceivedJson + " ] }"));
             Coding coding = new Coding();
             Global_Script_Manager.SetLog(11, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
             //if (RememberMe.isOn == true)
@@ -216,13 +218,13 @@ public class Register : MonoBehaviour
         }
     }
 
-    public void NewRegister()
+    public async Task NewRegister()
     {
         Coding coding = new Coding();
         token_csrf = "LATARY@" + coding.Md5Sum(Username.text.ToLower()) + coding.Sha1Sum(Username.text.ToLower());
         var client = new RestClient(API_Url + "/user");
         var request = new RestRequest(Method.POST);
-        //request.AddHeader("Postman-Token", "ba5fee2b-f869-40d3-a016-95334ca5d4ec");
+        var cancellationTokenSource = new CancellationTokenSource();
         request.AddHeader("cache-control", "no-cache");
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("X", "true");
@@ -231,25 +233,19 @@ public class Register : MonoBehaviour
         register.pwd = Password.text;
         register.token = token_csrf;
         register.contact.phone = Phone.text;
-        register.contact.mail = "jamal@yahoo.com";
-        register.profile.firstName = "mohammad";
-        register.profile.lastName = "jamali";
-        register.profile.melliCode = "2282511931";
-        register.profile.creditCard = "6273811101934609";
-        //request.AddParameter("undefined", "{\n    \"username\": \"mohada10\",\n    \"pwd\": \"22102210aA\",\n    \"token\": \"123i9(UDJ@!D:DASD\",\n    \"contact\":{\n    \t\"phone\":\"09197279883\",\n    \t\"mail\":\"jamalianm1@yahoo.com\"\n    },\n    \"seller\": false\n}", ParameterType.RequestBody);
-        request.AddParameter("User", JsonUtility.ToJson(register), ParameterType.RequestBody);
+        request.AddParameter("undefined", "{\r\n\t\"username\":\"" + Username.text + "\",\r\n\t\"pwd\":\"" + Password2.text + "\",\r\n\t\"token\":\"" + token_csrf + "\",\r\n\t\"contact\":{\r\n\t\t\"phone\":\""+ Phone.text +"\"\r\n\t}\r\n}", ParameterType.RequestBody);
         Debug.Log(JsonUtility.ToJson(register));
-        IRestResponse response = client.Execute(request);
+        IRestResponse response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
         Debug.Log(response.Content);
     }
 
-    public void DoRegisterBtn()
+    public async void DoRegisterBtn()
     {
         Coding coding = new Coding();
         if (VerifiCode == Code.text)
         {
             //StartCoroutine(DoRegister());
-            NewRegister();
+            await NewRegister();
             Global_Script_Manager.SetLog(19, coding.Md5Sum(SystemInfo.deviceUniqueIdentifier));
         }
         else
@@ -267,12 +263,11 @@ public class Register : MonoBehaviour
         if (CheckPassword() == true)
         {
             Verifi_p.gameObject.SetActive(true);
-            //if (sendsms.GetCredit() > 0)
+            if (sendsms.GetCredit() > 0)
             {
-                //sendsms.sendSMSRegisterVerification(Phone.text, global::SendSMS.SendKind.Normal);
+                sendsms.sendSMSRegisterVerification(Phone.text, global::SendSMS.SendKind.Normal);
                 //StartCoroutine(sendsms.sendSMSRegisterVerification(System.Convert.ToInt64(Phone.text)));
-                //VerifiCode = sendsms.ReadVerfi();
-                VerifiCode = "11111";
+                VerifiCode = sendsms.ReadVerfi();
                 Verifi_p.gameObject.SetActive(true);
                 StartTimer = true;
             }
